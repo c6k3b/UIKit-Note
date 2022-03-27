@@ -5,24 +5,18 @@ class Repository {
     // MARK: - Props
     var note: Note?
     var files: FileSystemOperations?
-    private static var shared: Repository?
-    
-    // MARK: - Initializers
-    private init() {}
-    
-    static func sharedInstance() -> Repository {
-        if shared == nil {
-            shared = Repository()
-        }
-        return shared!
-    }
     
     // MARK: - Methods
-    func getNote() {
-        
+    func saveNote() {
+        if let data = note?.body {
+            files?.saveToDisk(Data(data.utf8))
+        }
     }
     
-    func saveNote() {
-        
+    func getNote() -> String {
+        if let data = files?.loadFromDisk() {
+            return String(decoding: data, as: UTF8.self)
+        }
+        return ""
     }
 }

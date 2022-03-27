@@ -1,43 +1,33 @@
-import Foundation
+import UIKit
 
 enum Styles {
     
     // MARK: - Helpers
     enum Colors {
-//        static let arabicaBrown = UIColor(hex: 0x5C3E31)
-    }
-    
-    enum Fonts {
-//        static let poiretOneRegular74 = UIFont(name: "PoiretOne-Regular", size: 74)
+        static let whiteColor = UIColor(hex: 0xffffff)
+        static let blackColor = UIColor(hex: 0x000000)
     }
     
     enum Spacing {
         static let size = 16.0
     }
     
-    // MARK: - Views
-    enum View {
-        
+    // MARK: - Navigation
+    enum Navigation {
+//        static let titleFont = UIFont.systemFont(ofSize: 22, weight: .bold)
     }
     
-    enum Button {
-        
+    // MARK: - Views
+    enum View {
+        static let backgroundLight = Colors.whiteColor
+        static let backgroundDark = Colors.blackColor
     }
     
     enum TextField {
-        
+        static let font = UIFont.systemFont(ofSize: 22, weight: .bold)
     }
     
     enum TextView {
-        
-    }
-    
-    // MARK: - Stacks
-    enum HorizontalStack {
-        
-    }
-    
-    enum VerticalStack {
-        
+        static let font = UIFont.systemFont(ofSize: 14)
     }
 }

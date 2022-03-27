@@ -1,14 +1,22 @@
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
+    
+    // MARK: - Props
     var window: UIWindow?
+    private let mainViewController = MainViewController()
+    private let navigationController = UINavigationController()
 
+    // MARK: - Methods
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         guard let windowScene = scene as? UIWindowScene else { return }
         let window = UIWindow.init(windowScene: windowScene)
-        window.rootViewController = ViewController()
+        
+        mainViewController.repository = Repository()
+        
+        navigationController.viewControllers = [mainViewController]
+        window.rootViewController = navigationController
         window.makeKeyAndVisible()
         
         self.window = window
