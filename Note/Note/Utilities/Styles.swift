@@ -25,8 +25,10 @@ enum Styles {
         static let backgroundDark = Colors.dark
     }
     
+    // MARK: - Components
     enum TextField {
         static let font = UIFont.systemFont(ofSize: 22, weight: .bold)
+        
         static let topAnchor = Spacing.size
         static let leadingAnchor = Spacing.size
         static let trailingAnchor = -Spacing.size
@@ -45,6 +47,7 @@ enum Styles {
     
     enum TextView {
         static let font = UIFont.systemFont(ofSize: 14)
+        
         static let topAnchor = Spacing.size * 6
         static let leadingAnchor = Spacing.size
         static let trailingAnchor = -Spacing.size
