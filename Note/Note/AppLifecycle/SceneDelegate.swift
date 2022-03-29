@@ -6,6 +6,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     private let mainViewController = MainViewController()
     private let navigationController = UINavigationController()
+    private let repository = Repository()
 
     // MARK: - Methods
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -14,6 +15,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow.init(windowScene: windowScene)
         
         mainViewController.repository = Repository()
+        repository.note = Note()
+        repository.files = FileSystemOperations()
         
         navigationController.viewControllers = [mainViewController]
         window.rootViewController = navigationController

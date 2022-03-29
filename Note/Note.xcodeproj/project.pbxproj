@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00A36CFC27F335C800A7AC40 /* BarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A36CFB27F335C800A7AC40 /* BarButton.swift */; };
 		00BE4B7C27ECE81C00664855 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00BE4B7B27ECE81C00664855 /* AppDelegate.swift */; };
 		00BE4B7E27ECE81C00664855 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00BE4B7D27ECE81C00664855 /* SceneDelegate.swift */; };
 		00BE4B8027ECE81C00664855 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00BE4B7F27ECE81C00664855 /* MainViewController.swift */; };
@@ -43,6 +44,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		00A36CFB27F335C800A7AC40 /* BarButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarButton.swift; sourceTree = "<group>"; };
 		00BE4B7827ECE81C00664855 /* Note.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Note.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		00BE4B7B27ECE81C00664855 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		00BE4B7D27ECE81C00664855 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -198,6 +200,7 @@
 		00BE4BB827ECF7CF00664855 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				00A36CFB27F335C800A7AC40 /* BarButton.swift */,
 				00BE4BBD27ECF81800664855 /* TextField.swift */,
 				00BE4BBF27ECF82700664855 /* TextView.swift */,
 			);
@@ -211,10 +214,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00BE4BA227ECE82100664855 /* Build configuration list for PBXNativeTarget "Note" */;
 			buildPhases = (
+				00BE4BAB27ECEA1800664855 /* ShellScript */,
 				00BE4B7427ECE81C00664855 /* Sources */,
 				00BE4B7527ECE81C00664855 /* Frameworks */,
 				00BE4B7627ECE81C00664855 /* Resources */,
-				00BE4BAB27ECEA1800664855 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -358,6 +361,7 @@
 				00BE4B8027ECE81C00664855 /* MainViewController.swift in Sources */,
 				00BE4BB727ECF71A00664855 /* Extensions.swift in Sources */,
 				00BE4BC727ECF97F00664855 /* Repository.swift in Sources */,
+				00A36CFC27F335C800A7AC40 /* BarButton.swift in Sources */,
 				00BE4B7C27ECE81C00664855 /* AppDelegate.swift in Sources */,
 				00BE4B7E27ECE81C00664855 /* SceneDelegate.swift in Sources */,
 				00BE4BC927ECF99000664855 /* FileSystemOperations.swift in Sources */,

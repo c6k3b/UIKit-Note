@@ -3,19 +3,14 @@ import UIKit
 class MainViewController: UIViewController {
     
     // MARK: - Props
-    private var mainView = MainView()
+    typealias Navigation = Styles.Navigation
+    
+    private let mainView = MainView()
     var repository: Repository?
     
     override func loadView() {
-        setRepository()
         setView()
         setNavigationAppearance()
-    }
-    
-    private func setRepository() {
-        guard let repository = repository else { return }
-        repository.note = Note()
-        repository.files = FileSystemOperations()
     }
     
     private func setView() {
@@ -23,7 +18,8 @@ class MainViewController: UIViewController {
     }
     
     private func setNavigationAppearance() {
-        navigationItem.title = "Notes"
-        navigationItem.largeTitleDisplayMode = .always
+        navigationItem.title = "Note"
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: Navigation.titleFont]
+        navigationItem.rightBarButtonItem = mainView.rightBarButton
     }
 }
