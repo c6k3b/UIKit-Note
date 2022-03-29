@@ -5,8 +5,8 @@ class MainView: UIView {
     // MARK: - Props
     typealias View = Styles.View
     
-    private let textField = TextField()
-    private let textView = TextView()
+    var textField = TextField()
+    var textView = TextView()
     let rightBarButton = BarButton()
     
     private var isEditingMode = false
@@ -18,6 +18,7 @@ class MainView: UIView {
     
     override func didMoveToSuperview() {
         setAppearance()
+        didRightBarButtonTapped(rightBarButton)
     }
     
     // MARK: - Methods
