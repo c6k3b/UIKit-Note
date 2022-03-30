@@ -22,8 +22,6 @@
 		00BE4BBE27ECF81800664855 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00BE4BBD27ECF81800664855 /* TextField.swift */; };
 		00BE4BC027ECF82700664855 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00BE4BBF27ECF82700664855 /* TextView.swift */; };
 		00BE4BC527ECF92B00664855 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00BE4BC427ECF92B00664855 /* Note.swift */; };
-		00BE4BC727ECF97F00664855 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00BE4BC627ECF97F00664855 /* Repository.swift */; };
-		00BE4BC927ECF99000664855 /* FileSystemOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00BE4BC827ECF99000664855 /* FileSystemOperations.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,8 +61,6 @@
 		00BE4BBD27ECF81800664855 /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		00BE4BBF27ECF82700664855 /* TextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextView.swift; sourceTree = "<group>"; };
 		00BE4BC427ECF92B00664855 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
-		00BE4BC627ECF97F00664855 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
-		00BE4BC827ECF99000664855 /* FileSystemOperations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileSystemOperations.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,8 +179,6 @@
 			isa = PBXGroup;
 			children = (
 				00BE4BC427ECF92B00664855 /* Note.swift */,
-				00BE4BC627ECF97F00664855 /* Repository.swift */,
-				00BE4BC827ECF99000664855 /* FileSystemOperations.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -360,11 +354,9 @@
 			files = (
 				00BE4B8027ECE81C00664855 /* MainViewController.swift in Sources */,
 				00BE4BB727ECF71A00664855 /* Extensions.swift in Sources */,
-				00BE4BC727ECF97F00664855 /* Repository.swift in Sources */,
 				00A36CFC27F335C800A7AC40 /* BarButton.swift in Sources */,
 				00BE4B7C27ECE81C00664855 /* AppDelegate.swift in Sources */,
 				00BE4B7E27ECE81C00664855 /* SceneDelegate.swift in Sources */,
-				00BE4BC927ECF99000664855 /* FileSystemOperations.swift in Sources */,
 				00BE4BBE27ECF81800664855 /* TextField.swift in Sources */,
 				00BE4BB527ECF67400664855 /* MainView.swift in Sources */,
 				00BE4BB327ECEC9300664855 /* Styles.swift in Sources */,

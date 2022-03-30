@@ -6,7 +6,6 @@ class MainViewController: UIViewController {
     typealias Navigation = Styles.Navigation
     
     private let mainView = MainView()
-    var repository: Repository?
     
     override func loadView() {
         setView()
