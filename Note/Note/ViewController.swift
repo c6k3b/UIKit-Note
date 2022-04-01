@@ -82,7 +82,7 @@ class ViewController: UIViewController {
         ).isActive = true
         textView.bottomAnchor.constraint(
             equalTo: view.safeAreaLayoutGuide.bottomAnchor,
-            constant: 8
+            constant: -16
         ).isActive = true
     }
 
