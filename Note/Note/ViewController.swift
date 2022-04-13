@@ -10,6 +10,12 @@ class ViewController: UIViewController {
     private let noteBodyTextView = UITextView()
     private let datePicker = UIDatePicker()
 
+    private var dateLabelText: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "d MMMM yyyy"
+        return "Дата: \(dateFormatter.string(from: note.date))"
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -75,7 +81,7 @@ class ViewController: UIViewController {
 
     private func setupNoteDateLabel() {
         noteDateLabel.font = .systemFont(ofSize: 14)
-        noteDateLabel.text = showDate()
+        noteDateLabel.text = dateLabelText
 
         let gesture = UITapGestureRecognizer(target: self, action: #selector(showDatePickerAlert))
         noteDateLabel.addGestureRecognizer(gesture)
@@ -150,9 +156,12 @@ class ViewController: UIViewController {
             message: "Не могу сохранить пустую заметку",
             preferredStyle: .alert
         )
-        alert.addAction(UIAlertAction(title: "Редактировать", style: .cancel) { _ in
+
+        let action = UIAlertAction(title: "Редактировать", style: .cancel) { _ in
             self.noteBodyTextView.becomeFirstResponder()
-        })
+        }
+
+        alert.addAction(action)
         present(alert, animated: true)
     }
 
@@ -166,27 +175,15 @@ class ViewController: UIViewController {
 
         alert.addAction(UIAlertAction(title: "Выбрать", style: .default) { _ in
             self.note.date = self.datePicker.date
-            self.noteDateLabel.text = self.showDate()
+            self.noteDateLabel.text = self.dateLabelText
         })
 
         present(alert, animated: true)
-    }
-
-    private func showDate() -> String {
-        "Дата: \(note.date.getFormattedDate(format: "d MMMM yyyy"))"
     }
 }
 
 extension ViewController {
     private func isEmpty() -> Bool {
         return note.isEmpty
-    }
-}
-
-extension Date {
-    func getFormattedDate(format: String) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = format
-        return dateFormatter.string(from: self)
     }
 }
