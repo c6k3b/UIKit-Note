@@ -2,9 +2,9 @@ import UIKit
 
 class NoteView: UIView {
     var note = Note()
-    private var noteHeaderTextField = UITextField()
-    private var noteBodyTextField = UITextField()
-    private var noteDateTextField = UITextField()
+    private var noteHeaderLabel = UILabel()
+    private var noteBodyLabel = UILabel()
+    private var noteDateLabel = UILabel()
 
     private var dateLabelText: String {
         let dateFormatter = DateFormatter()
@@ -20,65 +20,65 @@ class NoteView: UIView {
     }
 
     private func setupHeader() {
-        noteHeaderTextField.text = note.header
-        noteHeaderTextField.font = .systemFont(ofSize: 16, weight: .regular)
+        noteHeaderLabel.text = note.header
+        noteHeaderLabel.font = .systemFont(ofSize: 16, weight: .regular)
 
-        addSubview(noteHeaderTextField)
+        addSubview(noteHeaderLabel)
 
-        noteHeaderTextField.translatesAutoresizingMaskIntoConstraints = false
-        noteHeaderTextField.topAnchor.constraint(
+        noteHeaderLabel.translatesAutoresizingMaskIntoConstraints = false
+        noteHeaderLabel.topAnchor.constraint(
             equalTo: safeAreaLayoutGuide.topAnchor,
             constant: 10
         ).isActive = true
-        noteHeaderTextField.leadingAnchor.constraint(
+        noteHeaderLabel.leadingAnchor.constraint(
             equalTo: safeAreaLayoutGuide.leadingAnchor,
             constant: 16
         ).isActive = true
-        noteHeaderTextField.trailingAnchor.constraint(
+        noteHeaderLabel.trailingAnchor.constraint(
             equalTo: safeAreaLayoutGuide.trailingAnchor,
             constant: -16
         ).isActive = true
     }
 
     private func setupBody() {
-        noteBodyTextField.text = note.body
-        noteBodyTextField.font = .systemFont(ofSize: 10, weight: .regular)
-        noteBodyTextField.textColor = .systemGray
+        noteBodyLabel.text = note.body
+        noteBodyLabel.font = .systemFont(ofSize: 10, weight: .regular)
+        noteBodyLabel.textColor = .systemGray
 
-        addSubview(noteBodyTextField)
+        addSubview(noteBodyLabel)
 
-        noteBodyTextField.translatesAutoresizingMaskIntoConstraints = false
-        noteBodyTextField.topAnchor.constraint(
-            equalTo: noteHeaderTextField.bottomAnchor,
+        noteBodyLabel.translatesAutoresizingMaskIntoConstraints = false
+        noteBodyLabel.topAnchor.constraint(
+            equalTo: noteHeaderLabel.bottomAnchor,
             constant: 4
         ).isActive = true
-        noteBodyTextField.leadingAnchor.constraint(
+        noteBodyLabel.leadingAnchor.constraint(
             equalTo: safeAreaLayoutGuide.leadingAnchor,
             constant: 16
         ).isActive = true
-        noteBodyTextField.trailingAnchor.constraint(
+        noteBodyLabel.trailingAnchor.constraint(
             equalTo: safeAreaLayoutGuide.trailingAnchor,
             constant: -16
         ).isActive = true
     }
 
     private func setupDate() {
-        noteDateTextField.text = dateLabelText
-        noteDateTextField.font = .systemFont(ofSize: 10, weight: .regular)
-        noteDateTextField.textColor = .systemGray
+        noteDateLabel.text = dateLabelText
+        noteDateLabel.font = .systemFont(ofSize: 10, weight: .regular)
+        noteDateLabel.textColor = .systemGray
 
-        addSubview(noteDateTextField)
+        addSubview(noteDateLabel)
 
-        noteDateTextField.translatesAutoresizingMaskIntoConstraints = false
-        noteDateTextField.topAnchor.constraint(
-            equalTo: noteBodyTextField.bottomAnchor,
+        noteDateLabel.translatesAutoresizingMaskIntoConstraints = false
+        noteDateLabel.topAnchor.constraint(
+            equalTo: noteBodyLabel.bottomAnchor,
             constant: 24
         ).isActive = true
-        noteDateTextField.leadingAnchor.constraint(
+        noteDateLabel.leadingAnchor.constraint(
             equalTo: safeAreaLayoutGuide.leadingAnchor,
             constant: 16
         ).isActive = true
-        noteDateTextField.trailingAnchor.constraint(
+        noteDateLabel.trailingAnchor.constraint(
             equalTo: safeAreaLayoutGuide.trailingAnchor,
             constant: -16
         ).isActive = true

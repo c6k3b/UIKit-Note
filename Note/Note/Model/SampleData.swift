@@ -1,7 +1,7 @@
 import Foundation
 
 class SampleData {
-    var data = [
+    var notes = [
         Note(
             header: "Вопросы для интервью",
             body: "Как давно ты стал программистом? (задать после небольшо...",
