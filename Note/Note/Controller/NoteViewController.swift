@@ -1,8 +1,10 @@
 import UIKit
 
 class NoteViewController: UIViewController {
-    private var note = Note()
+    var note = Note()
     private var isEditingMode = false
+
+    weak var delegate: NoteDelegate?
 
     private let navigationRightBarButton = UIBarButtonItem()
     private let noteHeaderTextField = UITextField()
@@ -21,6 +23,7 @@ class NoteViewController: UIViewController {
 
         view.backgroundColor = .systemBackground
 
+        setupNavigationLeftBarButton()
         setupNavigationRightBarButton()
         setupNoteDateLabel()
         setupNoteHeaderTextField()
@@ -28,8 +31,11 @@ class NoteViewController: UIViewController {
         didRightBarButtonTapped(navigationRightBarButton)
     }
 
-    @objc
-    private func didRightBarButtonTapped(_ button: UIBarButtonItem) {
+//    func passData(data: Note) {
+//        note = data
+//    }
+
+    @objc private func didRightBarButtonTapped(_ button: UIBarButtonItem) {
         isEditingMode = !isEditingMode
         setUserInteractionState()
 
@@ -45,6 +51,12 @@ class NoteViewController: UIViewController {
                 didRightBarButtonTapped(navigationRightBarButton)
             }
             noteBodyTextView.resignFirstResponder()
+        }
+    }
+
+    private func setupNavigationLeftBarButton() {
+        if let topItem = self.navigationController?.navigationBar.topItem {
+           topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         }
     }
 
