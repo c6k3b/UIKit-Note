@@ -1,5 +1,9 @@
 import Foundation
 
 protocol NoteDelegate: AnyObject {
-    func passData(data: Note)
+    func passNote(_ note: Note)
+}
+
+protocol ShowingNoteDelegate: AnyObject {
+    func showNoteVC(for noteView: NoteView)
 }

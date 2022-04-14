@@ -1,8 +1,7 @@
 import UIKit
 
-class ListViewController: UIViewController, NoteDelegate {
-    private let noteVC = NoteViewController()
-    private var data = SampleData().notes
+class ListViewController: UIViewController {
+    private var notes = SampleData().notes
     private let button = UIButton()
     private let scrollView = UIScrollView()
     private let stackView = UIStackView()
@@ -12,7 +11,6 @@ class ListViewController: UIViewController, NoteDelegate {
 
         navigationItem.title = "Заметки"
         view.backgroundColor = .systemBackground
-        noteVC.delegate = self
 
         setupScrollView()
         setupStackView()
@@ -45,7 +43,7 @@ class ListViewController: UIViewController, NoteDelegate {
         stackView.spacing = 4
         stackView.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         stackView.isLayoutMarginsRelativeArrangement = true
-        setupNoteList()
+        setupNoteView()
 
         scrollView.addSubview(stackView)
 
@@ -64,29 +62,37 @@ class ListViewController: UIViewController, NoteDelegate {
         ).isActive = true
     }
 
-    private func setupNoteList() {
-        for note in data {
-            let newNote = createNewNote(note: note)
-
-            newNote.backgroundColor = .systemBackground
-            newNote.layer.cornerRadius = 14
-            newNote.layer.shadowColor = UIColor.systemGray.cgColor
-            newNote.layer.shadowOffset = CGSize(width: 3, height: 3)
-            newNote.layer.shadowOpacity = 0.1
-            newNote.layer.shadowRadius = 4.0
-
-            let gesture = UITapGestureRecognizer(
-                target: self,
-                action: #selector(showNoteVC)
-            )
-
-            newNote.addGestureRecognizer(gesture)
-
-            stackView.addArrangedSubview(newNote)
-
-            newNote.translatesAutoresizingMaskIntoConstraints = false
-            newNote.heightAnchor.constraint(equalToConstant: 90).isActive = true
+    private func setupNoteView() {
+        for note in notes {
+            addNewNoteView(with: note)
         }
+    }
+
+    private func addNewNoteView(with note: Note) -> NoteView {
+        let noteView = NoteView()
+        noteView.note = note
+        noteView.showingDelegate = self
+
+        noteView.backgroundColor = .systemBackground
+        noteView.layer.cornerRadius = 14
+        noteView.layer.shadowColor = UIColor.systemGray.cgColor
+        noteView.layer.shadowOffset = CGSize(width: 3, height: 3)
+        noteView.layer.shadowOpacity = 0.1
+        noteView.layer.shadowRadius = 4.0
+
+        let gesture = UITapGestureRecognizer(
+            target: noteView,
+            action: #selector(NoteView.editNote)
+        )
+
+        noteView.addGestureRecognizer(gesture)
+
+        stackView.addArrangedSubview(noteView)
+
+        noteView.translatesAutoresizingMaskIntoConstraints = false
+        noteView.heightAnchor.constraint(equalToConstant: 90).isActive = true
+
+        return noteView
     }
 
     private func setupButton() {
@@ -117,22 +123,33 @@ class ListViewController: UIViewController, NoteDelegate {
         ).isActive = true
     }
 
-    func passData(data: Note) {
-        noteVC.note = data
-        navigationController?.pushViewController(noteVC, animated: true)
-    }
-
-    func createNewNote(note: Note) -> NoteView {
-        let noteView = NoteView()
-        noteView.note = note
-        return noteView
-    }
-
-    @objc private func showNoteVC() {
-        noteVC.delegate?.passData(data: data[1])
-    }
-
     @objc private func didButtonTapped() {
-        navigationController?.pushViewController(NoteViewController(), animated: true)
+        let note = Note()
+        notes.append(note)
+        let noteView = addNewNoteView(with: note)
+
+        showNoteVC(for: noteView)
+    }
+}
+
+extension ListViewController: NoteDelegate {
+    func passNote(_ note: Note) {
+        for noteIndex in 0..<notes.count {
+            let aNote = notes[noteIndex]
+            if aNote.id == note.id {
+                notes[noteIndex] = note
+                return
+            }
+        }
+    }
+}
+
+extension ListViewController: ShowingNoteDelegate {
+    func showNoteVC(for noteView: NoteView) {
+        let noteVC = NoteViewController()
+        noteVC.note = noteView.note
+        noteVC.noteDelegate = self
+
+        navigationController?.pushViewController(noteVC, animated: true)
     }
 }

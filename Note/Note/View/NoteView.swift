@@ -1,7 +1,8 @@
 import UIKit
 
-class NoteView: UIView {
-    var note = Note()
+@objc class NoteView: UIView {
+    var note: Note!
+    var showingDelegate: ShowingNoteDelegate!
     private var noteHeaderLabel = UILabel()
     private var noteBodyLabel = UILabel()
     private var noteDateLabel = UILabel()
@@ -82,5 +83,9 @@ class NoteView: UIView {
             equalTo: safeAreaLayoutGuide.trailingAnchor,
             constant: -16
         ).isActive = true
+    }
+
+    @objc func editNote() {
+        showingDelegate.showNoteVC(for: self)
     }
 }

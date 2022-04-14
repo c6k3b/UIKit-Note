@@ -1,10 +1,9 @@
 import UIKit
 
 class NoteViewController: UIViewController {
-    var note = Note()
+    var note: Note!
+    var noteDelegate: NoteDelegate!
     private var isEditingMode = false
-
-    weak var delegate: NoteDelegate?
 
     private let navigationRightBarButton = UIBarButtonItem()
     private let noteHeaderTextField = UITextField()
@@ -31,9 +30,13 @@ class NoteViewController: UIViewController {
         didRightBarButtonTapped(navigationRightBarButton)
     }
 
-//    func passData(data: Note) {
-//        note = data
-//    }
+    override func willMove(toParent parent: UIViewController?) {
+        super.willMove(toParent: parent)
+
+        if parent == nil {   // back button was pressed
+            noteDelegate?.passNote(note)
+        }
+    }
 
     @objc private func didRightBarButtonTapped(_ button: UIBarButtonItem) {
         isEditingMode = !isEditingMode
