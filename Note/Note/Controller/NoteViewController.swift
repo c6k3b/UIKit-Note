@@ -1,6 +1,6 @@
 import UIKit
 
-class ViewController: UIViewController {
+class NoteViewController: UIViewController {
     private var note = Note()
     private var isEditingMode = false
 
@@ -12,19 +12,18 @@ class ViewController: UIViewController {
 
     private var dateLabelText: String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "d MMMM yyyy"
-        return "Дата: \(dateFormatter.string(from: note.date))"
+        dateFormatter.dateFormat = "dd.MM.yyyy EEEE HH:mm"
+        return dateFormatter.string(from: note.date)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationItem.title = "Заметка"
         view.backgroundColor = .systemBackground
 
         setupNavigationRightBarButton()
-        setupNoteHeaderTextField()
         setupNoteDateLabel()
+        setupNoteHeaderTextField()
         setupNoteBodyTextView()
         didRightBarButtonTapped(navigationRightBarButton)
     }
@@ -50,47 +49,22 @@ class ViewController: UIViewController {
     }
 
     private func setupNavigationRightBarButton() {
-        navigationRightBarButton.title = "Изменить"
         navigationRightBarButton.target = self
         navigationRightBarButton.action = #selector(didRightBarButtonTapped(_:))
         navigationItem.rightBarButtonItem = navigationRightBarButton
     }
 
-    private func setupNoteHeaderTextField() {
-        noteHeaderTextField.placeholder = "Заголовок"
-        noteHeaderTextField.font = .systemFont(ofSize: 22, weight: .bold)
-
-        noteHeaderTextField.text = note.header
-
-        view.addSubview(noteHeaderTextField)
-
-        noteHeaderTextField.translatesAutoresizingMaskIntoConstraints = false
-        noteHeaderTextField.topAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.topAnchor,
-            constant: 8
-        ).isActive = true
-        noteHeaderTextField.leadingAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.leadingAnchor,
-            constant: 16
-        ).isActive = true
-        noteHeaderTextField.trailingAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-            constant: -16
-        ).isActive = true
-    }
-
     private func setupNoteDateLabel() {
         noteDateLabel.font = .systemFont(ofSize: 14)
         noteDateLabel.text = dateLabelText
-
-        let gesture = UITapGestureRecognizer(target: self, action: #selector(showDatePickerAlert))
-        noteDateLabel.addGestureRecognizer(gesture)
+        noteDateLabel.textColor = .systemGray
+        noteDateLabel.textAlignment = .center
 
         view.addSubview(noteDateLabel)
 
         noteDateLabel.translatesAutoresizingMaskIntoConstraints = false
         noteDateLabel.topAnchor.constraint(
-            equalTo: noteHeaderTextField.bottomAnchor,
+            equalTo: view.safeAreaLayoutGuide.topAnchor,
             constant: 8
         ).isActive = true
         noteDateLabel.leadingAnchor.constraint(
@@ -103,15 +77,39 @@ class ViewController: UIViewController {
         ).isActive = true
     }
 
+    private func setupNoteHeaderTextField() {
+        noteHeaderTextField.placeholder = "Введите название"
+        noteHeaderTextField.font = .systemFont(ofSize: 24, weight: .bold)
+
+        noteHeaderTextField.text = note.header
+
+        view.addSubview(noteHeaderTextField)
+
+        noteHeaderTextField.translatesAutoresizingMaskIntoConstraints = false
+        noteHeaderTextField.topAnchor.constraint(
+            equalTo: noteDateLabel.bottomAnchor,
+            constant: 8
+        ).isActive = true
+        noteHeaderTextField.leadingAnchor.constraint(
+            equalTo: view.safeAreaLayoutGuide.leadingAnchor,
+            constant: 16
+        ).isActive = true
+        noteHeaderTextField.trailingAnchor.constraint(
+            equalTo: view.safeAreaLayoutGuide.trailingAnchor,
+            constant: -16
+        ).isActive = true
+    }
+
     private func setupNoteBodyTextView() {
-        noteBodyTextView.font = .systemFont(ofSize: 14)
+        noteBodyTextView.font = .systemFont(ofSize: 16)
         noteBodyTextView.text = note.body
+        noteBodyTextView.adjustableKeyboard()
 
         view.addSubview(noteBodyTextView)
 
         noteBodyTextView.translatesAutoresizingMaskIntoConstraints = false
         noteBodyTextView.topAnchor.constraint(
-            equalTo: noteDateLabel.bottomAnchor,
+            equalTo: noteHeaderTextField.bottomAnchor,
             constant: 8
         ).isActive = true
         noteBodyTextView.leadingAnchor.constraint(
@@ -126,16 +124,6 @@ class ViewController: UIViewController {
             equalTo: view.safeAreaLayoutGuide.bottomAnchor,
             constant: -16
         ).isActive = true
-    }
-
-    private func setupDatePicker() {
-        datePicker.frame.origin = CGPoint(x: 0, y: -20)
-        datePicker.datePickerMode = .date
-        datePicker.locale = .autoupdatingCurrent
-
-        if #available(iOS 13.4, *) {
-            datePicker.preferredDatePickerStyle = .wheels
-        }
     }
 
     private func setUserInteractionState() {
@@ -164,26 +152,48 @@ class ViewController: UIViewController {
         alert.addAction(action)
         present(alert, animated: true)
     }
+}
 
-    @objc
-    private func showDatePickerAlert() {
-        let alert = UIAlertController(title: "\n\n\n\n\n\n\n\n", message: nil, preferredStyle: .actionSheet)
-        setupDatePicker()
-
-        alert.view.addSubview(datePicker)
-        datePicker.centerXAnchor.constraint(equalTo: alert.view.centerXAnchor).isActive = true
-
-        alert.addAction(UIAlertAction(title: "Выбрать", style: .default) { _ in
-            self.note.date = self.datePicker.date
-            self.noteDateLabel.text = self.dateLabelText
-        })
-
-        present(alert, animated: true)
+extension NoteViewController {
+    private func isEmpty() -> Bool {
+        return note.isEmpty
     }
 }
 
-extension ViewController {
-    private func isEmpty() -> Bool {
-        return note.isEmpty
+extension UITextView {
+    func adjustableKeyboard() {
+        let notificationCenter = NotificationCenter.default
+
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(adjustForKeyboard),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(adjustForKeyboard),
+            name: UIResponder.keyboardDidChangeFrameNotification,
+            object: nil
+        )
+    }
+
+    @objc private func adjustForKeyboard(notification: Notification) {
+        guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
+            return
+        }
+
+        let keyboardScreenEndFrame = keyboardValue.cgRectValue
+        let keyboardViewEndFrame = convert(keyboardScreenEndFrame, from: window)
+
+        if notification.name == UIResponder.keyboardWillHideNotification {
+            contentInset = .zero
+        } else {
+            contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
+        }
+
+        scrollIndicatorInsets = contentInset
+        scrollRangeToVisible(selectedRange)
     }
 }

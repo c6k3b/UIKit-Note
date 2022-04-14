@@ -7,10 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		000920AC28075898004D1862 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000920AB28075898004D1862 /* ListViewController.swift */; };
+		000920B128075D61004D1862 /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000920B028075D61004D1862 /* NoteView.swift */; };
+		000920B52807E07E004D1862 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000920B42807E07E004D1862 /* SampleData.swift */; };
+		000920B82807E63D004D1862 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000920B72807E63D004D1862 /* Protocols.swift */; };
 		003C66C027FD7EAA00537C70 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003C66BF27FD7EAA00537C70 /* Note.swift */; };
 		00BE4B7C27ECE81C00664855 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00BE4B7B27ECE81C00664855 /* AppDelegate.swift */; };
 		00BE4B7E27ECE81C00664855 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00BE4B7D27ECE81C00664855 /* SceneDelegate.swift */; };
-		00BE4B8027ECE81C00664855 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00BE4B7F27ECE81C00664855 /* ViewController.swift */; };
+		00BE4B8027ECE81C00664855 /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00BE4B7F27ECE81C00664855 /* NoteViewController.swift */; };
 		00BE4B8527ECE82000664855 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00BE4B8427ECE82000664855 /* Assets.xcassets */; };
 		00BE4B8827ECE82000664855 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00BE4B8627ECE82000664855 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -33,11 +37,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		000920AB28075898004D1862 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
+		000920B028075D61004D1862 /* NoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
+		000920B42807E07E004D1862 /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
+		000920B72807E63D004D1862 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		003C66BF27FD7EAA00537C70 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		00BE4B7827ECE81C00664855 /* Note.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Note.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		00BE4B7B27ECE81C00664855 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		00BE4B7D27ECE81C00664855 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		00BE4B7F27ECE81C00664855 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		00BE4B7F27ECE81C00664855 /* NoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewController.swift; sourceTree = "<group>"; };
 		00BE4B8427ECE82000664855 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		00BE4B8727ECE82000664855 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		00BE4B8927ECE82000664855 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -70,6 +78,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		000920AD28075C88004D1862 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				003C66BF27FD7EAA00537C70 /* Note.swift */,
+				000920B42807E07E004D1862 /* SampleData.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		000920AE28075D03004D1862 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				00BE4B8627ECE82000664855 /* LaunchScreen.storyboard */,
+				000920B028075D61004D1862 /* NoteView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		000920AF28075D1B004D1862 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				000920AB28075898004D1862 /* ListViewController.swift */,
+				00BE4B7F27ECE81C00664855 /* NoteViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		000920B62807E623004D1862 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				000920B72807E63D004D1862 /* Protocols.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		00BE4B6F27ECE81C00664855 = {
 			isa = PBXGroup;
 			children = (
@@ -93,9 +136,10 @@
 			children = (
 				00BE4B7B27ECE81C00664855 /* AppDelegate.swift */,
 				00BE4B7D27ECE81C00664855 /* SceneDelegate.swift */,
-				00BE4B8627ECE82000664855 /* LaunchScreen.storyboard */,
-				00BE4B7F27ECE81C00664855 /* ViewController.swift */,
-				003C66BF27FD7EAA00537C70 /* Note.swift */,
+				000920AD28075C88004D1862 /* Model */,
+				000920AE28075D03004D1862 /* View */,
+				000920AF28075D1B004D1862 /* Controller */,
+				000920B62807E623004D1862 /* Utilities */,
 				00BE4B8427ECE82000664855 /* Assets.xcassets */,
 				00BE4B8927ECE82000664855 /* Info.plist */,
 			);
@@ -253,10 +297,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00BE4B8027ECE81C00664855 /* ViewController.swift in Sources */,
+				00BE4B8027ECE81C00664855 /* NoteViewController.swift in Sources */,
+				000920B52807E07E004D1862 /* SampleData.swift in Sources */,
 				00BE4B7C27ECE81C00664855 /* AppDelegate.swift in Sources */,
+				000920B128075D61004D1862 /* NoteView.swift in Sources */,
 				00BE4B7E27ECE81C00664855 /* SceneDelegate.swift in Sources */,
+				000920AC28075898004D1862 /* ListViewController.swift in Sources */,
 				003C66C027FD7EAA00537C70 /* Note.swift in Sources */,
+				000920B82807E63D004D1862 /* Protocols.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
