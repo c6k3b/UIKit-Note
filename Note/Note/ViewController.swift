@@ -173,11 +173,12 @@ class ViewController: UIViewController {
         alert.view.addSubview(datePicker)
         datePicker.centerXAnchor.constraint(equalTo: alert.view.centerXAnchor).isActive = true
 
-        alert.addAction(UIAlertAction(title: "Выбрать", style: .default) { _ in
+        let action = UIAlertAction(title: "Выбрать", style: .default) { _ in
             self.note.date = self.datePicker.date
             self.noteDateLabel.text = self.dateLabelText
-        })
+        }
 
+        alert.addAction(action)
         present(alert, animated: true)
     }
 }
