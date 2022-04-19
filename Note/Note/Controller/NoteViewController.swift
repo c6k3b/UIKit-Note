@@ -1,20 +1,23 @@
 import UIKit
 
 class NoteViewController: UIViewController {
-    var note: Note!
-    var noteDelegate: NoteDelegate!
-    private var isEditingMode = false
+    private var note: Note
 
     private let navigationRightBarButton = UIBarButtonItem()
     private let noteHeaderTextField = UITextField()
     private let noteDateLabel = UILabel()
     private let noteBodyTextView = UITextView()
-    private let datePicker = UIDatePicker()
 
-    private var dateLabelText: String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.MM.yyyy EEEE HH:mm"
-        return dateFormatter.string(from: note.date)
+    private var isEditingMode = false
+    private let didFinishNote: (Note) -> Void = { _ in }
+
+    init(note: Note) {
+        self.note = note
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func viewDidLoad() {
@@ -22,56 +25,34 @@ class NoteViewController: UIViewController {
 
         view.backgroundColor = .systemBackground
 
-        setupNavigationLeftBarButton()
-        setupNavigationRightBarButton()
-        setupNoteDateLabel()
-        setupNoteHeaderTextField()
-        setupNoteBodyTextView()
+        setupNavigation()
+        setupDateLabel()
+        setupHeaderTextField()
+        setupBodyTextView()
         didRightBarButtonTapped(navigationRightBarButton)
+    }
+
+    private func setupNavigation() {
+        if let topItem = self.navigationController?.navigationBar.topItem {
+           topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        }
+
+        navigationRightBarButton.target = self
+        navigationRightBarButton.action = #selector(didRightBarButtonTapped(_:))
+        navigationItem.rightBarButtonItem = navigationRightBarButton
     }
 
     override func willMove(toParent parent: UIViewController?) {
         super.willMove(toParent: parent)
 
         if parent == nil {   // back button was pressed
-            noteDelegate?.passNote(note)
+            didFinishNote(note)
         }
     }
 
-    @objc private func didRightBarButtonTapped(_ button: UIBarButtonItem) {
-        isEditingMode = !isEditingMode
-        setUserInteractionState()
-
-        if isEditingMode {
-            navigationRightBarButton.title = "Готово"
-            noteBodyTextView.becomeFirstResponder()
-        } else {
-            navigationRightBarButton.title = "Изменить"
-            saveNote()
-
-            if isEmpty() {
-                showAlert()
-                didRightBarButtonTapped(navigationRightBarButton)
-            }
-            noteBodyTextView.resignFirstResponder()
-        }
-    }
-
-    private func setupNavigationLeftBarButton() {
-        if let topItem = self.navigationController?.navigationBar.topItem {
-           topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        }
-    }
-
-    private func setupNavigationRightBarButton() {
-        navigationRightBarButton.target = self
-        navigationRightBarButton.action = #selector(didRightBarButtonTapped(_:))
-        navigationItem.rightBarButtonItem = navigationRightBarButton
-    }
-
-    private func setupNoteDateLabel() {
+    private func setupDateLabel() {
         noteDateLabel.font = .systemFont(ofSize: 14)
-        noteDateLabel.text = dateLabelText
+        noteDateLabel.text = note.date.getFormattedDate(format: "dd.MM.yyyy EEEE HH:mm")
         noteDateLabel.textColor = .systemGray
         noteDateLabel.textAlignment = .center
 
@@ -92,7 +73,7 @@ class NoteViewController: UIViewController {
         ).isActive = true
     }
 
-    private func setupNoteHeaderTextField() {
+    private func setupHeaderTextField() {
         noteHeaderTextField.placeholder = "Введите название"
         noteHeaderTextField.font = .systemFont(ofSize: 24, weight: .bold)
 
@@ -115,7 +96,7 @@ class NoteViewController: UIViewController {
         ).isActive = true
     }
 
-    private func setupNoteBodyTextView() {
+    private func setupBodyTextView() {
         noteBodyTextView.font = .systemFont(ofSize: 16)
         noteBodyTextView.text = note.body
         noteBodyTextView.adjustableKeyboard()
@@ -150,7 +131,7 @@ class NoteViewController: UIViewController {
     private func saveNote() {
         note.header = noteHeaderTextField.text
         note.body = noteBodyTextView.text
-        note.date = datePicker.date
+        note.date = note.date
     }
 
     private func showAlert() {
@@ -167,48 +148,29 @@ class NoteViewController: UIViewController {
         alert.addAction(action)
         present(alert, animated: true)
     }
+
+    @objc private func didRightBarButtonTapped(_ button: UIBarButtonItem) {
+        isEditingMode = !isEditingMode
+        setUserInteractionState()
+
+        if isEditingMode {
+            navigationRightBarButton.title = "Готово"
+            noteBodyTextView.becomeFirstResponder()
+        } else {
+            navigationRightBarButton.title = "Изменить"
+            saveNote()
+
+            if isEmpty() {
+                showAlert()
+                didRightBarButtonTapped(navigationRightBarButton)
+            }
+            noteBodyTextView.resignFirstResponder()
+        }
+    }
 }
 
 extension NoteViewController {
     private func isEmpty() -> Bool {
         return note.isEmpty
-    }
-}
-
-extension UITextView {
-    func adjustableKeyboard() {
-        let notificationCenter = NotificationCenter.default
-
-        notificationCenter.addObserver(
-            self,
-            selector: #selector(adjustForKeyboard),
-            name: UIResponder.keyboardWillHideNotification,
-            object: nil
-        )
-
-        notificationCenter.addObserver(
-            self,
-            selector: #selector(adjustForKeyboard),
-            name: UIResponder.keyboardDidChangeFrameNotification,
-            object: nil
-        )
-    }
-
-    @objc private func adjustForKeyboard(notification: Notification) {
-        guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else {
-            return
-        }
-
-        let keyboardScreenEndFrame = keyboardValue.cgRectValue
-        let keyboardViewEndFrame = convert(keyboardScreenEndFrame, from: window)
-
-        if notification.name == UIResponder.keyboardWillHideNotification {
-            contentInset = .zero
-        } else {
-            contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
-        }
-
-        scrollIndicatorInsets = contentInset
-        scrollRangeToVisible(selectedRange)
     }
 }

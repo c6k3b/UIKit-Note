@@ -2,6 +2,7 @@ import UIKit
 
 class ListViewController: UIViewController {
     private var notes = SampleData().notes
+
     private let button = UIButton()
     private let scrollView = UIScrollView()
     private let stackView = UIStackView()
@@ -14,6 +15,7 @@ class ListViewController: UIViewController {
 
         setupScrollView()
         setupStackView()
+        setupNoteViews()
         setupButton()
     }
 
@@ -43,7 +45,6 @@ class ListViewController: UIViewController {
         stackView.spacing = 4
         stackView.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         stackView.isLayoutMarginsRelativeArrangement = true
-        setupNoteView()
 
         scrollView.addSubview(stackView)
 
@@ -62,37 +63,37 @@ class ListViewController: UIViewController {
         ).isActive = true
     }
 
-    private func setupNoteView() {
+    private func setupNoteViews() {
         for note in notes {
-            addNewNoteView(with: note)
+            let noteView = NoteView()
+
+            let noteModel = NoteView.Model(
+                header: note.header ?? "N/A",
+                body: note.body ?? "N/A",
+                date: note.date.getFormattedDate(format: "dd.MM.yyyy")
+            )
+
+            noteView.applyViewModel(noteModel)
+
+            noteView.backgroundColor = .systemBackground
+            noteView.layer.cornerRadius = 14
+            noteView.layer.shadowColor = UIColor.systemGray.cgColor
+            noteView.layer.shadowOffset = CGSize(width: 3, height: 3)
+            noteView.layer.shadowOpacity = 0.1
+            noteView.layer.shadowRadius = 4.0
+
+            stackView.addArrangedSubview(noteView)
+
+            noteView.translatesAutoresizingMaskIntoConstraints = false
+            noteView.heightAnchor.constraint(equalToConstant: 90).isActive = true
+
+            noteView.viewDidTapped = { _ in
+                self.navigationController?.pushViewController(
+                    NoteViewController(note: note),
+                    animated: true
+                )
+            }
         }
-    }
-
-    private func addNewNoteView(with note: Note) -> NoteView {
-        let noteView = NoteView()
-        noteView.note = note
-        noteView.showingDelegate = self
-
-        noteView.backgroundColor = .systemBackground
-        noteView.layer.cornerRadius = 14
-        noteView.layer.shadowColor = UIColor.systemGray.cgColor
-        noteView.layer.shadowOffset = CGSize(width: 3, height: 3)
-        noteView.layer.shadowOpacity = 0.1
-        noteView.layer.shadowRadius = 4.0
-
-        let gesture = UITapGestureRecognizer(
-            target: noteView,
-            action: #selector(NoteView.editNote)
-        )
-
-        noteView.addGestureRecognizer(gesture)
-
-        stackView.addArrangedSubview(noteView)
-
-        noteView.translatesAutoresizingMaskIntoConstraints = false
-        noteView.heightAnchor.constraint(equalToConstant: 90).isActive = true
-
-        return noteView
     }
 
     private func setupButton() {
@@ -124,32 +125,9 @@ class ListViewController: UIViewController {
     }
 
     @objc private func didButtonTapped() {
-        let note = Note()
-        notes.append(note)
-        let noteView = addNewNoteView(with: note)
-
-        showNoteVC(for: noteView)
-    }
-}
-
-extension ListViewController: NoteDelegate {
-    func passNote(_ note: Note) {
-        for noteIndex in 0..<notes.count {
-            let aNote = notes[noteIndex]
-            if aNote.id == note.id {
-                notes[noteIndex] = note
-                return
-            }
-        }
-    }
-}
-
-extension ListViewController: ShowingNoteDelegate {
-    func showNoteVC(for noteView: NoteView) {
-        let noteVC = NoteViewController()
-        noteVC.note = noteView.note
-        noteVC.noteDelegate = self
-
-        navigationController?.pushViewController(noteVC, animated: true)
+        navigationController?.pushViewController(
+            NoteViewController(note: Note()),
+            animated: true
+        )
     }
 }

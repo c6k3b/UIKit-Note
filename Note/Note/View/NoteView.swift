@@ -1,29 +1,34 @@
 import UIKit
 
-@objc class NoteView: UIView {
-    var note: Note!
-    var showingDelegate: ShowingNoteDelegate!
-    private var noteHeaderLabel = UILabel()
-    private var noteBodyLabel = UILabel()
-    private var noteDateLabel = UILabel()
+class NoteView: UIView {
+    private let noteHeaderLabel = UILabel()
+    private let noteBodyLabel = UILabel()
+    private let noteDateLabel = UILabel()
 
-    private var dateLabelText: String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd.MM.yyyy"
-        return dateFormatter.string(from: note.date)
-    }
+    var viewDidTapped: (Note?) -> Void = { _ in }
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        setupHeader()
-        setupBody()
-        setupDate()
+        setupHeaderLabel()
+        setupBodyLabel()
+        setupDateLabel()
     }
 
-    private func setupHeader() {
-        noteHeaderLabel.text = note.header
-        noteHeaderLabel.font = .systemFont(ofSize: 16, weight: .regular)
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = touches.first else { return }
+        if touch.view == self {
+            viewDidTapped(nil)
+        }
+    }
 
+    func applyViewModel(_ viewModel: NoteView.Model) {
+        noteHeaderLabel.text = viewModel.header
+        noteBodyLabel.text = viewModel.body
+        noteDateLabel.text = viewModel.date
+    }
+
+    private func setupHeaderLabel() {
+        noteHeaderLabel.font = .systemFont(ofSize: 16, weight: .regular)
         addSubview(noteHeaderLabel)
 
         noteHeaderLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -41,11 +46,9 @@ import UIKit
         ).isActive = true
     }
 
-    private func setupBody() {
-        noteBodyLabel.text = note.body
+    private func setupBodyLabel() {
         noteBodyLabel.font = .systemFont(ofSize: 10, weight: .regular)
         noteBodyLabel.textColor = .systemGray
-
         addSubview(noteBodyLabel)
 
         noteBodyLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -63,11 +66,9 @@ import UIKit
         ).isActive = true
     }
 
-    private func setupDate() {
-        noteDateLabel.text = dateLabelText
+    private func setupDateLabel() {
         noteDateLabel.font = .systemFont(ofSize: 10, weight: .regular)
         noteDateLabel.textColor = .systemGray
-
         addSubview(noteDateLabel)
 
         noteDateLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -84,8 +85,12 @@ import UIKit
             constant: -16
         ).isActive = true
     }
+}
 
-    @objc func editNote() {
-        showingDelegate.showNoteVC(for: self)
+extension NoteView {
+    struct Model {
+        let header: String
+        let body: String
+        let date: String
     }
 }
