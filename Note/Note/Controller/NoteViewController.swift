@@ -1,15 +1,16 @@
 import UIKit
 
 class NoteViewController: UIViewController {
-    private var note: Note
-
     private let navigationRightBarButton = UIBarButtonItem()
     private let noteHeaderTextField = UITextField()
     private let noteDateLabel = UILabel()
     private let noteBodyTextView = UITextView()
 
+    private var note: Note
     private var isEditingMode = false
-    private let didFinishNote: (Note) -> Void = { _ in }
+
+    weak var newNoteDelegate: NewNoteDelegate?
+    weak var noteDelegate: NoteDelegate?
 
     init(note: Note) {
         self.note = note
@@ -44,9 +45,9 @@ class NoteViewController: UIViewController {
 
     override func willMove(toParent parent: UIViewController?) {
         super.willMove(toParent: parent)
-
         if parent == nil {   // back button was pressed
-            didFinishNote(note)
+            newNoteDelegate?.createNewNoteView(from: note)
+            noteDelegate?.changeNoteModel(with: note)
         }
     }
 

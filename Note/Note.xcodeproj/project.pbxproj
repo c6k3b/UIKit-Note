@@ -17,7 +17,7 @@
 		00BE4B8027ECE81C00664855 /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00BE4B7F27ECE81C00664855 /* NoteViewController.swift */; };
 		00BE4B8527ECE82000664855 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00BE4B8427ECE82000664855 /* Assets.xcassets */; };
 		00BE4B8827ECE82000664855 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00BE4B8627ECE82000664855 /* LaunchScreen.storyboard */; };
-		00FC3898280EC0AD00E947D9 /* Delegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FC3897280EC0AD00E947D9 /* Delegates.swift */; };
+		00FC3898280EC0AD00E947D9 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FC3897280EC0AD00E947D9 /* Protocols.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,7 +52,7 @@
 		00BE4B8927ECE82000664855 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00BE4B8E27ECE82100664855 /* NoteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NoteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00BE4B9827ECE82100664855 /* NoteUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NoteUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		00FC3897280EC0AD00E947D9 /* Delegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delegates.swift; sourceTree = "<group>"; };
+		00FC3897280EC0AD00E947D9 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,7 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				00AE68B6280D5C6E00D65C7F /* Extensions.swift */,
-				00FC3897280EC0AD00E947D9 /* Delegates.swift */,
+				00FC3897280EC0AD00E947D9 /* Protocols.swift */,
 				000920B42807E07E004D1862 /* SampleData.swift */,
 			);
 			path = Utilities;
@@ -307,7 +307,7 @@
 				000920B128075D61004D1862 /* NoteView.swift in Sources */,
 				00BE4B7E27ECE81C00664855 /* SceneDelegate.swift in Sources */,
 				000920AC28075898004D1862 /* ListViewController.swift in Sources */,
-				00FC3898280EC0AD00E947D9 /* Delegates.swift in Sources */,
+				00FC3898280EC0AD00E947D9 /* Protocols.swift in Sources */,
 				003C66C027FD7EAA00537C70 /* Note.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

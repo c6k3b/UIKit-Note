@@ -65,34 +65,38 @@ class ListViewController: UIViewController {
 
     private func setupNoteViews() {
         for note in notes {
-            let noteView = NoteView()
+            addNewNoteView(with: note)
+        }
+    }
 
-            let noteModel = NoteView.Model(
-                header: note.header ?? "N/A",
-                body: note.body ?? "N/A",
-                date: note.date.getFormattedDate(format: "dd.MM.yyyy")
-            )
+    private func addNewNoteView(with note: Note) {
+        let noteView = NoteView()
 
-            noteView.applyViewModel(noteModel)
+        let noteModel = NoteView.Model(
+            header: note.header ?? "N/A",
+            body: note.body ?? "N/A",
+            date: note.date.getFormattedDate(format: "dd.MM.yyyy")
+        )
 
-            noteView.backgroundColor = .systemBackground
-            noteView.layer.cornerRadius = 14
-            noteView.layer.shadowColor = UIColor.systemGray.cgColor
-            noteView.layer.shadowOffset = CGSize(width: 3, height: 3)
-            noteView.layer.shadowOpacity = 0.1
-            noteView.layer.shadowRadius = 4.0
+        noteView.applyViewModel(noteModel)
 
-            stackView.addArrangedSubview(noteView)
+        noteView.backgroundColor = .systemBackground
+        noteView.layer.cornerRadius = 14
+        noteView.layer.shadowColor = UIColor.systemGray.cgColor
+        noteView.layer.shadowOffset = CGSize(width: 3, height: 3)
+        noteView.layer.shadowOpacity = 0.1
+        noteView.layer.shadowRadius = 4.0
 
-            noteView.translatesAutoresizingMaskIntoConstraints = false
-            noteView.heightAnchor.constraint(equalToConstant: 90).isActive = true
+        stackView.addArrangedSubview(noteView)
 
-            noteView.viewDidTapped = { _ in
-                self.navigationController?.pushViewController(
-                    NoteViewController(note: note),
-                    animated: true
-                )
-            }
+        noteView.translatesAutoresizingMaskIntoConstraints = false
+        noteView.heightAnchor.constraint(equalToConstant: 90).isActive = true
+
+        noteView.viewDidTapped = { _ in
+            let noteVC = NoteViewController(note: note)
+            noteVC.noteDelegate = self
+
+            self.navigationController?.pushViewController(noteVC, animated: true)
         }
     }
 
@@ -125,9 +129,21 @@ class ListViewController: UIViewController {
     }
 
     @objc private func didButtonTapped() {
-        navigationController?.pushViewController(
-            NoteViewController(note: Note()),
-            animated: true
-        )
+        let noteVC = NoteViewController(note: Note())
+        noteVC.newNoteDelegate = self
+
+        navigationController?.pushViewController(noteVC, animated: true)
+    }
+}
+
+extension ListViewController: NewNoteDelegate {
+    func createNewNoteView(from note: Note) {
+        addNewNoteView(with: note)
+    }
+}
+
+extension ListViewController: NoteDelegate {
+    func changeNoteModel(with note: Note) {
+        print("noteDelegate")
     }
 }
