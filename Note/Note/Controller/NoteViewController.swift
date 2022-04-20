@@ -9,7 +9,6 @@ class NoteViewController: UIViewController {
     private var note: Note
     private var isEditingMode = false
 
-    weak var newNoteDelegate: NewNoteDelegate?
     weak var noteDelegate: NoteDelegate?
 
     init(note: Note) {
@@ -34,8 +33,8 @@ class NoteViewController: UIViewController {
     }
 
     private func setupNavigation() {
-        if let topItem = self.navigationController?.navigationBar.topItem {
-           topItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        if #available(iOS 14.0, *) {
+            navigationController?.navigationBar.topItem?.backButtonDisplayMode = .minimal
         }
 
         navigationRightBarButton.target = self
@@ -46,8 +45,7 @@ class NoteViewController: UIViewController {
     override func willMove(toParent parent: UIViewController?) {
         super.willMove(toParent: parent)
         if parent == nil {   // back button was pressed
-            newNoteDelegate?.createNewNoteView(from: note)
-            noteDelegate?.changeNoteModel(with: note)
+            noteDelegate?.passDataToView(from: note)
         }
     }
 
@@ -156,9 +154,11 @@ class NoteViewController: UIViewController {
 
         if isEditingMode {
             navigationRightBarButton.title = "Готово"
+            navigationItem.hidesBackButton = true
             noteBodyTextView.becomeFirstResponder()
         } else {
             navigationRightBarButton.title = "Изменить"
+            navigationItem.hidesBackButton = false
             saveNote()
 
             if isEmpty() {

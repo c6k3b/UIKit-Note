@@ -97,6 +97,7 @@ class ListViewController: UIViewController {
             noteVC.noteDelegate = self
 
             self.navigationController?.pushViewController(noteVC, animated: true)
+            noteView.removeFromSuperview()
         }
     }
 
@@ -130,20 +131,14 @@ class ListViewController: UIViewController {
 
     @objc private func didButtonTapped() {
         let noteVC = NoteViewController(note: Note())
-        noteVC.newNoteDelegate = self
+        noteVC.noteDelegate = self
 
         navigationController?.pushViewController(noteVC, animated: true)
     }
 }
 
-extension ListViewController: NewNoteDelegate {
-    func createNewNoteView(from note: Note) {
-        addNewNoteView(with: note)
-    }
-}
-
 extension ListViewController: NoteDelegate {
-    func changeNoteModel(with note: Note) {
-        print("noteDelegate")
+    func passDataToView(from note: Note) {
+        addNewNoteView(with: note)
     }
 }
