@@ -5,20 +5,20 @@ class NoteView: UIView {
     private let noteBodyLabel = UILabel()
     private let noteDateLabel = UILabel()
 
-    var viewDidTapped: (Note?) -> Void = { _ in }
+    init(model: Model) {
+        super.init(frame: .zero)
+        self.applyViewModel(model)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func layoutSubviews() {
         super.layoutSubviews()
         setupHeaderLabel()
         setupBodyLabel()
         setupDateLabel()
-    }
-
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first else { return }
-        if touch.view == self {
-            viewDidTapped(nil)
-        }
     }
 
     func applyViewModel(_ viewModel: NoteView.Model) {

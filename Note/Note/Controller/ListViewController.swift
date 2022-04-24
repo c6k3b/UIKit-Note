@@ -3,142 +3,93 @@ import UIKit
 class ListViewController: UIViewController {
     private var notes = SampleData().notes
 
-    private let button = UIButton()
-    private let scrollView = UIScrollView()
-    private let stackView = UIStackView()
+    private let button = FloatingButton()
+    private let table = UITableView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        navigationItem.title = "Заметки"
-        view.backgroundColor = .systemBackground
-
-        setupScrollView()
-        setupStackView()
-        setupNoteViews()
+        setAppearance()
+        addSubviews()
+        registerCell()
+        setupDelegates()
         setupButton()
     }
 
-    private func setupScrollView() {
-        scrollView.showsVerticalScrollIndicator = false
-        view.addSubview(scrollView)
-
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.leadingAnchor.constraint(
-            equalTo: view.leadingAnchor
-        ).isActive = true
-        scrollView.trailingAnchor.constraint(
-            equalTo: view.trailingAnchor
-        ).isActive = true
-        scrollView.topAnchor.constraint(
-            equalTo: view.topAnchor
-        ).isActive = true
-        scrollView.bottomAnchor.constraint(
-            equalTo: view.bottomAnchor
-        ).isActive = true
+    private func setAppearance() {
+        navigationItem.title = "Заметки"
+        view.backgroundColor = .systemBackground
+        table.showsVerticalScrollIndicator = false
+        table.separatorStyle = .none
     }
 
-    private func setupStackView() {
-        stackView.axis = .vertical
-        stackView.alignment = .fill
-        stackView.distribution = .equalSpacing
-        stackView.spacing = 4
-        stackView.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
-        stackView.isLayoutMarginsRelativeArrangement = true
+    private func addSubviews() {
+        view.addSubview(table)
 
-        scrollView.addSubview(stackView)
-
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.leadingAnchor.constraint(
-            equalTo: scrollView.safeAreaLayoutGuide.leadingAnchor
-        ).isActive = true
-        stackView.trailingAnchor.constraint(
-            equalTo: scrollView.safeAreaLayoutGuide.trailingAnchor
-        ).isActive = true
-        stackView.topAnchor.constraint(
-            equalTo: scrollView.topAnchor
-        ).isActive = true
-        stackView.bottomAnchor.constraint(
-            equalTo: scrollView.bottomAnchor
-        ).isActive = true
+        table.translatesAutoresizingMaskIntoConstraints = false
+        table.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
+        table.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
+        table.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        table.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
 
-    private func setupNoteViews() {
-        for note in notes {
-            addNewNoteView(with: note)
-        }
+    private func registerCell() {
+        table.register(NoteCell.self, forCellReuseIdentifier: NoteCell.identifier)
     }
 
-    private func addNewNoteView(with note: Note) {
-        let noteView = NoteView()
-
-        let noteModel = NoteView.Model(
-            header: note.header ?? "N/A",
-            body: note.body ?? "N/A",
-            date: note.date.getFormattedDate(format: "dd.MM.yyyy")
-        )
-
-        noteView.applyViewModel(noteModel)
-
-        noteView.backgroundColor = .systemBackground
-        noteView.layer.cornerRadius = 14
-        noteView.layer.shadowColor = UIColor.systemGray.cgColor
-        noteView.layer.shadowOffset = CGSize(width: 3, height: 3)
-        noteView.layer.shadowOpacity = 0.1
-        noteView.layer.shadowRadius = 4.0
-
-        stackView.addArrangedSubview(noteView)
-
-        noteView.translatesAutoresizingMaskIntoConstraints = false
-        noteView.heightAnchor.constraint(equalToConstant: 90).isActive = true
-
-        noteView.viewDidTapped = { _ in
-            let noteVC = NoteViewController(note: note)
-            noteVC.noteDelegate = self
-
-            self.navigationController?.pushViewController(noteVC, animated: true)
-            noteView.removeFromSuperview()
-        }
+    private func setupDelegates() {
+        table.dataSource = self
+        table.delegate = self
     }
 
     private func setupButton() {
-        button.layer.cornerRadius = 25
-        button.clipsToBounds = true
-        button.contentVerticalAlignment = .bottom
-        button.titleLabel?.font = .systemFont(ofSize: 36)
-        button.setTitle("+", for: .normal)
-        button.backgroundColor = .systemBlue
         button.addTarget(self, action: #selector(didButtonTapped), for: .touchUpInside)
-
         view.addSubview(button)
-
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.trailingAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-            constant: -20
-        ).isActive = true
-        button.bottomAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.bottomAnchor,
-            constant: -20
-        ).isActive = true
-        button.heightAnchor.constraint(
-            equalToConstant: 50
-        ).isActive = true
-        button.widthAnchor.constraint(
-            equalToConstant: 50
-        ).isActive = true
     }
 
     @objc private func didButtonTapped() {
         let noteVC = NoteViewController(note: Note())
-        noteVC.noteDelegate = self
-
         navigationController?.pushViewController(noteVC, animated: true)
     }
 }
 
-extension ListViewController: NoteDelegate {
-    func passDataToView(from note: Note) {
-        addNewNoteView(with: note)
+// MARK: - Datasource
+extension ListViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        notes.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: NoteCell.identifier,
+            for: indexPath
+        ) as? NoteCell else {
+            return UITableViewCell()
+        }
+        cell.configure(with: notes[indexPath.row])
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("cell \(indexPath.row) tapped")
+        let noteVC = NoteViewController(note: notes[indexPath.row])
+        navigationController?.pushViewController(noteVC, animated: true)
+    }
+}
+
+// MARK: - Delegate
+extension ListViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 90
+    }
+
+    func tableView(
+        _ tableView: UITableView,
+        commit editingStyle: UITableViewCell.EditingStyle,
+        forRowAt indexPath: IndexPath
+    ) {
+        if editingStyle == .delete {
+            notes.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
     }
 }
