@@ -19,7 +19,7 @@ class NoteCell: UITableViewCell, ConfigurableCell {
         selectionStyle = .none
         layer.cornerRadius = 14
         layer.shadowColor = UIColor.systemGray.cgColor
-        layer.shadowOffset = CGSize(width: 3, height: 3)
+        layer.shadowOffset = CGSize(width: 0, height: 3)
         layer.shadowOpacity = 0.15
         layer.shadowRadius = 4.0
     }

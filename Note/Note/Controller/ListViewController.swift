@@ -48,6 +48,7 @@ class ListViewController: UIViewController {
 
     @objc private func didButtonTapped() {
         let noteVC = NoteViewController(note: Note())
+        noteVC.noteDelegate = self
         navigationController?.pushViewController(noteVC, animated: true)
     }
 }
@@ -70,9 +71,10 @@ extension ListViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("cell \(indexPath.row) tapped")
         let noteVC = NoteViewController(note: notes[indexPath.row])
+        noteVC.noteDelegate = self
         navigationController?.pushViewController(noteVC, animated: true)
+        notes.remove(at: indexPath.row)
     }
 }
 
@@ -93,3 +95,10 @@ extension ListViewController: UITableViewDelegate {
         }
     }
 }
+
+ extension ListViewController: NoteDelegate {
+    func passDataToView(from note: Note) {
+        notes.append(note)
+        table.reloadData()
+    }
+ }
