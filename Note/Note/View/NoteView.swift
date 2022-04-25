@@ -5,20 +5,16 @@ class NoteView: UIView {
     private let noteBodyLabel = UILabel()
     private let noteDateLabel = UILabel()
 
-    init(model: Model) {
-        super.init(frame: .zero)
+    init(model: Model, frame: CGRect = CGRect(origin: .zero, size: .zero)) {
+        super.init(frame: frame)
         self.applyViewModel(model)
+        setupHeaderLabel()
+        setupBodyLabel()
+        setupDateLabel()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        setupHeaderLabel()
-        setupBodyLabel()
-        setupDateLabel()
     }
 
     private func setupHeaderLabel() {
