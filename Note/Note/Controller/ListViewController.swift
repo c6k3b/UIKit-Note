@@ -95,12 +95,14 @@ extension ListViewController: UITableViewDelegate {
     }
 }
 
- extension ListViewController: NoteDelegate {
-    func passData(from note: Note) {
-        if let index = notes.firstIndex(where: { $0 === note }) {
-            notes[index] = note
-        } else {
-            notes.append(note)
+extension ListViewController: NoteDelegate {
+    func passData(from note: Note, isChanged: Bool) {
+        if isChanged {
+            if let index = notes.firstIndex(where: { $0 === note }) {
+                notes[index] = note
+            } else {
+                notes.append(note)
+            }
         }
         table.reloadData()
     }

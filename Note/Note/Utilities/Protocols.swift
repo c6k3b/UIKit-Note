@@ -1,7 +1,8 @@
 import Foundation
 
 protocol NoteDelegate: AnyObject {
-    func passData(from note: Note)
+//    private var isChanged: Bool { get set }
+    func passData(from note: Note, isChanged: Bool)
 }
 
 protocol ConfigurableCell {

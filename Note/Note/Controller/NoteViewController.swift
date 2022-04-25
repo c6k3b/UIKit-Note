@@ -9,6 +9,7 @@ class NoteViewController: UIViewController {
 
     private var note: Note
     private var isEditingMode = false
+    private var isChanged = false
 
     weak var noteDelegate: NoteDelegate?
 
@@ -123,9 +124,14 @@ class NoteViewController: UIViewController {
     }
 
     private func saveNote() {
-        note.header = noteHeaderTextField.text
-        note.body = noteBodyTextView.text
-        note.date = note.date
+        if noteHeaderTextField.text != note.header || noteBodyTextView.text != note.body {
+            note.header = noteHeaderTextField.text
+            note.body = noteBodyTextView.text
+            note.date = Date()
+
+            setupDateLabel()
+            isChanged.toggle()
+        }
     }
 
     private func showAlert() {
@@ -144,7 +150,7 @@ class NoteViewController: UIViewController {
     }
 
     @objc private func didLeftBarButtonTapped() {
-        noteDelegate?.passData(from: note)
+        noteDelegate?.passData(from: note, isChanged: isChanged)
         navigationController?.popViewController(animated: true)
     }
 
