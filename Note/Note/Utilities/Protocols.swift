@@ -1,7 +1,7 @@
 import Foundation
 
 protocol NoteDelegate: AnyObject {
-    func passDataToView(from note: Note)
+    func passData(from note: Note)
 }
 
 protocol ConfigurableCell {

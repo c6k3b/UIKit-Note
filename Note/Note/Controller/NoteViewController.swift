@@ -45,7 +45,7 @@ class NoteViewController: UIViewController {
     override func willMove(toParent parent: UIViewController?) {
         super.willMove(toParent: parent)
         if parent == nil {   // back button was pressed
-            noteDelegate?.passDataToView(from: note)
+            noteDelegate?.passData(from: note)
             dump(note)
         }
     }

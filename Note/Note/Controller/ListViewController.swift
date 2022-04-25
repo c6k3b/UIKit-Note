@@ -74,7 +74,6 @@ extension ListViewController: UITableViewDataSource {
         let noteVC = NoteViewController(note: notes[indexPath.row])
         noteVC.noteDelegate = self
         navigationController?.pushViewController(noteVC, animated: true)
-        notes.remove(at: indexPath.row)
     }
 }
 
@@ -97,8 +96,12 @@ extension ListViewController: UITableViewDelegate {
 }
 
  extension ListViewController: NoteDelegate {
-    func passDataToView(from note: Note) {
-        notes.append(note)
+    func passData(from note: Note) {
+        if let index = notes.firstIndex(where: { $0 === note }) {
+            notes[index] = note
+        } else {
+            notes.append(note)
+        }
         table.reloadData()
     }
  }
