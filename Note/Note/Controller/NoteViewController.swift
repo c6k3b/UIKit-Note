@@ -1,6 +1,7 @@
 import UIKit
 
 class NoteViewController: UIViewController {
+    private let navigationLeftBarButton = UIBarButtonItem()
     private let navigationRightBarButton = UIBarButtonItem()
     private let noteHeaderTextField = UITextField()
     private let noteDateLabel = UILabel()
@@ -33,20 +34,14 @@ class NoteViewController: UIViewController {
     }
 
     private func setupNavigation() {
-        if #available(iOS 14.0, *) {
-            navigationController?.navigationBar.topItem?.backButtonDisplayMode = .minimal
-        }
+        navigationLeftBarButton.image = UIImage(named: "backButton")
+        navigationLeftBarButton.target = self
+        navigationLeftBarButton.action = #selector(didLeftBarButtonTapped)
+        navigationItem.leftBarButtonItem = navigationLeftBarButton
 
         navigationRightBarButton.target = self
         navigationRightBarButton.action = #selector(didRightBarButtonTapped(_:))
         navigationItem.rightBarButtonItem = navigationRightBarButton
-    }
-
-    override func willMove(toParent parent: UIViewController?) {
-        super.willMove(toParent: parent)
-        if parent == nil {   // back button was pressed
-            noteDelegate?.passDataToView(from: note)
-        }
     }
 
     private func setupDateLabel() {
@@ -148,17 +143,22 @@ class NoteViewController: UIViewController {
         present(alert, animated: true)
     }
 
+    @objc private func didLeftBarButtonTapped() {
+        noteDelegate?.passDataToView(from: note)
+        navigationController?.popViewController(animated: true)
+    }
+
     @objc private func didRightBarButtonTapped(_ button: UIBarButtonItem) {
         isEditingMode = !isEditingMode
         setUserInteractionState()
 
         if isEditingMode {
             navigationRightBarButton.title = "Готово"
-            navigationItem.hidesBackButton = true
+            navigationLeftBarButton.isEnabled = false
             noteBodyTextView.becomeFirstResponder()
         } else {
             navigationRightBarButton.title = "Изменить"
-            navigationItem.hidesBackButton = false
+            navigationLeftBarButton.isEnabled = true
             saveNote()
 
             if isEmpty() {

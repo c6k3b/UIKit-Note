@@ -7,11 +7,15 @@ class NoteView: UIView {
 
     var viewDidTapped: (Note?) -> Void = { _ in }
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    override init(frame: CGRect = CGRect(origin: .zero, size: .zero)) {
+        super.init(frame: frame)
         setupHeaderLabel()
         setupBodyLabel()
         setupDateLabel()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
