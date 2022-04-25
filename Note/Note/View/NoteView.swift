@@ -12,17 +12,11 @@ class NoteView: UIView {
         setupHeaderLabel()
         setupBodyLabel()
         setupDateLabel()
+        setupGestureRecognizer()
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first else { return }
-        if touch.view == self {
-            viewDidTapped(nil)
-        }
     }
 
     func applyViewModel(_ viewModel: NoteView.Model) {
@@ -88,6 +82,16 @@ class NoteView: UIView {
             equalTo: safeAreaLayoutGuide.trailingAnchor,
             constant: -16
         ).isActive = true
+    }
+
+    private func setupGestureRecognizer() {
+        let recognizer = UITapGestureRecognizer()
+        recognizer.addTarget(self, action: #selector(viewTapped))
+        addGestureRecognizer(recognizer)
+    }
+
+    @objc private func viewTapped() {
+        viewDidTapped(nil)
     }
 }
 
