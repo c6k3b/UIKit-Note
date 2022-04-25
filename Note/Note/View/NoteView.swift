@@ -21,12 +21,6 @@ class NoteView: UIView {
         setupDateLabel()
     }
 
-    func applyViewModel(_ viewModel: NoteView.Model) {
-        noteHeaderLabel.text = viewModel.header
-        noteBodyLabel.text = viewModel.body
-        noteDateLabel.text = viewModel.date
-    }
-
     private func setupHeaderLabel() {
         noteHeaderLabel.font = .systemFont(ofSize: 16, weight: .regular)
         addSubview(noteHeaderLabel)
@@ -84,6 +78,12 @@ class NoteView: UIView {
             equalTo: safeAreaLayoutGuide.trailingAnchor,
             constant: -16
         ).isActive = true
+    }
+
+    func applyViewModel(_ viewModel: NoteView.Model) {
+        noteHeaderLabel.text = viewModel.header
+        noteBodyLabel.text = viewModel.body
+        noteDateLabel.text = viewModel.date
     }
 }
 
