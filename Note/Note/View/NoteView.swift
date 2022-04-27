@@ -7,7 +7,7 @@ class NoteView: UIView {
 
     var viewDidTapped: (Note?) -> Void = { _ in }
 
-    override init(frame: CGRect = CGRect(origin: .zero, size: .zero)) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
         setupHeaderLabel()
         setupBodyLabel()
