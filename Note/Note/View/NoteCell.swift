@@ -10,10 +10,15 @@ class NoteCell: UITableViewCell, ConfigurableCell {
                 header: model.header ?? "N/A",
                 body: model.body ?? "N/A",
                 date: model.date.getFormattedDate(format: "dd.MM.yyyy")
-            ), frame: .zero
+            ), frame: .infinite
         )
         setAppearance()
     }
+
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//        backgroundView?.frame = (backgroundView?.frame.inset(by: UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)))!
+//    }
 
     private func setAppearance() {
         selectionStyle = .none

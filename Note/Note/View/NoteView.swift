@@ -23,15 +23,15 @@ class NoteView: UIView {
 
         noteHeaderLabel.translatesAutoresizingMaskIntoConstraints = false
         noteHeaderLabel.topAnchor.constraint(
-            equalTo: safeAreaLayoutGuide.topAnchor,
+            equalTo: topAnchor,
             constant: 10
         ).isActive = true
         noteHeaderLabel.leadingAnchor.constraint(
-            equalTo: safeAreaLayoutGuide.leadingAnchor,
+            equalTo: leadingAnchor,
             constant: 16
         ).isActive = true
         noteHeaderLabel.trailingAnchor.constraint(
-            equalTo: safeAreaLayoutGuide.trailingAnchor,
+            equalTo: trailingAnchor,
             constant: -16
         ).isActive = true
     }
@@ -47,11 +47,11 @@ class NoteView: UIView {
             constant: 4
         ).isActive = true
         noteBodyLabel.leadingAnchor.constraint(
-            equalTo: safeAreaLayoutGuide.leadingAnchor,
+            equalTo: leadingAnchor,
             constant: 16
         ).isActive = true
         noteBodyLabel.trailingAnchor.constraint(
-            equalTo: safeAreaLayoutGuide.trailingAnchor,
+            equalTo: trailingAnchor,
             constant: -16
         ).isActive = true
     }
@@ -67,11 +67,11 @@ class NoteView: UIView {
             constant: 24
         ).isActive = true
         noteDateLabel.leadingAnchor.constraint(
-            equalTo: safeAreaLayoutGuide.leadingAnchor,
+            equalTo: leadingAnchor,
             constant: 16
         ).isActive = true
         noteDateLabel.trailingAnchor.constraint(
-            equalTo: safeAreaLayoutGuide.trailingAnchor,
+            equalTo: trailingAnchor,
             constant: -16
         ).isActive = true
     }

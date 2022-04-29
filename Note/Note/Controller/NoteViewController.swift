@@ -94,6 +94,7 @@ class NoteViewController: UIViewController {
     private func setupBodyTextView() {
         noteBodyTextView.font = .systemFont(ofSize: 16)
         noteBodyTextView.text = note.body
+        noteBodyTextView.autocorrectionType = .no
         noteBodyTextView.adjustableKeyboard()
 
         view.addSubview(noteBodyTextView)

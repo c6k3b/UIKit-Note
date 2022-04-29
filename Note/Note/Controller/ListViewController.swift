@@ -93,6 +93,10 @@ extension ListViewController: UITableViewDelegate {
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
     }
+
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        UIView()
+    }
 }
 
 extension ListViewController: NoteDelegate {
