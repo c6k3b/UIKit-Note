@@ -10,7 +10,7 @@ class NoteCell: UITableViewCell, ConfigurableCell {
                 header: model.header ?? "N/A",
                 body: model.body ?? "N/A",
                 date: model.date.getFormattedDate(format: "dd.MM.yyyy")
-            )
+            ), frame: .zero
         )
         setAppearance()
     }

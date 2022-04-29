@@ -5,7 +5,7 @@ class NoteView: UIView {
     private let noteBodyLabel = UILabel()
     private let noteDateLabel = UILabel()
 
-    init(model: Model, frame: CGRect = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 0)) {
+    init(model: Model, frame: CGRect) {
         super.init(frame: frame)
         self.applyViewModel(model)
         setupHeaderLabel()
