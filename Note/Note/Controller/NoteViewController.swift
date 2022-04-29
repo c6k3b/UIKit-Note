@@ -152,6 +152,7 @@ class NoteViewController: UIViewController {
         isEditingMode = !isEditingMode
         setUserInteractionState()
 
+<<<<<<< HEAD:Note/Note/Controller/NoteViewController.swift
         if isEditingMode {
             navigationRightBarButton.title = "Готово"
             navigationLeftBarButton.isEnabled = false
@@ -167,6 +168,15 @@ class NoteViewController: UIViewController {
             }
             noteBodyTextView.resignFirstResponder()
         }
+=======
+        let action = UIAlertAction(title: "Выбрать", style: .default) { _ in
+            self.note.date = self.datePicker.date
+            self.noteDateLabel.text = self.dateLabelText
+        }
+
+        alert.addAction(action)
+        present(alert, animated: true)
+>>>>>>> main:Note/Note/ViewController.swift
     }
 }
 
