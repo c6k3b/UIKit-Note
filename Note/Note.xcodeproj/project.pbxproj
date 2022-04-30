@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		000920AC28075898004D1862 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000920AB28075898004D1862 /* ListViewController.swift */; };
-		000920B128075D61004D1862 /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000920B028075D61004D1862 /* NoteView.swift */; };
+		000920B128075D61004D1862 /* NoteCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000920B028075D61004D1862 /* NoteCellView.swift */; };
 		000920B52807E07E004D1862 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000920B42807E07E004D1862 /* SampleData.swift */; };
 		003C66C027FD7EAA00537C70 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003C66BF27FD7EAA00537C70 /* Note.swift */; };
 		00A9203F28112E01007DB762 /* NoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A9203E28112E01007DB762 /* NoteCell.swift */; };
@@ -41,7 +41,7 @@
 
 /* Begin PBXFileReference section */
 		000920AB28075898004D1862 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
-		000920B028075D61004D1862 /* NoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
+		000920B028075D61004D1862 /* NoteCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCellView.swift; sourceTree = "<group>"; };
 		000920B42807E07E004D1862 /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
 		003C66BF27FD7EAA00537C70 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		00A9203E28112E01007DB762 /* NoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCell.swift; sourceTree = "<group>"; };
@@ -96,9 +96,8 @@
 			isa = PBXGroup;
 			children = (
 				00BE4B8627ECE82000664855 /* LaunchScreen.storyboard */,
-				000920B028075D61004D1862 /* NoteView.swift */,
+				000920B028075D61004D1862 /* NoteCellView.swift */,
 				00A920422811367F007DB762 /* FloatingButton.swift */,
-				00A9203E28112E01007DB762 /* NoteCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -108,6 +107,7 @@
 			children = (
 				000920AB28075898004D1862 /* ListViewController.swift */,
 				00BE4B7F27ECE81C00664855 /* NoteViewController.swift */,
+				00A9203E28112E01007DB762 /* NoteCell.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -311,7 +311,7 @@
 				00BE4B7C27ECE81C00664855 /* AppDelegate.swift in Sources */,
 				00A9203F28112E01007DB762 /* NoteCell.swift in Sources */,
 				00AE68B7280D5C6E00D65C7F /* Extensions.swift in Sources */,
-				000920B128075D61004D1862 /* NoteView.swift in Sources */,
+				000920B128075D61004D1862 /* NoteCellView.swift in Sources */,
 				00BE4B7E27ECE81C00664855 /* SceneDelegate.swift in Sources */,
 				000920AC28075898004D1862 /* ListViewController.swift in Sources */,
 				00FC3898280EC0AD00E947D9 /* Protocols.swift in Sources */,

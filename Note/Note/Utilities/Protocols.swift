@@ -1,7 +1,7 @@
 import Foundation
+import UIKit
 
 protocol NoteDelegate: AnyObject {
-//    private var isChanged: Bool { get set }
     func passData(from note: Note, isChanged: Bool)
 }
 

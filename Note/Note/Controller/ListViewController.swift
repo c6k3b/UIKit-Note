@@ -26,8 +26,8 @@ class ListViewController: UIViewController {
         view.addSubview(table)
 
         table.translatesAutoresizingMaskIntoConstraints = false
-        table.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
-        table.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
+        table.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        table.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         table.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         table.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
@@ -80,7 +80,7 @@ extension ListViewController: UITableViewDataSource {
 // MARK: - Delegate
 extension ListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 90
+        return 94
     }
 
     func tableView(
@@ -92,10 +92,6 @@ extension ListViewController: UITableViewDelegate {
             notes.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         }
-    }
-
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        UIView()
     }
 }
 

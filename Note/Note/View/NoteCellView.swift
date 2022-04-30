@@ -1,6 +1,6 @@
 import UIKit
 
-class NoteView: UIView {
+class NoteCellView: UIView {
     private let noteHeaderLabel = UILabel()
     private let noteBodyLabel = UILabel()
     private let noteDateLabel = UILabel()
@@ -15,6 +15,26 @@ class NoteView: UIView {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func didMoveToSuperview() {
+        setupView()
+    }
+
+    private func setupView() {
+        layer.cornerRadius = 14
+        layer.shadowColor = UIColor.systemGray.cgColor
+        layer.shadowOffset = CGSize(width: 3, height: 3)
+        layer.shadowOpacity = 0.15
+        layer.shadowRadius = 4.0
+        backgroundColor = .systemBackground
+
+        translatesAutoresizingMaskIntoConstraints = false
+        guard let superview = superview else { return }
+        topAnchor.constraint(equalTo: superview.topAnchor).isActive = true
+        bottomAnchor.constraint(equalTo: superview.bottomAnchor, constant: -4).isActive = true
+        leftAnchor.constraint(equalTo: superview.leftAnchor, constant: 16).isActive = true
+        rightAnchor.constraint(equalTo: superview.rightAnchor, constant: -16).isActive = true
     }
 
     private func setupHeaderLabel() {
@@ -76,14 +96,14 @@ class NoteView: UIView {
         ).isActive = true
     }
 
-    func applyViewModel(_ viewModel: NoteView.Model) {
+    func applyViewModel(_ viewModel: NoteCellView.Model) {
         noteHeaderLabel.text = viewModel.header
         noteBodyLabel.text = viewModel.body
         noteDateLabel.text = viewModel.date
     }
 }
 
-extension NoteView {
+extension NoteCellView {
     struct Model {
         let header: String
         let body: String
