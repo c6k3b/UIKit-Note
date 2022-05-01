@@ -106,8 +106,8 @@
 			isa = PBXGroup;
 			children = (
 				000920AB28075898004D1862 /* ListViewController.swift */,
-				00BE4B7F27ECE81C00664855 /* NoteViewController.swift */,
 				00A9203E28112E01007DB762 /* NoteCell.swift */,
+				00BE4B7F27ECE81C00664855 /* NoteViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
