@@ -9,7 +9,8 @@ class NoteCell: UITableViewCell, ConfigurableCell {
             model: NoteCellView.Model(
                 header: model.header ?? "N/A",
                 body: model.body ?? "N/A",
-                date: model.date.getFormattedDate(format: "dd.MM.yyyy")
+                date: model.date.getFormattedDate(format: "dd.MM.yyyy"),
+                isEditingMode: model.isEditingMode
             ), frame: .infinite
         )
         selectionStyle = .none

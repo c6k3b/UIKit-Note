@@ -8,7 +8,6 @@ class NoteViewController: UIViewController {
     private let noteBodyTextView = UITextView()
 
     private var note: Note
-    private var isEditingMode = false
     private var isChanged = false
 
     weak var noteDelegate: NoteDelegate?
@@ -31,17 +30,17 @@ class NoteViewController: UIViewController {
         setupDateLabel()
         setupHeaderTextField()
         setupBodyTextView()
-        didRightBarButtonTapped(navigationRightBarButton)
+        didNavigationRightBarButtonTapped(navigationRightBarButton)
     }
 
     private func setupNavigation() {
         navigationLeftBarButton.image = UIImage(named: "backButton")
         navigationLeftBarButton.target = self
-        navigationLeftBarButton.action = #selector(didLeftBarButtonTapped)
+        navigationLeftBarButton.action = #selector(didNavigationLeftBarButtonTapped)
         navigationItem.leftBarButtonItem = navigationLeftBarButton
 
         navigationRightBarButton.target = self
-        navigationRightBarButton.action = #selector(didRightBarButtonTapped(_:))
+        navigationRightBarButton.action = #selector(didNavigationRightBarButtonTapped)
         navigationItem.rightBarButtonItem = navigationRightBarButton
     }
 
@@ -119,9 +118,9 @@ class NoteViewController: UIViewController {
     }
 
     private func setUserInteractionState() {
-        noteHeaderTextField.isUserInteractionEnabled = isEditingMode
-        noteBodyTextView.isUserInteractionEnabled = isEditingMode
-        noteDateLabel.isUserInteractionEnabled = isEditingMode
+        noteHeaderTextField.isUserInteractionEnabled = note.isEditingMode
+        noteBodyTextView.isUserInteractionEnabled = note.isEditingMode
+        noteDateLabel.isUserInteractionEnabled = note.isEditingMode
     }
 
     private func saveNote() {
@@ -150,16 +149,17 @@ class NoteViewController: UIViewController {
         present(alert, animated: true)
     }
 
-    @objc private func didLeftBarButtonTapped() {
+    @objc private func didNavigationLeftBarButtonTapped() {
+        note.isEditingMode = false
         noteDelegate?.passData(from: note, isChanged: isChanged)
         navigationController?.popViewController(animated: true)
     }
 
-    @objc private func didRightBarButtonTapped(_ button: UIBarButtonItem) {
-        isEditingMode = !isEditingMode
+    @objc private func didNavigationRightBarButtonTapped(_ button: UIBarButtonItem) {
+        note.isEditingMode.toggle()
         setUserInteractionState()
 
-        if isEditingMode {
+        if note.isEditingMode {
             navigationRightBarButton.title = "Готово"
             navigationLeftBarButton.isEnabled = false
             noteBodyTextView.becomeFirstResponder()
@@ -170,7 +170,7 @@ class NoteViewController: UIViewController {
 
             if isEmpty() {
                 showAlert()
-                didRightBarButtonTapped(navigationRightBarButton)
+                didNavigationRightBarButtonTapped(navigationRightBarButton)
             }
             noteBodyTextView.resignFirstResponder()
         }

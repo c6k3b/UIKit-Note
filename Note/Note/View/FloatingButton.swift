@@ -1,10 +1,13 @@
 import UIKit
 
 class FloatingButton: UIButton {
+    var isEditingMode = false
+
     override func layoutSubviews() {
         super.layoutSubviews()
         setAppearance()
         activateCurrentConstraints()
+        shake()
     }
 
     private func setAppearance() {
@@ -12,8 +15,8 @@ class FloatingButton: UIButton {
         clipsToBounds = true
         contentVerticalAlignment = .bottom
         titleLabel?.font = .systemFont(ofSize: 36)
-        setTitle("+", for: .normal)
         backgroundColor = .systemBlue
+        setImage(UIImage(named: !isEditingMode ? "buttonPlus" : "buttonTrash"), for: .normal)
     }
 
     private func activateCurrentConstraints() {

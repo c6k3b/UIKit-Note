@@ -1,49 +1,75 @@
 import UIKit
 
 class ListViewController: UIViewController {
-    private var notes = SampleData().notes
+    private let navigationRightBarButton = UIBarButtonItem()
+    private let floatingButton = FloatingButton()
+    private let tableView = UITableView()
 
-    private let button = FloatingButton()
-    private let table = UITableView()
+    private var notes = SampleData().notes
+    private var isEditingMode = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setAppearance()
+        setupNavigation()
         addSubviews()
+        setupFloatingButton()
         registerCell()
         setupDelegates()
-        setupButton()
     }
 
     private func setAppearance() {
-        navigationItem.title = "Заметки"
         view.backgroundColor = .systemBackground
-        table.showsVerticalScrollIndicator = false
-        table.separatorStyle = .none
+        tableView.showsVerticalScrollIndicator = false
+        tableView.separatorStyle = .none
+    }
+
+    private func setupNavigation() {
+        navigationItem.title = "Заметки"
+
+        setupNavigationRightButtonTitle()
+        navigationRightBarButton.target = self
+        navigationRightBarButton.action = #selector(didNavigationRightBarButtonTapped)
+        navigationItem.rightBarButtonItem = navigationRightBarButton
+    }
+
+    private func setupNavigationRightButtonTitle() {
+        navigationRightBarButton.title = !isEditingMode ? "Выбрать" : "Готово"
     }
 
     private func addSubviews() {
-        view.addSubview(table)
+        view.addSubview(tableView)
 
-        table.translatesAutoresizingMaskIntoConstraints = false
-        table.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        table.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        table.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        table.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+    }
+
+    private func setupFloatingButton() {
+        floatingButton.addTarget(self, action: #selector(didButtonTapped), for: .touchUpInside)
+        view.addSubview(floatingButton)
     }
 
     private func registerCell() {
-        table.register(NoteCell.self, forCellReuseIdentifier: NoteCell.identifier)
+        tableView.register(NoteCell.self, forCellReuseIdentifier: NoteCell.identifier)
     }
 
     private func setupDelegates() {
-        table.dataSource = self
-        table.delegate = self
+        tableView.dataSource = self
+        tableView.delegate = self
     }
 
-    private func setupButton() {
-        button.addTarget(self, action: #selector(didButtonTapped), for: .touchUpInside)
-        view.addSubview(button)
+    @objc private func didNavigationRightBarButtonTapped() {
+        isEditingMode.toggle()
+        setupNavigationRightButtonTitle()
+
+        notes.forEach { $0.isEditingMode = isEditingMode }
+        tableView.reloadData()
+
+        floatingButton.isEditingMode = isEditingMode
+        floatingButton.layoutSubviews()
     }
 
     @objc private func didButtonTapped() {
@@ -104,6 +130,6 @@ extension ListViewController: NoteDelegate {
                 notes.append(note)
             }
         }
-        table.reloadData()
+        tableView.reloadData()
     }
  }
