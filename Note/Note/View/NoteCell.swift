@@ -1,40 +1,30 @@
 import UIKit
 
-class NoteCellView: UIView {
+class NoteCell: UITableViewCell, ConfigurableCell {
+    typealias ConfigurationModel = Note
+    static var identifier = String(describing: NoteCell.self)
+
     private let noteHeaderLabel = UILabel()
     private let noteBodyLabel = UILabel()
     private let noteDateLabel = UILabel()
 
-    init(model: Model, frame: CGRect) {
-        super.init(frame: frame)
-        self.applyViewModel(model)
+    func configure(with model: ConfigurationModel) {
+        noteHeaderLabel.text = model.header
+        noteBodyLabel.text = model.body
+        noteDateLabel.text = model.date.getFormattedDate(format: "dd.MM.yyyy")
+
+        setupView()
         setupHeaderLabel()
         setupBodyLabel()
         setupDateLabel()
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    override func didMoveToSuperview() {
-        setupView()
-    }
-
     private func setupView() {
-        layer.cornerRadius = 14
-        layer.shadowColor = UIColor.systemGray.cgColor
-        layer.shadowOffset = CGSize(width: 3, height: 3)
-        layer.shadowOpacity = 0.15
-        layer.shadowRadius = 4.0
-        backgroundColor = .systemBackground
-
-        translatesAutoresizingMaskIntoConstraints = false
-        guard let superview = superview else { return }
-        topAnchor.constraint(equalTo: superview.topAnchor).isActive = true
-        bottomAnchor.constraint(equalTo: superview.bottomAnchor, constant: -4).isActive = true
-        leftAnchor.constraint(equalTo: superview.leftAnchor, constant: 16).isActive = true
-        rightAnchor.constraint(equalTo: superview.rightAnchor, constant: -16).isActive = true
+        selectionStyle = .none
+        contentView.layer.cornerRadius = 14
+        contentView.layer.masksToBounds = true
+        backgroundColor = .clear
+        contentView.backgroundColor = .systemBackground
     }
 
     private func setupHeaderLabel() {
@@ -95,15 +85,9 @@ class NoteCellView: UIView {
             constant: -16
         ).isActive = true
     }
-
-    func applyViewModel(_ viewModel: NoteCellView.Model) {
-        noteHeaderLabel.text = viewModel.header
-        noteBodyLabel.text = viewModel.body
-        noteDateLabel.text = viewModel.date
-    }
 }
 
-extension NoteCellView {
+extension NoteCell {
     struct Model {
         let header: String
         let body: String
