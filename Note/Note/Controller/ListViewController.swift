@@ -17,17 +17,18 @@ class ListViewController: UIViewController {
 
     private func setAppearance() {
         navigationItem.title = "Заметки"
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .systemBackground.withAlphaComponent(0.98)
         table.showsVerticalScrollIndicator = false
         table.separatorStyle = .none
+        table.backgroundColor = .clear
     }
 
     private func addSubviews() {
         view.addSubview(table)
 
         table.translatesAutoresizingMaskIntoConstraints = false
-        table.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        table.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        table.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
+        table.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
         table.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         table.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
@@ -55,8 +56,12 @@ class ListViewController: UIViewController {
 
 // MARK: - Datasource
 extension ListViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         notes.count
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        1
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -66,12 +71,12 @@ extension ListViewController: UITableViewDataSource {
         ) as? NoteCell else {
             return UITableViewCell()
         }
-        cell.configure(with: notes[indexPath.row])
+        cell.configure(with: notes[indexPath.section])
         return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let noteVC = NoteViewController(note: notes[indexPath.row])
+        let noteVC = NoteViewController(note: notes[indexPath.section])
         noteVC.noteDelegate = self
         navigationController?.pushViewController(noteVC, animated: true)
     }
@@ -80,7 +85,15 @@ extension ListViewController: UITableViewDataSource {
 // MARK: - Delegate
 extension ListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 94
+        return 90
+    }
+
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        4
+    }
+
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        UIView()
     }
 
     func tableView(
@@ -89,8 +102,8 @@ extension ListViewController: UITableViewDelegate {
         forRowAt indexPath: IndexPath
     ) {
         if editingStyle == .delete {
-            notes.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            notes.remove(at: indexPath.section)
+            tableView.deleteSections([indexPath.section], with: .fade)
         }
     }
 }
