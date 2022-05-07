@@ -1,7 +1,6 @@
 import UIKit
 
 class NoteViewController: UIViewController {
-    private let navigationRightBarButton = UIBarButtonItem()
     private let navigationLeftBarButton = UIBarButtonItem()
     private let noteHeaderTextField = UITextField()
     private let noteDateLabel = UILabel()
@@ -23,14 +22,34 @@ class NoteViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.backgroundColor = .systemBackground
-
         setupNavigation()
         setupDateLabel()
         setupHeaderTextField()
         setupBodyTextView()
-        didNavigationRightBarButtonTapped(navigationRightBarButton)
+
+        view.backgroundColor = .systemBackground
+        setEditing(true, animated: true)
+    }
+
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+
+        noteHeaderTextField.isUserInteractionEnabled = isEditing
+        noteBodyTextView.isUserInteractionEnabled = isEditing
+        noteDateLabel.isUserInteractionEnabled = isEditing
+        navigationLeftBarButton.isEnabled = !isEditing
+        editButtonItem.title = isEditing ? "Готово" : "Изменить"
+
+        if isEditing {
+            noteBodyTextView.becomeFirstResponder()
+        } else {
+            saveNote()
+            if isEmpty() {
+                showAlert()
+                setEditing(editing, animated: true)
+            }
+            noteBodyTextView.resignFirstResponder()
+        }
     }
 
     private func setupNavigation() {
@@ -38,10 +57,7 @@ class NoteViewController: UIViewController {
         navigationLeftBarButton.target = self
         navigationLeftBarButton.action = #selector(didNavigationLeftBarButtonTapped)
         navigationItem.leftBarButtonItem = navigationLeftBarButton
-
-        navigationRightBarButton.target = self
-        navigationRightBarButton.action = #selector(didNavigationRightBarButtonTapped)
-        navigationItem.rightBarButtonItem = navigationRightBarButton
+        navigationItem.rightBarButtonItem = editButtonItem
     }
 
     private func setupDateLabel() {
@@ -117,12 +133,6 @@ class NoteViewController: UIViewController {
         ).isActive = true
     }
 
-    private func setUserInteractionState() {
-        noteHeaderTextField.isUserInteractionEnabled = note.isEditingMode
-        noteBodyTextView.isUserInteractionEnabled = note.isEditingMode
-        noteDateLabel.isUserInteractionEnabled = note.isEditingMode
-    }
-
     private func saveNote() {
         if noteHeaderTextField.text != note.header || noteBodyTextView.text != note.body {
             note.header = noteHeaderTextField.text
@@ -150,30 +160,8 @@ class NoteViewController: UIViewController {
     }
 
     @objc private func didNavigationLeftBarButtonTapped() {
-        note.isEditingMode = false
         noteDelegate?.passData(from: note, isChanged: isChanged)
         navigationController?.popViewController(animated: true)
-    }
-
-    @objc private func didNavigationRightBarButtonTapped(_ button: UIBarButtonItem) {
-        note.isEditingMode.toggle()
-        setUserInteractionState()
-
-        if note.isEditingMode {
-            navigationRightBarButton.title = "Готово"
-            navigationLeftBarButton.isEnabled = false
-            noteBodyTextView.becomeFirstResponder()
-        } else {
-            navigationRightBarButton.title = "Изменить"
-            navigationLeftBarButton.isEnabled = true
-            saveNote()
-
-            if isEmpty() {
-                showAlert()
-                didNavigationRightBarButtonTapped(navigationRightBarButton)
-            }
-            noteBodyTextView.resignFirstResponder()
-        }
     }
 }
 

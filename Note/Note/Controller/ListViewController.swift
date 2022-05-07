@@ -1,78 +1,84 @@
 import UIKit
 
 class ListViewController: UIViewController {
-    private let navigationRightBarButton = UIBarButtonItem()
-    private let floatingButton = FloatingButton()
-    private let tableView = UITableView()
+    private let floatingButton = UIButton()
+    private let table = UITableView()
 
     private var notes = SampleData().notes
-    private var isEditingMode = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setAppearance()
         setupNavigation()
-        addSubviews()
+        setupTableView()
         setupFloatingButton()
-        registerCell()
         setupDelegates()
+        view.backgroundColor = .systemBackground.withAlphaComponent(0.98)
     }
 
-    private func setAppearance() {
-        view.backgroundColor = .systemBackground
-        tableView.showsVerticalScrollIndicator = false
-        tableView.separatorStyle = .none
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        table.setEditing(editing, animated: animated)
+        editButtonItem.title = !table.isEditing ? "Выбрать" : "Готово"
     }
 
     private func setupNavigation() {
         navigationItem.title = "Заметки"
-
-        setupNavigationRightButtonTitle()
-        navigationRightBarButton.target = self
-        navigationRightBarButton.action = #selector(didNavigationRightBarButtonTapped)
-        navigationItem.rightBarButtonItem = navigationRightBarButton
+        editButtonItem.title = "Выбрать"
+        navigationItem.rightBarButtonItem = editButtonItem
     }
 
-    private func setupNavigationRightButtonTitle() {
-        navigationRightBarButton.title = !isEditingMode ? "Выбрать" : "Готово"
-    }
+    private func setupTableView() {
+        table.showsVerticalScrollIndicator = false
+        table.separatorStyle = .none
+        table.backgroundColor = .clear
+        table.register(NoteCell.self, forCellReuseIdentifier: NoteCell.identifier)
 
-    private func addSubviews() {
-        view.addSubview(tableView)
+        view.addSubview(table)
 
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        table.translatesAutoresizingMaskIntoConstraints = false
+        table.leadingAnchor.constraint(
+            equalTo: view.leadingAnchor,
+            constant: 16
+        ).isActive = true
+        table.trailingAnchor.constraint(
+            equalTo: view.trailingAnchor,
+            constant: -16
+        ).isActive = true
+        table.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        table.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
 
     private func setupFloatingButton() {
-        floatingButton.addTarget(self, action: #selector(didButtonTapped), for: .touchUpInside)
-        view.addSubview(floatingButton)
-    }
+        floatingButton.layer.cornerRadius = 25
+        floatingButton.clipsToBounds = true
+        floatingButton.contentVerticalAlignment = .bottom
+        floatingButton.titleLabel?.font = .systemFont(ofSize: 36)
+        floatingButton.backgroundColor = .systemBlue
+        floatingButton.setImage(UIImage(named: !table.isEditing ? "buttonPlus" : "buttonTrash"), for: .normal)
 
-    private func registerCell() {
-        tableView.register(NoteCell.self, forCellReuseIdentifier: NoteCell.identifier)
+        view.addSubview(floatingButton)
+
+        floatingButton.addTarget(self, action: #selector(didFloatingButtonTapped), for: .touchUpInside)
+
+        floatingButton.translatesAutoresizingMaskIntoConstraints = false
+        floatingButton.trailingAnchor.constraint(
+            equalTo: view.safeAreaLayoutGuide.trailingAnchor,
+            constant: -20
+        ).isActive = true
+        floatingButton.bottomAnchor.constraint(
+            equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+            constant: -20
+        ).isActive = true
+        floatingButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        floatingButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
     }
 
     private func setupDelegates() {
-        tableView.dataSource = self
-        tableView.delegate = self
+        table.dataSource = self
+        table.delegate = self
     }
 
-    @objc private func didNavigationRightBarButtonTapped() {
-        isEditingMode.toggle()
-        setupNavigationRightButtonTitle()
-
-        notes.forEach { $0.isEditingMode = isEditingMode }
-        tableView.reloadData()
-
-        floatingButton.isEditingMode = isEditingMode
-        floatingButton.layoutSubviews()
-    }
-
-    @objc private func didButtonTapped() {
+    @objc private func didFloatingButtonTapped() {
         let noteVC = NoteViewController(note: Note())
         noteVC.noteDelegate = self
         navigationController?.pushViewController(noteVC, animated: true)
@@ -81,9 +87,8 @@ class ListViewController: UIViewController {
 
 // MARK: - Datasource
 extension ListViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        notes.count
-    }
+    func numberOfSections(in tableView: UITableView) -> Int { notes.count }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { 1 }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(
@@ -92,12 +97,12 @@ extension ListViewController: UITableViewDataSource {
         ) as? NoteCell else {
             return UITableViewCell()
         }
-        cell.configure(with: notes[indexPath.row])
+        cell.configure(with: notes[indexPath.section])
         return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let noteVC = NoteViewController(note: notes[indexPath.row])
+        let noteVC = NoteViewController(note: notes[indexPath.section])
         noteVC.noteDelegate = self
         navigationController?.pushViewController(noteVC, animated: true)
     }
@@ -105,9 +110,9 @@ extension ListViewController: UITableViewDataSource {
 
 // MARK: - Delegate
 extension ListViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 94
-    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat { 90 }
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat { 4 }
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? { UIView() }
 
     func tableView(
         _ tableView: UITableView,
@@ -115,8 +120,8 @@ extension ListViewController: UITableViewDelegate {
         forRowAt indexPath: IndexPath
     ) {
         if editingStyle == .delete {
-            notes.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            notes.remove(at: indexPath.section)
+            tableView.deleteSections([indexPath.section], with: .fade)
         }
     }
 }
@@ -130,6 +135,6 @@ extension ListViewController: NoteDelegate {
                 notes.append(note)
             }
         }
-        tableView.reloadData()
+        table.reloadData()
     }
  }
