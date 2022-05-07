@@ -72,7 +72,12 @@ extension ListViewController: UITableViewDataSource {
         ) as? NoteCell else {
             return UITableViewCell()
         }
-        cell.configure(with: notes[indexPath.section])
+        let note = notes[indexPath.section]
+        cell.configure(
+            header: note.header ?? "N/A",
+            body: note.body ?? "N/A",
+            date: note.date.getFormattedDate(format: "dd MM yyyy")
+        )
         return cell
     }
 

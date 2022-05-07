@@ -1,7 +1,7 @@
 import UIKit
 
 class NoteCell: UITableViewCell, ConfigurableCell {
-    typealias ConfigurationModel = Note
+//    typealias ConfigurationModel = Note
     static var identifier = String(describing: NoteCell.self)
 
     private let noteHeaderLabel = UILabel()
@@ -9,13 +9,19 @@ class NoteCell: UITableViewCell, ConfigurableCell {
     private let noteDateLabel = UILabel()
     private let stackView = UIStackView()
 
-    func configure(with model: ConfigurationModel) {
-        noteHeaderLabel.text = model.header
-        noteBodyLabel.text = model.body
-        noteDateLabel.text = model.date.getFormattedDate(format: "dd.MM.yyyy")
-
+    func configure(header: String, body: String, date: String) {
+        noteHeaderLabel.text = header
+        noteBodyLabel.text = body
+        noteDateLabel.text = date
         setupView()
     }
+//    func configure(with model: ConfigurationModel) {
+//        noteHeaderLabel.text = model.header
+//        noteBodyLabel.text = model.body
+//        noteDateLabel.text = model.date.getFormattedDate(format: "dd.MM.yyyy")
+//
+//        setupView()
+//    }
 
     private func setupView() {
         selectionStyle = .none
