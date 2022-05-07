@@ -3,7 +3,7 @@ import Foundation
 class Note {
     var header: String?
     var body: String?
-    var date: Date
+    var date: String?
 
     var isEmpty: Bool {
         header?.isEmpty ?? true && body?.isEmpty ?? true

@@ -7,6 +7,7 @@ class NoteCell: UITableViewCell, ConfigurableCell {
     private let noteHeaderLabel = UILabel()
     private let noteBodyLabel = UILabel()
     private let noteDateLabel = UILabel()
+    private let stackView = UIStackView()
 
     func configure(with model: ConfigurationModel) {
         noteHeaderLabel.text = model.header
@@ -14,9 +15,6 @@ class NoteCell: UITableViewCell, ConfigurableCell {
         noteDateLabel.text = model.date.getFormattedDate(format: "dd.MM.yyyy")
 
         setupView()
-        setupHeaderLabel()
-        setupBodyLabel()
-        setupDateLabel()
     }
 
     private func setupView() {
@@ -25,72 +23,59 @@ class NoteCell: UITableViewCell, ConfigurableCell {
         contentView.layer.masksToBounds = true
         backgroundColor = .clear
         contentView.backgroundColor = .systemBackground
+
+        contentView.addSubview(stackView)
+        setupStackView()
+    }
+
+    private func setupStackView() {
+        stackView.alignment = .leading
+        stackView.axis = .vertical
+        stackView.distribution = .equalCentering
+
+        setupHeaderLabel()
+        setupBodyLabel()
+        setupDateLabel()
+
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.leadingAnchor.constraint(
+            equalTo: contentView.leadingAnchor,
+            constant: 16
+        ).isActive = true
+        stackView.trailingAnchor.constraint(
+            equalTo: contentView.trailingAnchor,
+            constant: -16
+        ).isActive = true
+        stackView.topAnchor.constraint(
+            equalTo: contentView.topAnchor,
+            constant: 10
+        ).isActive = true
+        stackView.bottomAnchor.constraint(
+            equalTo: contentView.bottomAnchor,
+            constant: -10
+        ).isActive = true
     }
 
     private func setupHeaderLabel() {
         noteHeaderLabel.font = .systemFont(ofSize: 16, weight: .regular)
-        addSubview(noteHeaderLabel)
-
-        noteHeaderLabel.translatesAutoresizingMaskIntoConstraints = false
-        noteHeaderLabel.topAnchor.constraint(
-            equalTo: topAnchor,
-            constant: 10
-        ).isActive = true
-        noteHeaderLabel.leadingAnchor.constraint(
-            equalTo: leadingAnchor,
-            constant: 16
-        ).isActive = true
-        noteHeaderLabel.trailingAnchor.constraint(
-            equalTo: trailingAnchor,
-            constant: -16
-        ).isActive = true
+        stackView.addArrangedSubview(noteHeaderLabel)
     }
 
     private func setupBodyLabel() {
         noteBodyLabel.font = .systemFont(ofSize: 10, weight: .regular)
         noteBodyLabel.textColor = .systemGray
-        addSubview(noteBodyLabel)
+        stackView.addArrangedSubview(noteBodyLabel)
 
         noteBodyLabel.translatesAutoresizingMaskIntoConstraints = false
         noteBodyLabel.topAnchor.constraint(
             equalTo: noteHeaderLabel.bottomAnchor,
             constant: 4
         ).isActive = true
-        noteBodyLabel.leadingAnchor.constraint(
-            equalTo: leadingAnchor,
-            constant: 16
-        ).isActive = true
-        noteBodyLabel.trailingAnchor.constraint(
-            equalTo: trailingAnchor,
-            constant: -16
-        ).isActive = true
     }
 
     private func setupDateLabel() {
         noteDateLabel.font = .systemFont(ofSize: 10, weight: .regular)
         noteDateLabel.textColor = .systemGray
-        addSubview(noteDateLabel)
-
-        noteDateLabel.translatesAutoresizingMaskIntoConstraints = false
-        noteDateLabel.topAnchor.constraint(
-            equalTo: noteBodyLabel.bottomAnchor,
-            constant: 24
-        ).isActive = true
-        noteDateLabel.leadingAnchor.constraint(
-            equalTo: leadingAnchor,
-            constant: 16
-        ).isActive = true
-        noteDateLabel.trailingAnchor.constraint(
-            equalTo: trailingAnchor,
-            constant: -16
-        ).isActive = true
-    }
-}
-
-extension NoteCell {
-    struct Model {
-        let header: String
-        let body: String
-        let date: String
+        stackView.addArrangedSubview(noteDateLabel)
     }
 }

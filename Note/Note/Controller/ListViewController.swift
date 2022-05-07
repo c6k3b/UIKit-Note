@@ -21,6 +21,7 @@ class ListViewController: UIViewController {
         table.showsVerticalScrollIndicator = false
         table.separatorStyle = .none
         table.backgroundColor = .clear
+        table.estimatedRowHeight = 90
     }
 
     private func addSubviews() {
@@ -85,7 +86,7 @@ extension ListViewController: UITableViewDataSource {
 // MARK: - Delegate
 extension ListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 90
+        UITableView.automaticDimension
     }
 
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
