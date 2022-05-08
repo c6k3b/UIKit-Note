@@ -6,6 +6,5 @@ protocol NoteDelegate: AnyObject {
 }
 
 protocol ConfigurableCell {
-    associatedtype ConfigurationModel
-    func configure(with model: ConfigurationModel)
+    func configure(header: String?, body: String?, date: String)
 }

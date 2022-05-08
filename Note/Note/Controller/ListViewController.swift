@@ -12,7 +12,7 @@ class ListViewController: UIViewController {
         setupTableView()
         setupFloatingButton()
         setupDelegates()
-        view.backgroundColor = .systemBackground.withAlphaComponent(0.98)
+        view.backgroundColor = .systemBackground.withAlphaComponent(0.96)
     }
 
     override func setEditing(_ editing: Bool, animated: Bool) {
@@ -31,6 +31,7 @@ class ListViewController: UIViewController {
         table.showsVerticalScrollIndicator = false
         table.separatorStyle = .none
         table.backgroundColor = .clear
+        table.estimatedRowHeight = 90
         table.register(NoteCell.self, forCellReuseIdentifier: NoteCell.identifier)
 
         view.addSubview(table)
@@ -97,7 +98,12 @@ extension ListViewController: UITableViewDataSource {
         ) as? NoteCell else {
             return UITableViewCell()
         }
-        cell.configure(with: notes[indexPath.section])
+        let note = notes[indexPath.section]
+        cell.configure(
+            header: note.header ?? "N/A",
+            body: note.body ?? "N/A",
+            date: note.date.getFormattedDate(format: "dd MM yyyy")
+        )
         return cell
     }
 
@@ -110,7 +116,9 @@ extension ListViewController: UITableViewDataSource {
 
 // MARK: - Delegate
 extension ListViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat { 90 }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        UITableView.automaticDimension
+    }
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat { 4 }
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? { UIView() }
 
