@@ -12,10 +12,7 @@ class NoteCell: UITableViewCell, ConfigurableCell {
         noteHeaderLabel.text = header
         noteBodyLabel.text = body
         noteDateLabel.text = date
-        setupView()
-    }
 
-    private func setupView() {
         selectionStyle = .none
         contentView.layer.cornerRadius = 14
         contentView.layer.masksToBounds = true
