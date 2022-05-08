@@ -6,5 +6,5 @@ protocol NoteDelegate: AnyObject {
 }
 
 protocol ConfigurableCell {
-    func configure(header: String, body: String, date: String)
+    func configure(header: String?, body: String?, date: String)
 }

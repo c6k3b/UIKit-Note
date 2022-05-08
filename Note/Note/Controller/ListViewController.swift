@@ -17,7 +17,7 @@ class ListViewController: UIViewController {
 
     private func setAppearance() {
         navigationItem.title = "Заметки"
-        view.backgroundColor = .systemBackground.withAlphaComponent(0.98)
+        view.backgroundColor = .systemBackground.withAlphaComponent(0.97)
         table.showsVerticalScrollIndicator = false
         table.separatorStyle = .none
         table.backgroundColor = .clear

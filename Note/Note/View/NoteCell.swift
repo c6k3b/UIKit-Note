@@ -8,7 +8,7 @@ class NoteCell: UITableViewCell, ConfigurableCell {
     private let noteDateLabel = UILabel()
     private let stackView = UIStackView()
 
-    func configure(header: String, body: String, date: String) {
+    func configure(header: String?, body: String?, date: String) {
         noteHeaderLabel.text = header
         noteBodyLabel.text = body
         noteDateLabel.text = date
@@ -26,7 +26,7 @@ class NoteCell: UITableViewCell, ConfigurableCell {
     private func setupStackView() {
         stackView.alignment = .leading
         stackView.axis = .vertical
-        stackView.distribution = .equalCentering
+        stackView.distribution = .fill
 
         setupHeaderLabel()
         setupBodyLabel()
@@ -49,28 +49,25 @@ class NoteCell: UITableViewCell, ConfigurableCell {
             equalTo: contentView.bottomAnchor,
             constant: -10
         ).isActive = true
+
+        stackView.setCustomSpacing(4, after: noteHeaderLabel)
+        stackView.setCustomSpacing(24, after: noteBodyLabel)
     }
 
     private func setupHeaderLabel() {
-        noteHeaderLabel.font = .systemFont(ofSize: 16, weight: .regular)
-        stackView.addArrangedSubview(noteHeaderLabel)
-    }
+           noteHeaderLabel.font = .systemFont(ofSize: 15)
+           stackView.addArrangedSubview(noteHeaderLabel)
+       }
 
-    private func setupBodyLabel() {
-        noteBodyLabel.font = .systemFont(ofSize: 10, weight: .regular)
-        noteBodyLabel.textColor = .systemGray
-        stackView.addArrangedSubview(noteBodyLabel)
+       private func setupBodyLabel() {
+           noteBodyLabel.font = .systemFont(ofSize: 10)
+           noteBodyLabel.textColor = .systemGray
+           stackView.addArrangedSubview(noteBodyLabel)
+       }
 
-        noteBodyLabel.translatesAutoresizingMaskIntoConstraints = false
-        noteBodyLabel.topAnchor.constraint(
-            equalTo: noteHeaderLabel.bottomAnchor,
-            constant: 4
-        ).isActive = true
-    }
-
-    private func setupDateLabel() {
-        noteDateLabel.font = .systemFont(ofSize: 10, weight: .regular)
-        noteDateLabel.textColor = .systemGray
-        stackView.addArrangedSubview(noteDateLabel)
-    }
+       private func setupDateLabel() {
+           noteDateLabel.font = .systemFont(ofSize: 10)
+           noteDateLabel.textColor = .systemGray
+           stackView.addArrangedSubview(noteDateLabel)
+       }
 }
