@@ -3,22 +3,38 @@ import UIKit
 class NoteCell: UITableViewCell, ConfigurableCell {
     static var identifier = String(describing: NoteCell.self)
 
-    private let noteHeaderLabel = UILabel()
-    private let noteBodyLabel = UILabel()
-    private let noteDateLabel = UILabel()
+    private let headerLabel = UILabel()
+    private let bodyLabel = UILabel()
+    private let dateLabel = UILabel()
     private let stackView = UIStackView()
+    private let selectorImageView = UIImageView(image: UIImage(named: "checkmarkEmpty"))
 
     func configure(header: String?, body: String?, date: String) {
-        noteHeaderLabel.text = header
-        noteBodyLabel.text = body
-        noteDateLabel.text = date
+        headerLabel.text = header
+        bodyLabel.text = body
+        dateLabel.text = date
+        setAppearance()
+    }
 
+    override func willTransition(to state: UITableViewCell.StateMask) {
+        super.willTransition(to: state)
+        shakeHorizontaly()
+    }
+
+    private func setAppearance() {
         selectionStyle = .none
-        contentView.layer.cornerRadius = 14
-        contentView.layer.masksToBounds = true
         backgroundColor = .clear
+
+        backgroundView = UIView()
+        selectorImageView.frame = CGRect(x: 20, y: 37, width: 16, height: 16)
+
+        contentView.layer.cornerRadius = 14
         contentView.backgroundColor = .systemBackground
 
+        backgroundView?.layer.cornerRadius = 14
+        backgroundView?.backgroundColor = .systemBackground
+
+        backgroundView?.addSubview(selectorImageView)
         contentView.addSubview(stackView)
         setupStackView()
     }
@@ -50,24 +66,24 @@ class NoteCell: UITableViewCell, ConfigurableCell {
             constant: -10
         ).isActive = true
 
-        stackView.setCustomSpacing(4, after: noteHeaderLabel)
-        stackView.setCustomSpacing(24, after: noteBodyLabel)
+        stackView.setCustomSpacing(4, after: headerLabel)
+        stackView.setCustomSpacing(24, after: bodyLabel)
     }
 
     private func setupHeaderLabel() {
-        noteHeaderLabel.font = .systemFont(ofSize: 15)
-        stackView.addArrangedSubview(noteHeaderLabel)
+        headerLabel.font = .systemFont(ofSize: 15)
+        stackView.addArrangedSubview(headerLabel)
     }
 
     private func setupBodyLabel() {
-        noteBodyLabel.font = .systemFont(ofSize: 10)
-        noteBodyLabel.textColor = .systemGray
-        stackView.addArrangedSubview(noteBodyLabel)
+        bodyLabel.font = .systemFont(ofSize: 10)
+        bodyLabel.textColor = .systemGray
+        stackView.addArrangedSubview(bodyLabel)
     }
 
     private func setupDateLabel() {
-        noteDateLabel.font = .systemFont(ofSize: 10)
-        noteDateLabel.textColor = .systemGray
-        stackView.addArrangedSubview(noteDateLabel)
+        dateLabel.font = .systemFont(ofSize: 10)
+        dateLabel.textColor = .systemGray
+        stackView.addArrangedSubview(dateLabel)
     }
 }

@@ -12,13 +12,14 @@ class ListViewController: UIViewController {
         setupTableView()
         setupFloatingButton()
         setupDelegates()
-        view.backgroundColor = .systemBackground.withAlphaComponent(0.96)
+        view.backgroundColor = .systemBackground.withAlphaComponent(0.97)
     }
 
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         table.setEditing(editing, animated: animated)
         editButtonItem.title = !table.isEditing ? "Выбрать" : "Готово"
+        setupFloatingButton()
     }
 
     private func setupNavigation() {
@@ -31,6 +32,7 @@ class ListViewController: UIViewController {
         table.showsVerticalScrollIndicator = false
         table.separatorStyle = .none
         table.backgroundColor = .clear
+//        table.allowsMultipleSelection = true
         table.estimatedRowHeight = 90
         table.register(NoteCell.self, forCellReuseIdentifier: NoteCell.identifier)
 
@@ -58,6 +60,7 @@ class ListViewController: UIViewController {
         floatingButton.setImage(UIImage(named: !table.isEditing ? "buttonPlus" : "buttonTrash"), for: .normal)
 
         view.addSubview(floatingButton)
+        floatingButton.shake()
 
         floatingButton.addTarget(self, action: #selector(didFloatingButtonTapped), for: .touchUpInside)
 
@@ -116,12 +119,22 @@ extension ListViewController: UITableViewDataSource {
 
 // MARK: - Delegate
 extension ListViewController: UITableViewDelegate {
+    // Cell Appearance
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         UITableView.automaticDimension
     }
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat { 4 }
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? { UIView() }
 
+    // Removing delete button
+    func tableView(
+        _ tableView: UITableView,
+        editingStyleForRowAt indexPath: IndexPath
+    ) -> UITableViewCell.EditingStyle {
+        tableView.isEditing ? .none : .delete
+    }
+
+    // Swipe for delete
     func tableView(
         _ tableView: UITableView,
         commit editingStyle: UITableViewCell.EditingStyle,
