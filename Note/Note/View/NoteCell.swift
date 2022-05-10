@@ -7,7 +7,9 @@ class NoteCell: UITableViewCell, ConfigurableCell {
     private let bodyLabel = UILabel()
     private let dateLabel = UILabel()
     private let stackView = UIStackView()
-    private let selectorImageView = UIImageView(image: UIImage(named: "checkmarkEmpty"))
+
+    private let checkmarkEmpty = UIImageView()
+    private let checkmarkFilled = UIImageView()
 
     func configure(header: String?, body: String?, date: String) {
         headerLabel.text = header
@@ -22,11 +24,17 @@ class NoteCell: UITableViewCell, ConfigurableCell {
     }
 
     private func setAppearance() {
-        selectionStyle = .none
+        selectionStyle = .default
         backgroundColor = .clear
 
         backgroundView = UIView()
-        selectorImageView.frame = CGRect(x: 20, y: 37, width: 16, height: 16)
+        selectedBackgroundView = UIView()
+
+        checkmarkEmpty.frame = CGRect(x: 20, y: 37, width: 16, height: 16)
+        checkmarkEmpty.image = UIImage(named: "checkmarkEmpty")
+
+        checkmarkFilled.frame = CGRect(x: 20, y: 37, width: 16, height: 16)
+        checkmarkFilled.image = UIImage(named: "checkmarkFilled")
 
         contentView.layer.cornerRadius = 14
         contentView.backgroundColor = .systemBackground
@@ -34,7 +42,9 @@ class NoteCell: UITableViewCell, ConfigurableCell {
         backgroundView?.layer.cornerRadius = 14
         backgroundView?.backgroundColor = .systemBackground
 
-        backgroundView?.addSubview(selectorImageView)
+        backgroundView?.addSubview(checkmarkEmpty)
+        selectedBackgroundView?.addSubview(checkmarkFilled)
+
         contentView.addSubview(stackView)
         setupStackView()
     }

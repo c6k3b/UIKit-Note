@@ -32,8 +32,10 @@ class ListViewController: UIViewController {
         table.showsVerticalScrollIndicator = false
         table.separatorStyle = .none
         table.backgroundColor = .clear
-//        table.allowsMultipleSelection = true
         table.estimatedRowHeight = 90
+//        table.allowsMultipleSelection = true
+        table.allowsSelectionDuringEditing = true
+        table.allowsSelectionDuringEditing = true
         table.register(NoteCell.self, forCellReuseIdentifier: NoteCell.identifier)
 
         view.addSubview(table)
@@ -82,10 +84,19 @@ class ListViewController: UIViewController {
         table.delegate = self
     }
 
+    private func deleteNote(_ indexPath: IndexPath, _ tableView: UITableView) {
+        notes.remove(at: indexPath.section)
+        tableView.deleteSections([indexPath.section], with: .fade)
+    }
+
     @objc private func didFloatingButtonTapped() {
-        let noteVC = NoteViewController(note: Note())
-        noteVC.noteDelegate = self
-        navigationController?.pushViewController(noteVC, animated: true)
+        if !isEditing {
+            let noteVC = NoteViewController(note: Note())
+            noteVC.noteDelegate = self
+            navigationController?.pushViewController(noteVC, animated: true)
+        } else {
+//            deleteNote(tableView(table, cellForRowAt: 0), table)
+        }
     }
 }
 
@@ -109,17 +120,11 @@ extension ListViewController: UITableViewDataSource {
         )
         return cell
     }
-
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let noteVC = NoteViewController(note: notes[indexPath.section])
-        noteVC.noteDelegate = self
-        navigationController?.pushViewController(noteVC, animated: true)
-    }
 }
 
 // MARK: - Delegate
 extension ListViewController: UITableViewDelegate {
-    // Cell Appearance
+    // Cell appearance
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         UITableView.automaticDimension
     }
@@ -141,9 +146,26 @@ extension ListViewController: UITableViewDelegate {
         forRowAt indexPath: IndexPath
     ) {
         if editingStyle == .delete {
-            notes.remove(at: indexPath.section)
-            tableView.deleteSections([indexPath.section], with: .fade)
+            deleteNote(indexPath, tableView)
         }
+    }
+
+    // Row select/deselect
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if !isEditing {
+            let noteVC = NoteViewController(note: notes[indexPath.section])
+            noteVC.noteDelegate = self
+            navigationController?.pushViewController(noteVC, animated: true)
+        }
+    }
+
+    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        if let indexPathForSelectedRow = tableView.indexPathForSelectedRow,
+           indexPathForSelectedRow == indexPath {
+            tableView.deselectRow(at: indexPath, animated: true)
+            return nil
+        }
+        return indexPath
     }
 }
 
