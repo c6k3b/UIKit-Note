@@ -8,8 +8,8 @@ class NoteCell: UITableViewCell, ConfigurableCell {
     private let dateLabel = UILabel()
     private let stackView = UIStackView()
 
-    private let checkmarkEmpty = UIImageView()
-    private let checkmarkFilled = UIImageView()
+//    private let checkmarkEmpty = UIImageView()
+//    private let checkmarkFilled = UIImageView()
 
     func configure(header: String?, body: String?, date: String) {
         headerLabel.text = header
@@ -18,32 +18,27 @@ class NoteCell: UITableViewCell, ConfigurableCell {
         setAppearance()
     }
 
-    override func willTransition(to state: UITableViewCell.StateMask) {
-        super.willTransition(to: state)
-        shakeHorizontaly()
-    }
+//    override func willTransition(to state: UITableViewCell.StateMask) {
+//        super.willTransition(to: state)
+//        shakeHorizontaly()
+//    }
 
     private func setAppearance() {
-        selectionStyle = .default
-        backgroundColor = .clear
+//        selectionStyle = .default
+        layer.cornerRadius = 14
+        tintColor = .red
 
-        backgroundView = UIView()
-        selectedBackgroundView = UIView()
+        backgroundView = UIView(frame: bounds)
+        selectedBackgroundView = UIView(frame: bounds)
 
-        checkmarkEmpty.frame = CGRect(x: 20, y: 37, width: 16, height: 16)
-        checkmarkEmpty.image = UIImage(named: "checkmarkEmpty")
+//        checkmarkEmpty.frame = CGRect(x: 20, y: 37, width: 16, height: 16)
+//        checkmarkEmpty.image = UIImage(named: "checkmarkEmpty")
+//
+//        checkmarkFilled.frame = CGRect(x: 20, y: 37, width: 16, height: 16)
+//        checkmarkFilled.image = UIImage(named: "checkmarkFilled")
 
-        checkmarkFilled.frame = CGRect(x: 20, y: 37, width: 16, height: 16)
-        checkmarkFilled.image = UIImage(named: "checkmarkFilled")
-
-        contentView.layer.cornerRadius = 14
-        contentView.backgroundColor = .systemBackground
-
-        backgroundView?.layer.cornerRadius = 14
-        backgroundView?.backgroundColor = .systemBackground
-
-        backgroundView?.addSubview(checkmarkEmpty)
-        selectedBackgroundView?.addSubview(checkmarkFilled)
+//        backgroundView?.addSubview(checkmarkEmpty)
+//        selectedBackgroundView?.addSubview(checkmarkFilled)
 
         contentView.addSubview(stackView)
         setupStackView()
@@ -58,26 +53,10 @@ class NoteCell: UITableViewCell, ConfigurableCell {
         setupBodyLabel()
         setupDateLabel()
 
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.leadingAnchor.constraint(
-            equalTo: contentView.leadingAnchor,
-            constant: 16
-        ).isActive = true
-        stackView.trailingAnchor.constraint(
-            equalTo: contentView.trailingAnchor,
-            constant: -16
-        ).isActive = true
-        stackView.topAnchor.constraint(
-            equalTo: contentView.topAnchor,
-            constant: 10
-        ).isActive = true
-        stackView.bottomAnchor.constraint(
-            equalTo: contentView.bottomAnchor,
-            constant: -10
-        ).isActive = true
-
         stackView.setCustomSpacing(4, after: headerLabel)
         stackView.setCustomSpacing(24, after: bodyLabel)
+
+        activateStackViewConstraints()
     }
 
     private func setupHeaderLabel() {
@@ -95,5 +74,27 @@ class NoteCell: UITableViewCell, ConfigurableCell {
         dateLabel.font = .systemFont(ofSize: 10)
         dateLabel.textColor = .systemGray
         stackView.addArrangedSubview(dateLabel)
+    }
+}
+
+extension NoteCell {
+    private func activateStackViewConstraints() {
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.leadingAnchor.constraint(
+            equalTo: contentView.leadingAnchor,
+            constant: 16
+        ).isActive = true
+        stackView.trailingAnchor.constraint(
+            equalTo: contentView.trailingAnchor,
+            constant: -16
+        ).isActive = true
+        stackView.topAnchor.constraint(
+            equalTo: contentView.topAnchor,
+            constant: 10
+        ).isActive = true
+        stackView.bottomAnchor.constraint(
+            equalTo: contentView.bottomAnchor,
+            constant: -10
+        ).isActive = true
     }
 }

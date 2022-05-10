@@ -2,9 +2,10 @@ import UIKit
 
 class NoteViewController: UIViewController {
     private let navigationLeftBarButton = UIBarButtonItem()
-    private let noteHeaderTextField = UITextField()
-    private let noteDateLabel = UILabel()
-    private let noteBodyTextView = UITextView()
+    private let headerTextField = UITextField()
+    private let dateLabel = UILabel()
+    private let bodyTextView = UITextView()
+    private let stackView = UIStackView()
 
     private var note: Note
     private var isChanged = false
@@ -23,9 +24,7 @@ class NoteViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigation()
-        setupDateLabel()
-        setupHeaderTextField()
-        setupBodyTextView()
+        setupStackView()
 
         view.backgroundColor = .systemBackground
         setEditing(true, animated: true)
@@ -34,22 +33,35 @@ class NoteViewController: UIViewController {
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
 
-        noteHeaderTextField.isUserInteractionEnabled = isEditing
-        noteBodyTextView.isUserInteractionEnabled = isEditing
-        noteDateLabel.isUserInteractionEnabled = isEditing
+        headerTextField.isUserInteractionEnabled = isEditing
+        bodyTextView.isUserInteractionEnabled = isEditing
+        dateLabel.isUserInteractionEnabled = isEditing
         navigationLeftBarButton.isEnabled = !isEditing
         editButtonItem.title = isEditing ? "Готово" : "Изменить"
 
         if isEditing {
-            noteBodyTextView.becomeFirstResponder()
+            bodyTextView.becomeFirstResponder()
         } else {
             saveNote()
             if isEmpty() {
                 showAlert()
-                setEditing(editing, animated: true)
+                setEditing(editing, animated: animated)
             }
-            noteBodyTextView.resignFirstResponder()
+            bodyTextView.resignFirstResponder()
         }
+    }
+
+    private func setupStackView() {
+        stackView.axis = .vertical
+        stackView.distribution = .fill
+        stackView.spacing = 8
+
+        setupDateLabel()
+        setupHeaderTextField()
+        setupBodyTextView()
+
+        view.addSubview(stackView)
+        activateStackViewConstraints()
     }
 
     private func setupNavigation() {
@@ -61,85 +73,41 @@ class NoteViewController: UIViewController {
     }
 
     private func setupDateLabel() {
-        noteDateLabel.font = .systemFont(ofSize: 14)
-        noteDateLabel.text = note.date.getFormattedDate(format: "dd.MM.yyyy EEEE HH:mm")
-        noteDateLabel.textColor = .systemGray
-        noteDateLabel.textAlignment = .center
+        dateLabel.font = .systemFont(ofSize: 14)
+        dateLabel.textColor = .systemGray
+        dateLabel.textAlignment = .center
 
-        view.addSubview(noteDateLabel)
+        dateLabel.text = note.date.getFormattedDate(format: "dd.MM.yyyy EEEE HH:mm")
 
-        noteDateLabel.translatesAutoresizingMaskIntoConstraints = false
-        noteDateLabel.topAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.topAnchor,
-            constant: 8
-        ).isActive = true
-        noteDateLabel.leadingAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.leadingAnchor,
-            constant: 16
-        ).isActive = true
-        noteDateLabel.trailingAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-            constant: -16
-        ).isActive = true
+        stackView.addArrangedSubview(dateLabel)
     }
 
     private func setupHeaderTextField() {
-        noteHeaderTextField.placeholder = "Введите название"
-        noteHeaderTextField.font = .systemFont(ofSize: 24, weight: .bold)
+        headerTextField.placeholder = "Введите название"
+        headerTextField.font = .systemFont(ofSize: 24, weight: .bold)
 
-        noteHeaderTextField.text = note.header
+        headerTextField.text = note.header
 
-        view.addSubview(noteHeaderTextField)
-
-        noteHeaderTextField.translatesAutoresizingMaskIntoConstraints = false
-        noteHeaderTextField.topAnchor.constraint(
-            equalTo: noteDateLabel.bottomAnchor,
-            constant: 8
-        ).isActive = true
-        noteHeaderTextField.leadingAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.leadingAnchor,
-            constant: 16
-        ).isActive = true
-        noteHeaderTextField.trailingAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-            constant: -16
-        ).isActive = true
+        stackView.addArrangedSubview(headerTextField)
     }
 
     private func setupBodyTextView() {
-        noteBodyTextView.font = .systemFont(ofSize: 16)
-        noteBodyTextView.text = note.body
-        noteBodyTextView.autocorrectionType = .no
-        noteBodyTextView.adjustableKeyboard()
+        bodyTextView.font = .systemFont(ofSize: 16)
+        bodyTextView.autocorrectionType = .no
+        bodyTextView.adjustableKeyboard()
 
-        view.addSubview(noteBodyTextView)
+        bodyTextView.text = note.body
 
-        noteBodyTextView.translatesAutoresizingMaskIntoConstraints = false
-        noteBodyTextView.topAnchor.constraint(
-            equalTo: noteHeaderTextField.bottomAnchor,
-            constant: 8
-        ).isActive = true
-        noteBodyTextView.leadingAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.leadingAnchor,
-            constant: 16
-        ).isActive = true
-        noteBodyTextView.trailingAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-            constant: -16
-        ).isActive = true
-        noteBodyTextView.bottomAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.bottomAnchor,
-            constant: -16
-        ).isActive = true
+        stackView.addArrangedSubview(bodyTextView)
     }
 
     private func saveNote() {
-        if noteHeaderTextField.text != note.header || noteBodyTextView.text != note.body {
-            note.header = noteHeaderTextField.text
-            note.body = noteBodyTextView.text
+        if headerTextField.text != note.header || bodyTextView.text != note.body {
+            note.header = headerTextField.text
+            note.body = bodyTextView.text
             note.date = Date()
 
-            setupDateLabel()
+            dateLabel.text = note.date.getFormattedDate(format: "dd.MM.yyyy EEEE HH:mm")
             isChanged.toggle()
         }
     }
@@ -152,7 +120,7 @@ class NoteViewController: UIViewController {
         )
 
         let action = UIAlertAction(title: "Редактировать", style: .cancel) { _ in
-            self.noteBodyTextView.becomeFirstResponder()
+            self.bodyTextView.becomeFirstResponder()
         }
 
         alert.addAction(action)
@@ -168,5 +136,28 @@ class NoteViewController: UIViewController {
 extension NoteViewController {
     private func isEmpty() -> Bool {
         return note.isEmpty
+    }
+}
+
+// MARK: - Constraints
+extension NoteViewController {
+    private func activateStackViewConstraints() {
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.topAnchor.constraint(
+            equalTo: view.safeAreaLayoutGuide.topAnchor,
+            constant: 8
+        ).isActive = true
+        stackView.leadingAnchor.constraint(
+            equalTo: view.safeAreaLayoutGuide.leadingAnchor,
+            constant: 16
+        ).isActive = true
+        stackView.trailingAnchor.constraint(
+            equalTo: view.safeAreaLayoutGuide.trailingAnchor,
+            constant: -16
+        ).isActive = true
+        stackView.bottomAnchor.constraint(
+            equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+            constant: -16
+        ).isActive = true
     }
 }
