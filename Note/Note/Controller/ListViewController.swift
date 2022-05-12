@@ -15,11 +15,22 @@ class ListViewController: UIViewController {
         view.backgroundColor = .systemBackground.withAlphaComponent(0.97)
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        floatingButton.shake()
+    }
+
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        floatingButton.shake()
+//    }
+
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         table.setEditing(editing, animated: true)
         editButtonItem.title = !table.isEditing ? "Выбрать" : "Готово"
-        setupFloatingButton()
+        floatingButton.setImage(UIImage(named: !table.isEditing ? "buttonPlus" : "buttonTrash"), for: .normal)
+        floatingButton.shakeHorizontaly()
     }
 
     private func setupNavigation() {
@@ -55,7 +66,6 @@ class ListViewController: UIViewController {
         activateFloatingButtonConstraints()
 
         floatingButton.addTarget(self, action: #selector(didFloatingButtonTapped), for: .touchUpInside)
-        floatingButton.shake()
     }
 
     private func setupDelegates() {
@@ -149,7 +159,23 @@ extension ListViewController: UITableViewDelegate {
         if !isEditing {
             let noteVC = NoteViewController(note: notes[indexPath.section])
             noteVC.noteDelegate = self
-            navigationController?.pushViewController(noteVC, animated: true)
+
+            UIView.animate(
+                withDuration: 0.6,
+                delay: 0,
+                usingSpringWithDamping: 0.7,
+                initialSpringVelocity: 0.6,
+                options: []
+            ) {
+                [weak self] in
+                guard let self = self else { return }
+                self.floatingButton.bottomAnchor.constraint(
+                    equalTo: self.view.topAnchor, constant: -30
+                ).isActive = true
+                self.view.layoutSubviews()
+            } completion: { _ in
+                self.navigationController?.pushViewController(noteVC, animated: true)
+            }
         } else {
             if let cell = tableView.cellForRow(at: indexPath) as? NoteCell {
                 cell.shake()

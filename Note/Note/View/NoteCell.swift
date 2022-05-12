@@ -1,21 +1,26 @@
 import UIKit
 
 class NoteCell: UITableViewCell, ConfigurableCell {
-    static var identifier = String(describing: NoteCell.self)
+    static var identifier: String { String(describing: NoteCell.self) }
 
     private let headerLabel = UILabel()
     private let bodyLabel = UILabel()
     private let dateLabel = UILabel()
     private let stackView = UIStackView()
 
-    private let checkmarkEmpty = UIImageView()
-    private let checkmarkFilled = UIImageView()
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setAppearance()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     func configure(header: String?, body: String?, date: String) {
         headerLabel.text = header
         bodyLabel.text = body
         dateLabel.text = date
-        setAppearance()
     }
 
     override func layoutSubviews() {
