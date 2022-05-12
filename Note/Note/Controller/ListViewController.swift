@@ -32,7 +32,6 @@ class ListViewController: UIViewController {
         table.showsVerticalScrollIndicator = false
         table.allowsSelectionDuringEditing = true
         table.allowsMultipleSelectionDuringEditing = true
-        table.indicatorStyle = .default
 
         table.backgroundColor = .clear
         table.separatorStyle = .none
@@ -65,17 +64,38 @@ class ListViewController: UIViewController {
     }
 
     @objc private func didFloatingButtonTapped() {
-        if !isEditing {
-            let noteVC = NoteViewController(note: Note())
-            noteVC.noteDelegate = self
-            navigationController?.pushViewController(noteVC, animated: true)
-        }
+        !isEditing ? pushNoteVC() : removeNotes()
+    }
 
-        table.indexPathsForSelectedRows?.forEach({ index in
-            notes.remove(at: index.row)
-            table.deleteSections([index.section], with: .left)
-        })
-        table.reloadData()
+    private func pushNoteVC() {
+        let noteVC = NoteViewController(note: Note())
+        noteVC.noteDelegate = self
+        navigationController?.pushViewController(noteVC, animated: true)
+    }
+
+    private func removeNotes() {
+        table.performBatchUpdates {
+            let indices = table.indexPathsForSelectedRows
+            if indices == nil { showAlert() }
+
+            indices?.forEach {
+                notes.remove(at: $0.section)
+                table.deleteSections([$0.section], with: .automatic)
+            }
+        }
+    }
+
+    private func showAlert() {
+        let alert = UIAlertController(
+            title: "Вы не выбрали ни одной заметки",
+            message: nil,
+            preferredStyle: .alert
+        )
+
+        let action = UIAlertAction(title: "Ok", style: .cancel)
+        alert.addAction(action)
+
+        present(alert, animated: true)
     }
 }
 
@@ -136,25 +156,6 @@ extension ListViewController: UITableViewDelegate {
             }
         }
     }
-
-    // remove delete button
-//    func tableView(
-//        _ tableView: UITableView,
-//        editingStyleForRowAt indexPath: IndexPath
-//    ) -> UITableViewCell.EditingStyle {
-//        if isEditing { return .none }
-//        return .delete
-//    }
-
-    // deselect fading
-//    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-//        if let indexPathForSelectedRow = tableView.indexPathForSelectedRow,
-//           indexPathForSelectedRow == indexPath {
-//            tableView.deselectRow(at: indexPath, animated: true)
-//            return nil
-//        }
-//        return indexPath
-//    }
 }
 
 extension ListViewController: NoteDelegate {

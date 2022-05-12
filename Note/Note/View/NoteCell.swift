@@ -18,35 +18,18 @@ class NoteCell: UITableViewCell, ConfigurableCell {
         setAppearance()
     }
 
-//    override func willTransition(to state: UITableViewCell.StateMask) {
-//        super.willTransition(to: state)
-//        shakeHorizontaly()
-//    }
-
-//    override func setSelected(_ selected: Bool, animated: Bool) {
-//        super.setSelected(selected, animated: animated)
-//    }
-
     override func layoutSubviews() {
         super.layoutSubviews()
         layer.cornerRadius = 14
     }
 
     private func setAppearance() {
+        contentView.autoresizingMask = UIView.AutoresizingMask.flexibleHeight
         contentView.backgroundColor = .systemBackground
         contentView.layer.cornerRadius = 14
-//
+
         backgroundView = UIView(frame: bounds)
         selectedBackgroundView = UIView(frame: bounds)
-//
-//        checkmarkEmpty.frame = CGRect(x: 20, y: 37, width: 16, height: 16)
-//        checkmarkEmpty.image = UIImage(named: "checkmarkEmpty")
-//
-//        checkmarkFilled.frame = CGRect(x: 20, y: 37, width: 16, height: 16)
-//        checkmarkFilled.image = UIImage(named: "checkmarkFilled")
-//
-//        backgroundView?.addSubview(checkmarkEmpty)
-//        selectedBackgroundView?.addSubview(checkmarkFilled)
 
         contentView.addSubview(stackView)
         setupStackView()
