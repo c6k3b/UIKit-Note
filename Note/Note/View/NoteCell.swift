@@ -1,18 +1,29 @@
 import UIKit
 
 class NoteCell: UITableViewCell, ConfigurableCell {
-    static var identifier = String(describing: NoteCell.self)
+    static var identifier: String { String(describing: NoteCell.self) }
 
     private let noteHeaderLabel = UILabel()
     private let noteBodyLabel = UILabel()
     private let noteDateLabel = UILabel()
     private let stackView = UIStackView()
 
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setAppearance()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     func configure(header: String?, body: String?, date: String) {
         noteHeaderLabel.text = header
         noteBodyLabel.text = body
         noteDateLabel.text = date
+    }
 
+    private func setAppearance() {
         selectionStyle = .none
         contentView.layer.cornerRadius = 14
         contentView.layer.masksToBounds = true
@@ -55,19 +66,19 @@ class NoteCell: UITableViewCell, ConfigurableCell {
     }
 
     private func setupHeaderLabel() {
-           noteHeaderLabel.font = .systemFont(ofSize: 15)
-           stackView.addArrangedSubview(noteHeaderLabel)
-       }
+        noteHeaderLabel.font = .systemFont(ofSize: 15)
+        stackView.addArrangedSubview(noteHeaderLabel)
+    }
 
-       private func setupBodyLabel() {
-           noteBodyLabel.font = .systemFont(ofSize: 10)
-           noteBodyLabel.textColor = .systemGray
-           stackView.addArrangedSubview(noteBodyLabel)
-       }
+    private func setupBodyLabel() {
+        noteBodyLabel.font = .systemFont(ofSize: 10)
+        noteBodyLabel.textColor = .systemGray
+        stackView.addArrangedSubview(noteBodyLabel)
+    }
 
-       private func setupDateLabel() {
-           noteDateLabel.font = .systemFont(ofSize: 10)
-           noteDateLabel.textColor = .systemGray
-           stackView.addArrangedSubview(noteDateLabel)
-       }
+    private func setupDateLabel() {
+        noteDateLabel.font = .systemFont(ofSize: 10)
+        noteDateLabel.textColor = .systemGray
+        stackView.addArrangedSubview(noteDateLabel)
+    }
 }
