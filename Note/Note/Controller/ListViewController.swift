@@ -17,7 +17,7 @@ class ListViewController: UIViewController {
 
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
-        table.setEditing(editing, animated: animated)
+        table.setEditing(editing, animated: true)
         editButtonItem.title = !table.isEditing ? "Выбрать" : "Готово"
         setupFloatingButton()
     }
@@ -32,6 +32,7 @@ class ListViewController: UIViewController {
         table.showsVerticalScrollIndicator = false
         table.allowsSelectionDuringEditing = true
         table.allowsMultipleSelectionDuringEditing = true
+        table.indicatorStyle = .default
 
         table.backgroundColor = .clear
         table.separatorStyle = .none
@@ -63,19 +64,18 @@ class ListViewController: UIViewController {
         table.delegate = self
     }
 
-    private func deleteNote(at indexPath: IndexPath, from tableView: UITableView) {
-        notes.remove(at: indexPath.section)
-        tableView.deleteSections([indexPath.section], with: .fade)
-    }
-
     @objc private func didFloatingButtonTapped() {
         if !isEditing {
             let noteVC = NoteViewController(note: Note())
             noteVC.noteDelegate = self
             navigationController?.pushViewController(noteVC, animated: true)
-        } else {
-//            deleteNote(tableView(table, cellForRowAt: 0), table)
         }
+
+        table.indexPathsForSelectedRows?.forEach({ index in
+            notes.remove(at: index.row)
+            table.deleteSections([index.section], with: .left)
+        })
+        table.reloadData()
     }
 }
 
@@ -105,30 +105,48 @@ extension ListViewController: UITableViewDataSource {
 
 // MARK: - Delegate
 extension ListViewController: UITableViewDelegate {
+    // cell appearance
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         UITableView.automaticDimension
     }
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat { 4 }
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? { UIView() }
 
+    // swipe for delete
     func tableView(
         _ tableView: UITableView,
         commit editingStyle: UITableViewCell.EditingStyle,
         forRowAt indexPath: IndexPath
     ) {
         if editingStyle == .delete {
-            deleteNote(at: indexPath, from: tableView)
+            notes.remove(at: indexPath.section)
+            tableView.deleteSections([indexPath.section], with: .automatic)
         }
     }
 
+    // action on tap
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if !isEditing {
             let noteVC = NoteViewController(note: notes[indexPath.section])
             noteVC.noteDelegate = self
             navigationController?.pushViewController(noteVC, animated: true)
+        } else {
+            if let cell = tableView.cellForRow(at: indexPath) as? NoteCell {
+                cell.shake()
+            }
         }
     }
 
+    // remove delete button
+//    func tableView(
+//        _ tableView: UITableView,
+//        editingStyleForRowAt indexPath: IndexPath
+//    ) -> UITableViewCell.EditingStyle {
+//        if isEditing { return .none }
+//        return .delete
+//    }
+
+    // deselect fading
 //    func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
 //        if let indexPathForSelectedRow = tableView.indexPathForSelectedRow,
 //           indexPathForSelectedRow == indexPath {
