@@ -1,29 +1,47 @@
 import UIKit
 
 class ListViewController: UIViewController {
-    private let floatingButton = UIButton()
-    private let table = UITableView()
+    // MARK: - Props
+    private let table: UITableView = {
+        $0.showsVerticalScrollIndicator = false
+        $0.allowsSelectionDuringEditing = true
+        $0.allowsMultipleSelectionDuringEditing = true
+
+        $0.backgroundColor = .clear
+        $0.separatorStyle = .none
+        $0.estimatedRowHeight = 90
+
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.register(NoteCell.self, forCellReuseIdentifier: NoteCell.identifier)
+        return $0
+    }(UITableView())
+
+    private lazy var floatingButton: UIButton = {
+        $0.layer.cornerRadius = 25
+        $0.clipsToBounds = true
+        $0.contentVerticalAlignment = .bottom
+        $0.titleLabel?.font = .systemFont(ofSize: 36)
+        $0.backgroundColor = .systemBlue
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.setImage(UIImage(named: "buttonPlus"), for: .normal)
+        $0.addTarget(self, action: #selector(didFloatingButtonTapped), for: .touchUpInside)
+        return $0
+    }(UIButton())
 
     private var notes = SampleData().notes
 
+    // MARK: - Lyfecicle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavigation()
-        setupTableView()
-        setupFloatingButton()
-        setupDelegates()
-        view.backgroundColor = .systemBackground.withAlphaComponent(0.97)
+        createUI()
+        table.dataSource = self
+        table.delegate = self
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        floatingButton.shake()
+        floatingButton.shakeOnAppear()
     }
-
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//        floatingButton.shake()
-//    }
 
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
@@ -33,44 +51,17 @@ class ListViewController: UIViewController {
         floatingButton.shakeHorizontaly()
     }
 
-    private func setupNavigation() {
+    // MARK: - Methods
+    private func createUI() {
         navigationItem.title = "Заметки"
         editButtonItem.title = "Выбрать"
         navigationItem.rightBarButtonItem = editButtonItem
-    }
-
-    private func setupTableView() {
-        table.showsVerticalScrollIndicator = false
-        table.allowsSelectionDuringEditing = true
-        table.allowsMultipleSelectionDuringEditing = true
-
-        table.backgroundColor = .clear
-        table.separatorStyle = .none
-        table.estimatedRowHeight = 90
-
-        table.register(NoteCell.self, forCellReuseIdentifier: NoteCell.identifier)
 
         view.addSubview(table)
         activateTableViewConstraints()
-    }
-
-    private func setupFloatingButton() {
-        floatingButton.layer.cornerRadius = 25
-        floatingButton.clipsToBounds = true
-        floatingButton.contentVerticalAlignment = .bottom
-        floatingButton.titleLabel?.font = .systemFont(ofSize: 36)
-        floatingButton.backgroundColor = .systemBlue
-        floatingButton.setImage(UIImage(named: !table.isEditing ? "buttonPlus" : "buttonTrash"), for: .normal)
-
         view.addSubview(floatingButton)
         activateFloatingButtonConstraints()
-
-        floatingButton.addTarget(self, action: #selector(didFloatingButtonTapped), for: .touchUpInside)
-    }
-
-    private func setupDelegates() {
-        table.dataSource = self
-        table.delegate = self
+        view.backgroundColor = .systemBackground.withAlphaComponent(0.97)
     }
 
     @objc private func didFloatingButtonTapped() {
@@ -101,7 +92,6 @@ class ListViewController: UIViewController {
             message: nil,
             preferredStyle: .alert
         )
-
         let action = UIAlertAction(title: "Ok", style: .cancel)
         alert.addAction(action)
 
@@ -156,7 +146,12 @@ extension ListViewController: UITableViewDelegate {
 
     // action on tap
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if !isEditing {
+        switch isEditing {
+        case true:
+            if let cell = tableView.cellForRow(at: indexPath) as? NoteCell {
+                cell.shake()
+            }
+        case false:
             let noteVC = NoteViewController(note: notes[indexPath.section])
             noteVC.noteDelegate = self
 
@@ -166,8 +161,7 @@ extension ListViewController: UITableViewDelegate {
                 usingSpringWithDamping: 0.7,
                 initialSpringVelocity: 0.6,
                 options: []
-            ) {
-                [weak self] in
+            ) { [weak self] in
                 guard let self = self else { return }
                 self.floatingButton.bottomAnchor.constraint(
                     equalTo: self.view.topAnchor, constant: -30
@@ -175,10 +169,6 @@ extension ListViewController: UITableViewDelegate {
                 self.view.layoutSubviews()
             } completion: { _ in
                 self.navigationController?.pushViewController(noteVC, animated: true)
-            }
-        } else {
-            if let cell = tableView.cellForRow(at: indexPath) as? NoteCell {
-                cell.shake()
             }
         }
     }
@@ -200,14 +190,11 @@ extension ListViewController: NoteDelegate {
 // MARK: - Constraints
 extension ListViewController {
     private func activateTableViewConstraints() {
-        table.translatesAutoresizingMaskIntoConstraints = false
         table.leadingAnchor.constraint(
-            equalTo: view.leadingAnchor,
-            constant: 16
+            equalTo: view.leadingAnchor, constant: 16
         ).isActive = true
         table.trailingAnchor.constraint(
-            equalTo: view.trailingAnchor,
-            constant: -16
+            equalTo: view.trailingAnchor, constant: -16
         ).isActive = true
         table.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         table.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
@@ -216,12 +203,10 @@ extension ListViewController {
     private func activateFloatingButtonConstraints() {
         floatingButton.translatesAutoresizingMaskIntoConstraints = false
         floatingButton.trailingAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-            constant: -20
+            equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20
         ).isActive = true
         floatingButton.bottomAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.bottomAnchor,
-            constant: -20
+            equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20
         ).isActive = true
         floatingButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
         floatingButton.widthAnchor.constraint(equalToConstant: 50).isActive = true

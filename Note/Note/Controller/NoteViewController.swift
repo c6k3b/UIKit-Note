@@ -144,20 +144,16 @@ extension NoteViewController {
     private func activateStackViewConstraints() {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.topAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.topAnchor,
-            constant: 8
+            equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8
         ).isActive = true
         stackView.leadingAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.leadingAnchor,
-            constant: 16
+            equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16
         ).isActive = true
         stackView.trailingAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-            constant: -16
+            equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16
         ).isActive = true
         stackView.bottomAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.bottomAnchor,
-            constant: -16
+            equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16
         ).isActive = true
     }
 }
