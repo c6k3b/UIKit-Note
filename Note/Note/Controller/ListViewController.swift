@@ -84,11 +84,11 @@ class ListViewController: UIViewController {
     }
 
     private func removeNotes() {
-            let indices = table.indexPathsForSelectedRows
-            if indices == nil { showEmptySelectionAlert() }
-
         table.performBatchUpdates {
-            indices?.forEach {
+            let cellsForRemove = table.indexPathsForSelectedRows
+            if cellsForRemove == nil { showEmptySelectionAlert() }
+
+            cellsForRemove?.forEach {
                 notes.remove(at: $0.section)
                 table.deleteSections([$0.section], with: .automatic)
             }
