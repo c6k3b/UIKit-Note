@@ -11,7 +11,6 @@ class ListViewController: UIViewController {
         $0.separatorStyle = .none
         $0.estimatedRowHeight = 90
 
-        $0.translatesAutoresizingMaskIntoConstraints = false
         $0.register(NoteCell.self, forCellReuseIdentifier: NoteCell.identifier)
         return $0
     }(UITableView())
@@ -21,8 +20,7 @@ class ListViewController: UIViewController {
         $0.clipsToBounds = true
         $0.contentVerticalAlignment = .bottom
         $0.titleLabel?.font = .systemFont(ofSize: 36)
-        $0.backgroundColor = .systemBlue
-        $0.translatesAutoresizingMaskIntoConstraints = false
+
         $0.setImage(UIImage(named: "buttonPlus"), for: .normal)
         $0.addTarget(self, action: #selector(didFloatingButtonTapped), for: .touchUpInside)
         return $0
@@ -30,7 +28,7 @@ class ListViewController: UIViewController {
 
     private var notes = SampleData().notes
 
-    // MARK: - Lyfecicle
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         createUI()
@@ -41,6 +39,7 @@ class ListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         floatingButton.shakeOnAppear()
+        floatingButton.layer.opacity = 1
     }
 
     override func setEditing(_ editing: Bool, animated: Bool) {
@@ -53,49 +52,47 @@ class ListViewController: UIViewController {
 
     // MARK: - Methods
     private func createUI() {
+        view.backgroundColor = .systemBackground.withAlphaComponent(0.97)
+
         navigationItem.title = "Заметки"
         editButtonItem.title = "Выбрать"
         navigationItem.rightBarButtonItem = editButtonItem
 
         view.addSubview(table)
         activateTableViewConstraints()
+
         view.addSubview(floatingButton)
         activateFloatingButtonConstraints()
-        view.backgroundColor = .systemBackground.withAlphaComponent(0.97)
     }
 
     @objc private func didFloatingButtonTapped() {
-        !isEditing ? pushNoteVC() : removeNotes()
+        !isEditing ? pushNoteVC(NoteViewController(note: Note())) : removeNotes()
     }
 
-    private func pushNoteVC() {
-        let noteVC = NoteViewController(note: Note())
-        noteVC.noteDelegate = self
-        navigationController?.pushViewController(noteVC, animated: true)
+    private func pushNoteVC(_ viewController: NoteViewController) {
+        CATransaction.begin()
+        CATransaction.setCompletionBlock {
+            viewController.noteDelegate = self
+            self.navigationController?.pushViewController(viewController, animated: true)
+        }
+
+        floatingButton.shakeOnDisappear()
+        UIView.animate(withDuration: 0.2, delay: 0.6, options: []) {
+            self.floatingButton.layer.opacity = 0
+        }
+        CATransaction.commit()
     }
 
     private func removeNotes() {
-        table.performBatchUpdates {
             let indices = table.indexPathsForSelectedRows
-            if indices == nil { showAlert() }
+            if indices == nil { showEmptySelectionAlert() }
 
+        table.performBatchUpdates {
             indices?.forEach {
                 notes.remove(at: $0.section)
                 table.deleteSections([$0.section], with: .automatic)
             }
         }
-    }
-
-    private func showAlert() {
-        let alert = UIAlertController(
-            title: "Вы не выбрали ни одной заметки",
-            message: nil,
-            preferredStyle: .alert
-        )
-        let action = UIAlertAction(title: "Ok", style: .cancel)
-        alert.addAction(action)
-
-        present(alert, animated: true)
     }
 }
 
@@ -146,34 +143,17 @@ extension ListViewController: UITableViewDelegate {
 
     // action on tap
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch isEditing {
-        case true:
+        if isEditing {
             if let cell = tableView.cellForRow(at: indexPath) as? NoteCell {
                 cell.shake()
             }
-        case false:
-            let noteVC = NoteViewController(note: notes[indexPath.section])
-            noteVC.noteDelegate = self
-
-            UIView.animate(
-                withDuration: 0.6,
-                delay: 0,
-                usingSpringWithDamping: 0.7,
-                initialSpringVelocity: 0.6,
-                options: []
-            ) { [weak self] in
-                guard let self = self else { return }
-                self.floatingButton.bottomAnchor.constraint(
-                    equalTo: self.view.topAnchor, constant: -30
-                ).isActive = true
-                self.view.layoutSubviews()
-            } completion: { _ in
-                self.navigationController?.pushViewController(noteVC, animated: true)
-            }
+        } else {
+            pushNoteVC(NoteViewController(note: notes[indexPath.section]))
         }
     }
 }
 
+// MARK: - Note Delegate
 extension ListViewController: NoteDelegate {
     func passData(from note: Note, isChanged: Bool) {
         if isChanged {
@@ -182,14 +162,30 @@ extension ListViewController: NoteDelegate {
             } else {
                 notes.append(note)
             }
+            table.reloadData()
         }
-        table.reloadData()
+    }
+}
+
+// MARK: - Alerts
+extension ListViewController {
+    private func showEmptySelectionAlert() {
+        let alert = UIAlertController(
+            title: "Вы не выбрали ни одной заметки",
+            message: nil,
+            preferredStyle: .alert
+        )
+        let action = UIAlertAction(title: "Ok", style: .cancel)
+        alert.addAction(action)
+
+        present(alert, animated: true)
     }
 }
 
 // MARK: - Constraints
 extension ListViewController {
     private func activateTableViewConstraints() {
+        table.translatesAutoresizingMaskIntoConstraints = false
         table.leadingAnchor.constraint(
             equalTo: view.leadingAnchor, constant: 16
         ).isActive = true

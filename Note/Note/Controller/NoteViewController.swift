@@ -1,20 +1,61 @@
 import UIKit
 
 class NoteViewController: UIViewController {
-    private let navigationLeftBarButton = UIBarButtonItem()
-    private let headerTextField = UITextField()
-    private let dateLabel = UILabel()
-    private let bodyTextView = UITextView()
-    private let stackView = UIStackView()
+    // MARK: - Props
+    private lazy var navigationLeftBarButton: UIBarButtonItem = {
+        $0.image = UIImage(named: "backButton")
+        $0.target = self
+        $0.action = #selector(didNavigationLeftBarButtonTapped)
+        return $0
+    }(UIBarButtonItem())
+
+    private lazy var stackView: UIStackView = {
+        $0.axis = .vertical
+        $0.distribution = .fill
+        $0.spacing = 8
+
+        $0.addArrangedSubview(dateLabel)
+        $0.addArrangedSubview(headerTextField)
+        $0.addArrangedSubview(bodyTextView)
+
+        return $0
+    }(UIStackView())
+
+    private lazy var dateLabel: UILabel = {
+        $0.font = .systemFont(ofSize: 14)
+        $0.textColor = .systemGray
+        $0.textAlignment = .center
+        $0.text = setupDateLabel()
+        return $0
+    }(UILabel())
+
+    private lazy var headerTextField: UITextField = {
+        $0.placeholder = "Введите название"
+        $0.font = .systemFont(ofSize: 24, weight: .bold)
+        $0.text = note.header
+        return $0
+    }(UITextField())
+
+    private lazy var bodyTextView: UITextView = {
+        $0.font = .systemFont(ofSize: 16)
+        $0.autocorrectionType = .no
+        $0.adjustableKeyboard()
+        $0.text = note.body
+        return $0
+    }(UITextView())
+
+    private lazy var isChanged: Bool = {
+        headerTextField.text != note.header || bodyTextView.text != note.body
+    }()
 
     private var note: Note
-    private var isChanged = false
-
     weak var noteDelegate: NoteDelegate?
 
+    // MARK: - Lifecycle
     init(note: Note) {
         self.note = note
         super.init(nibName: nil, bundle: nil)
+        setEditing(true, animated: true)
     }
 
     required init?(coder: NSCoder) {
@@ -23,119 +64,80 @@ class NoteViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavigation()
-        setupStackView()
-
-        view.backgroundColor = .systemBackground
-        setEditing(true, animated: true)
+        createUI()
     }
 
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
 
-        headerTextField.isUserInteractionEnabled = isEditing
-        bodyTextView.isUserInteractionEnabled = isEditing
-        dateLabel.isUserInteractionEnabled = isEditing
-        navigationLeftBarButton.isEnabled = !isEditing
-        editButtonItem.title = isEditing ? "Готово" : "Изменить"
+        dateLabel.isUserInteractionEnabled = editing
+        headerTextField.isUserInteractionEnabled = editing
+        bodyTextView.isUserInteractionEnabled = editing
 
-        if isEditing {
-            bodyTextView.becomeFirstResponder()
-        } else {
+        navigationLeftBarButton.isEnabled = !editing
+        editButtonItem.title = editing ? "Готово" : "Изменить"
+
+        _ = editing ? bodyTextView.becomeFirstResponder() :  bodyTextView.resignFirstResponder()
+
+        if !editing && isChanged {
             saveNote()
-            if isEmpty() {
-                showAlert()
-                setEditing(editing, animated: animated)
-            }
-            bodyTextView.resignFirstResponder()
+            dateLabel.text = setupDateLabel()
+            dateLabel.shake()
+        }
+
+        if !editing && isEmpty() {
+            showEmptyFieldsAlert()
+            setEditing(!editing, animated: true)
         }
     }
 
-    private func setupStackView() {
-        stackView.axis = .vertical
-        stackView.distribution = .fill
-        stackView.spacing = 8
+    // MARK: - Methods
+    private func createUI() {
+        view.backgroundColor = .systemBackground
 
-        setupDateLabel()
-        setupHeaderTextField()
-        setupBodyTextView()
+        navigationItem.leftBarButtonItem = navigationLeftBarButton
+        navigationItem.rightBarButtonItem = editButtonItem
 
         view.addSubview(stackView)
         activateStackViewConstraints()
     }
 
-    private func setupNavigation() {
-        navigationLeftBarButton.image = UIImage(named: "backButton")
-        navigationLeftBarButton.target = self
-        navigationLeftBarButton.action = #selector(didNavigationLeftBarButtonTapped)
-        navigationItem.leftBarButtonItem = navigationLeftBarButton
-        navigationItem.rightBarButtonItem = editButtonItem
-    }
-
-    private func setupDateLabel() {
-        dateLabel.font = .systemFont(ofSize: 14)
-        dateLabel.textColor = .systemGray
-        dateLabel.textAlignment = .center
-
-        dateLabel.text = note.date.getFormattedDate(format: "dd.MM.yyyy EEEE HH:mm")
-
-        stackView.addArrangedSubview(dateLabel)
-    }
-
-    private func setupHeaderTextField() {
-        headerTextField.placeholder = "Введите название"
-        headerTextField.font = .systemFont(ofSize: 24, weight: .bold)
-
-        headerTextField.text = note.header
-
-        stackView.addArrangedSubview(headerTextField)
-    }
-
-    private func setupBodyTextView() {
-        bodyTextView.font = .systemFont(ofSize: 16)
-        bodyTextView.autocorrectionType = .no
-        bodyTextView.adjustableKeyboard()
-
-        bodyTextView.text = note.body
-
-        stackView.addArrangedSubview(bodyTextView)
-    }
-
-    private func saveNote() {
-        if headerTextField.text != note.header || bodyTextView.text != note.body {
-            note.header = headerTextField.text
-            note.body = bodyTextView.text
-            note.date = Date()
-
-            dateLabel.text = note.date.getFormattedDate(format: "dd.MM.yyyy EEEE HH:mm")
-            isChanged.toggle()
-        }
-    }
-
-    private func showAlert() {
-        let alert = UIAlertController(
-            title: "Поля не заполнены",
-            message: "Не могу сохранить пустую заметку",
-            preferredStyle: .alert
-        )
-
-        let action = UIAlertAction(title: "Редактировать", style: .cancel) { _ in
-            self.bodyTextView.becomeFirstResponder()
-        }
-
-        alert.addAction(action)
-        present(alert, animated: true)
+    private func setupDateLabel() -> String {
+        note.date.getFormattedDate(format: "dd.MM.yyyy EEEE HH:mm")
     }
 
     @objc private func didNavigationLeftBarButtonTapped() {
         noteDelegate?.passData(from: note, isChanged: isChanged)
         navigationController?.popViewController(animated: true)
     }
+
+    private func saveNote() {
+        note.header = headerTextField.text
+        note.body = bodyTextView.text
+        note.date = Date()
+    }
 }
 
 extension NoteViewController {
     private func isEmpty() -> Bool {
         return note.isEmpty
+    }
+}
+
+// MARK: - Alerts
+extension NoteViewController {
+    private func showEmptyFieldsAlert() {
+        let alert = UIAlertController(
+            title: "Поля не заполнены",
+            message: "Не могу сохранить пустую заметку",
+            preferredStyle: .alert
+        )
+        let action = UIAlertAction(title: "Редактировать", style: .cancel) { _ in
+            self.bodyTextView.becomeFirstResponder()
+        }
+
+        alert.addAction(action)
+        present(alert, animated: true)
     }
 }
 

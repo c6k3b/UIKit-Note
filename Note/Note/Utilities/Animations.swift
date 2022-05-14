@@ -19,9 +19,17 @@ extension UIView {
 
     func shakeOnAppear() {
         let animation = CAKeyframeAnimation(keyPath: "transform.translation.y")
-        animation.timingFunction = CAMediaTimingFunction(name: .linear)
-        animation.duration = 1.6
+        animation.timingFunction = CAMediaTimingFunction(name: .easeIn)
+        animation.duration = 1
         animation.values = [100, -10, 5, -5, 0]
         layer.add(animation, forKey: "shakeOnAppear")
+    }
+
+    func shakeOnDisappear() {
+        let animation = CAKeyframeAnimation(keyPath: "transform.translation.y")
+        animation.timingFunction = CAMediaTimingFunction(name: .easeOut)
+        animation.duration = 0.8
+        animation.values = [0, -10, 100]
+        layer.add(animation, forKey: "shakeOnDisappear")
     }
 }
