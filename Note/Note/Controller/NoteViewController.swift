@@ -13,11 +13,9 @@ class NoteViewController: UIViewController {
         $0.axis = .vertical
         $0.distribution = .fill
         $0.spacing = 8
-
         $0.addArrangedSubview(dateLabel)
         $0.addArrangedSubview(headerTextField)
         $0.addArrangedSubview(bodyTextView)
-
         return $0
     }(UIStackView())
 

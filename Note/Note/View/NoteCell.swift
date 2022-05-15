@@ -1,16 +1,42 @@
 import UIKit
 
 class NoteCell: UITableViewCell, ConfigurableCell {
+    // MARK: - Props
+    private lazy var stackView: UIStackView = {
+        $0.alignment = .leading
+        $0.axis = .vertical
+        $0.distribution = .fill
+        $0.addArrangedSubview(headerLabel)
+        $0.setCustomSpacing(4, after: headerLabel)
+        $0.addArrangedSubview(bodyLabel)
+        $0.setCustomSpacing(24, after: bodyLabel)
+        $0.addArrangedSubview(dateLabel)
+        return $0
+    }(UIStackView())
+
+    private let headerLabel: UILabel = {
+        $0.font = .systemFont(ofSize: 15)
+        return $0
+    }(UILabel())
+
+    private let bodyLabel: UILabel = {
+        $0.font = .systemFont(ofSize: 10)
+        $0.textColor = .systemGray
+        return $0
+    }(UILabel())
+
+    private let dateLabel: UILabel = {
+        $0.font = .systemFont(ofSize: 10)
+        $0.textColor = .systemGray
+        return $0
+    }(UILabel())
+
     static var identifier: String { String(describing: NoteCell.self) }
 
-    private let headerLabel = UILabel()
-    private let bodyLabel = UILabel()
-    private let dateLabel = UILabel()
-    private let stackView = UIStackView()
-
+    // MARK: - Initializers
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setAppearance()
+        createUI()
     }
 
     required init?(coder: NSCoder) {
@@ -23,13 +49,14 @@ class NoteCell: UITableViewCell, ConfigurableCell {
         dateLabel.text = date
     }
 
+    // MARK: - Lifecycle
     override func layoutSubviews() {
         super.layoutSubviews()
         layer.cornerRadius = 14
     }
 
-    private func setAppearance() {
-        contentView.autoresizingMask = UIView.AutoresizingMask.flexibleHeight
+    // MARK: - Methods
+    private func createUI() {
         contentView.backgroundColor = .systemBackground
         contentView.layer.cornerRadius = 14
 
@@ -37,42 +64,11 @@ class NoteCell: UITableViewCell, ConfigurableCell {
         selectedBackgroundView = UIView(frame: bounds)
 
         contentView.addSubview(stackView)
-        setupStackView()
-    }
-
-    private func setupStackView() {
-        stackView.alignment = .leading
-        stackView.axis = .vertical
-        stackView.distribution = .fill
-
-        setupHeaderLabel()
-        setupBodyLabel()
-        setupDateLabel()
-
-        stackView.setCustomSpacing(4, after: headerLabel)
-        stackView.setCustomSpacing(24, after: bodyLabel)
-
         activateStackViewConstraints()
-    }
-
-    private func setupHeaderLabel() {
-        headerLabel.font = .systemFont(ofSize: 15)
-        stackView.addArrangedSubview(headerLabel)
-    }
-
-    private func setupBodyLabel() {
-        bodyLabel.font = .systemFont(ofSize: 10)
-        bodyLabel.textColor = .systemGray
-        stackView.addArrangedSubview(bodyLabel)
-    }
-
-    private func setupDateLabel() {
-        dateLabel.font = .systemFont(ofSize: 10)
-        dateLabel.textColor = .systemGray
-        stackView.addArrangedSubview(dateLabel)
     }
 }
 
+// MARK: - Constraints
 extension NoteCell {
     private func activateStackViewConstraints() {
         stackView.translatesAutoresizingMaskIntoConstraints = false

@@ -4,13 +4,10 @@ class ListViewController: UIViewController {
     // MARK: - Props
     private let table: UITableView = {
         $0.showsVerticalScrollIndicator = false
-        $0.allowsSelectionDuringEditing = true
         $0.allowsMultipleSelectionDuringEditing = true
-
         $0.backgroundColor = .clear
         $0.separatorStyle = .none
         $0.estimatedRowHeight = 90
-
         $0.register(NoteCell.self, forCellReuseIdentifier: NoteCell.identifier)
         return $0
     }(UITableView())
@@ -20,7 +17,6 @@ class ListViewController: UIViewController {
         $0.clipsToBounds = true
         $0.contentVerticalAlignment = .bottom
         $0.titleLabel?.font = .systemFont(ofSize: 36)
-
         $0.setImage(UIImage(named: "buttonPlus"), for: .normal)
         $0.addTarget(self, action: #selector(didFloatingButtonTapped), for: .touchUpInside)
         return $0
@@ -130,7 +126,12 @@ extension ListViewController: UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat { 4 }
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? { UIView() }
-
+    func tableView(
+        _ tableView: UITableView,
+        editingStyleForRowAt indexPath: IndexPath
+    ) -> UITableViewCell.EditingStyle {
+        .delete
+    }
     // swipe for delete
     func tableView(
         _ tableView: UITableView,
@@ -146,11 +147,15 @@ extension ListViewController: UITableViewDelegate {
     // action on tap
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if isEditing {
-            if let cell = tableView.cellForRow(at: indexPath) as? NoteCell {
-                cell.shake()
-            }
+            if let cell = tableView.cellForRow(at: indexPath) as? NoteCell { cell.shake() }
         } else {
             pushNoteVC(NoteViewController(note: notes[indexPath.section]))
+        }
+    }
+
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        if isEditing {
+            if let cell = tableView.cellForRow(at: indexPath) as? NoteCell { cell.shake() }
         }
     }
 }
