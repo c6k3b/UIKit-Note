@@ -2,34 +2,30 @@ import UIKit
 
 class ListViewController: UIViewController {
     // MARK: - Props
-    private let table: UITableView = {
-        $0.showsVerticalScrollIndicator = false
-        $0.allowsMultipleSelectionDuringEditing = true
-        $0.backgroundColor = .clear
-        $0.separatorStyle = .none
-        $0.estimatedRowHeight = 90
-        $0.register(NoteCell.self, forCellReuseIdentifier: NoteCell.identifier)
+    private lazy var table: NotesTableView = {
+        $0.dataSource = self
+        $0.delegate = self
         return $0
-    }(UITableView())
+    }(NotesTableView())
 
-    private lazy var floatingButton: UIButton = {
-        $0.layer.cornerRadius = 25
-        $0.clipsToBounds = true
-        $0.contentVerticalAlignment = .bottom
-        $0.titleLabel?.font = .systemFont(ofSize: 36)
-        $0.setImage(UIImage(named: "buttonPlus"), for: .normal)
+    private lazy var floatingButton: FloatingButton = {
         $0.addTarget(self, action: #selector(didFloatingButtonTapped), for: .touchUpInside)
         return $0
-    }(UIButton())
+    }(FloatingButton())
 
     private var notes = SampleData().notes
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        createUI()
-        table.dataSource = self
-        table.delegate = self
+        view.backgroundColor = .systemBackground.withAlphaComponent(0.97)
+
+        navigationItem.title = "Заметки"
+        editButtonItem.title = "Выбрать"
+        navigationItem.rightBarButtonItem = editButtonItem
+
+        view.addSubview(table)
+        view.addSubview(floatingButton)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -47,20 +43,6 @@ class ListViewController: UIViewController {
     }
 
     // MARK: - Methods
-    private func createUI() {
-        view.backgroundColor = .systemBackground.withAlphaComponent(0.97)
-
-        navigationItem.title = "Заметки"
-        editButtonItem.title = "Выбрать"
-        navigationItem.rightBarButtonItem = editButtonItem
-
-        view.addSubview(table)
-        activateTableViewConstraints()
-
-        view.addSubview(floatingButton)
-        activateFloatingButtonConstraints()
-    }
-
     @objc private func didFloatingButtonTapped() {
         !isEditing ? pushNoteVC(NoteViewController(note: Note())) : removeNotes()
     }
@@ -132,6 +114,7 @@ extension ListViewController: UITableViewDelegate {
     ) -> UITableViewCell.EditingStyle {
         .delete
     }
+
     // swipe for delete
     func tableView(
         _ tableView: UITableView,
@@ -144,7 +127,7 @@ extension ListViewController: UITableViewDelegate {
         }
     }
 
-    // action on tap
+    // actions on tap
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if isEditing {
             if let cell = tableView.cellForRow(at: indexPath) as? NoteCell { cell.shake() }
@@ -186,32 +169,5 @@ extension ListViewController {
         alert.addAction(action)
 
         present(alert, animated: true)
-    }
-}
-
-// MARK: - Constraints
-extension ListViewController {
-    private func activateTableViewConstraints() {
-        table.translatesAutoresizingMaskIntoConstraints = false
-        table.leadingAnchor.constraint(
-            equalTo: view.leadingAnchor, constant: 16
-        ).isActive = true
-        table.trailingAnchor.constraint(
-            equalTo: view.trailingAnchor, constant: -16
-        ).isActive = true
-        table.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        table.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-    }
-
-    private func activateFloatingButtonConstraints() {
-        floatingButton.translatesAutoresizingMaskIntoConstraints = false
-        floatingButton.trailingAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20
-        ).isActive = true
-        floatingButton.bottomAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20
-        ).isActive = true
-        floatingButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        floatingButton.widthAnchor.constraint(equalToConstant: 50).isActive = true
     }
 }
