@@ -4,12 +4,7 @@ class NotesTableView: UITableView {
     // MARK: - Initializers
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
-        showsVerticalScrollIndicator = false
-        allowsMultipleSelectionDuringEditing = true
-        backgroundColor = .clear
-        separatorStyle = .none
-        estimatedRowHeight = 90
-
+        createUI()
         register(NoteCell.self, forCellReuseIdentifier: NoteCell.identifier)
     }
 
@@ -19,6 +14,15 @@ class NotesTableView: UITableView {
 
     override func didMoveToSuperview() {
         activateTableViewConstraints()
+    }
+
+    // MARK: - Methods
+    private func createUI() {
+        showsVerticalScrollIndicator = false
+        allowsMultipleSelectionDuringEditing = true
+        backgroundColor = .clear
+        separatorStyle = .none
+        estimatedRowHeight = 90
     }
 }
 

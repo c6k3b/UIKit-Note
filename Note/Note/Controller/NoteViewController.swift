@@ -53,7 +53,6 @@ class NoteViewController: UIViewController {
     init(note: Note) {
         self.note = note
         super.init(nibName: nil, bundle: nil)
-        setEditing(true, animated: true)
     }
 
     required init?(coder: NSCoder) {
@@ -63,18 +62,16 @@ class NoteViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         createUI()
+        setEditing(true, animated: true)
     }
 
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
 
-        dateLabel.isUserInteractionEnabled = editing
-        headerTextField.isUserInteractionEnabled = editing
-        bodyTextView.isUserInteractionEnabled = editing
-
         navigationLeftBarButton.isEnabled = !editing
         editButtonItem.title = editing ? "Готово" : "Изменить"
 
+        view.isUserInteractionEnabled = editing
         _ = editing ? bodyTextView.becomeFirstResponder() :  bodyTextView.resignFirstResponder()
 
         if !editing && isChanged {

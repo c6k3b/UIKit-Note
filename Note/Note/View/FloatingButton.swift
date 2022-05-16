@@ -4,11 +4,7 @@ class FloatingButton: UIButton {
     // MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
-        layer.cornerRadius = 25
-        clipsToBounds = true
-        contentVerticalAlignment = .bottom
-        titleLabel?.font = .systemFont(ofSize: 36)
-        setImage(UIImage(named: "buttonPlus"), for: .normal)
+        createUI()
     }
 
     required init?(coder: NSCoder) {
@@ -18,6 +14,15 @@ class FloatingButton: UIButton {
     // MARK: - Lifecycle
     override func didMoveToSuperview() {
         activateFloatingButtonConstraints()
+    }
+
+    // MARK: - Methods
+    private func createUI() {
+        layer.cornerRadius = 25
+        clipsToBounds = true
+        contentVerticalAlignment = .bottom
+        titleLabel?.font = .systemFont(ofSize: 36)
+        setImage(UIImage(named: "buttonPlus"), for: .normal)
     }
 }
 
