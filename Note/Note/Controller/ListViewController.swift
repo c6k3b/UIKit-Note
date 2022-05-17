@@ -62,13 +62,16 @@ class ListViewController: UIViewController {
     }
 
     private func removeNotes() {
-        let cellsForRemove = table.indexPathsForSelectedRows?.sorted(by: <)
-        if cellsForRemove == nil { showEmptySelectionAlert() }
+        let cellsForRemove = table.indexPathsForSelectedRows?.sorted(by: >)
 
-        table.performBatchUpdates {
+        if cellsForRemove == nil {
+            showEmptySelectionAlert()
+        } else {
             cellsForRemove?.forEach {
+                table.beginUpdates()
                 notes.remove(at: $0.section)
                 table.deleteSections([$0.section], with: .automatic)
+                table.endUpdates()
             }
         }
     }
@@ -85,7 +88,7 @@ extension ListViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: NoteCell.identifier,
             for: indexPath
-        ) as? NoteCell else {
+        ) as? ConfigurableCell else {
             return UITableViewCell()
         }
 
@@ -94,7 +97,7 @@ extension ListViewController: UITableViewDataSource {
             body: note.body ?? "N/A",
             date: note.date.getFormattedDate(format: "dd MM yyyy")
         )
-        return cell
+        return cell as? UITableViewCell ?? UITableViewCell()
     }
 }
 
