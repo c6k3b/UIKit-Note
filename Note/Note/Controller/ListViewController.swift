@@ -109,18 +109,10 @@ extension ListViewController: UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat { 4 }
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? { UIView() }
-    func tableView(
-        _ tableView: UITableView,
-        editingStyleForRowAt indexPath: IndexPath
-    ) -> UITableViewCell.EditingStyle {
-        .delete
-    }
 
     // swipe for delete
     func tableView(
-        _ tableView: UITableView,
-        commit editingStyle: UITableViewCell.EditingStyle,
-        forRowAt indexPath: IndexPath
+        _ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath
     ) {
         if editingStyle == .delete {
             notes.remove(at: indexPath.section)
