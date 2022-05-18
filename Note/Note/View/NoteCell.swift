@@ -55,29 +55,34 @@ class NoteCell: UITableViewCell, ConfigurableCell {
         layer.cornerRadius = 14
     }
 
-// Custom checker
-//    override func setSelected(_ selected: Bool, animated: Bool) {
-//        super.setSelected(selected, animated: animated)
-//        imageView?.image = UIImage(
-//            named: selected ? "checkmarkFilled" : "checkmarkEmpty"
-//        )
-//    }
-//
-//    override func setEditing(_ editing: Bool, animated: Bool) {
-//        super.setEditing(false, animated: animated)
-//        setNeedsLayout()
-//    }
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: true)
+        if isEditing { shake() }
+    }
 
     // MARK: - Methods
     private func createUI() {
-        contentView.backgroundColor = .systemBackground
         contentView.layer.cornerRadius = 14
+        contentView.backgroundColor = .systemBackground
 
-        backgroundView = UIView(frame: bounds)
-        selectedBackgroundView = UIView(frame: bounds)
+        backgroundView = createBackground(withImage: "checkmarkEmpty")
+        selectedBackgroundView = createBackground(withImage: "checkmarkFilled")
 
         contentView.addSubview(stackView)
         activateStackViewConstraints()
+    }
+
+    private func createBackground(withImage: String) -> UIView {
+        let view = UIView()
+        view.frame = bounds
+        view.bounds = CGRect(
+            origin: CGPoint(
+                x: bounds.origin.x - 20,
+                y: bounds.origin.y - 37
+            ), size: .zero
+        )
+        view.addSubview(UIImageView(image: UIImage(named: withImage)))
+        return view
     }
 }
 

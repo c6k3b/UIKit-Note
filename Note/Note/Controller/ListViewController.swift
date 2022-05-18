@@ -103,14 +103,12 @@ extension ListViewController: UITableViewDataSource {
 
 // MARK: - Delegate
 extension ListViewController: UITableViewDelegate {
-    // cell appearance
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? { UIView() }
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat { 4 }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         UITableView.automaticDimension
     }
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat { 4 }
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? { UIView() }
 
-    // swipe for delete
     func tableView(
         _ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath
     ) {
@@ -120,19 +118,8 @@ extension ListViewController: UITableViewDelegate {
         }
     }
 
-    // actions on tap
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if isEditing {
-            if let cell = tableView.cellForRow(at: indexPath) as? NoteCell { cell.shake() }
-        } else {
-            pushNoteVC(NoteViewController(note: notes[indexPath.section]))
-        }
-    }
-
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        if isEditing {
-            if let cell = tableView.cellForRow(at: indexPath) as? NoteCell { cell.shake() }
-        }
+        if !isEditing { pushNoteVC(NoteViewController(note: notes[indexPath.section])) }
     }
 }
 
