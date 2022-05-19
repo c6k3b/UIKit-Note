@@ -20,7 +20,6 @@ class NotesTableView: UITableView {
     private func createUI() {
         showsVerticalScrollIndicator = false
         allowsMultipleSelectionDuringEditing = true
-//        allowsSelectionDuringEditing = true
         backgroundColor = .clear
         separatorStyle = .none
         estimatedRowHeight = 90
