@@ -1,6 +1,7 @@
 import UIKit
 
 class NoteViewController: UIViewController {
+    private let navigationLeftBarButton = UIBarButtonItem()
     private let navigationRightBarButton = UIBarButtonItem()
     private let navigationLeftBarButton = UIBarButtonItem()
     private let noteHeaderTextField = UITextField()
@@ -151,7 +152,11 @@ class NoteViewController: UIViewController {
     }
 
     @objc private func didLeftBarButtonTapped() {
+<<<<<<< HEAD
         noteDelegate?.passData(from: note, isChanged: isChanged)
+=======
+        noteDelegate?.passDataToView(from: note)
+>>>>>>> f946c825576de7fdbf937b158e65fa2919da6b9b
         navigationController?.popViewController(animated: true)
     }
 
