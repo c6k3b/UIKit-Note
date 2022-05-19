@@ -3,12 +3,14 @@ import UIKit
 class NoteViewController: UIViewController {
     private let navigationLeftBarButton = UIBarButtonItem()
     private let navigationRightBarButton = UIBarButtonItem()
+    private let navigationLeftBarButton = UIBarButtonItem()
     private let noteHeaderTextField = UITextField()
     private let noteDateLabel = UILabel()
     private let noteBodyTextView = UITextView()
 
     private var note: Note
     private var isEditingMode = false
+    private var isChanged = false
 
     weak var noteDelegate: NoteDelegate?
 
@@ -93,6 +95,7 @@ class NoteViewController: UIViewController {
     private func setupBodyTextView() {
         noteBodyTextView.font = .systemFont(ofSize: 16)
         noteBodyTextView.text = note.body
+        noteBodyTextView.autocorrectionType = .no
         noteBodyTextView.adjustableKeyboard()
 
         view.addSubview(noteBodyTextView)
@@ -123,9 +126,14 @@ class NoteViewController: UIViewController {
     }
 
     private func saveNote() {
-        note.header = noteHeaderTextField.text
-        note.body = noteBodyTextView.text
-        note.date = note.date
+        if noteHeaderTextField.text != note.header || noteBodyTextView.text != note.body {
+            note.header = noteHeaderTextField.text
+            note.body = noteBodyTextView.text
+            note.date = Date()
+
+            setupDateLabel()
+            isChanged.toggle()
+        }
     }
 
     private func showAlert() {
@@ -144,7 +152,11 @@ class NoteViewController: UIViewController {
     }
 
     @objc private func didLeftBarButtonTapped() {
+<<<<<<< HEAD
+        noteDelegate?.passData(from: note, isChanged: isChanged)
+=======
         noteDelegate?.passDataToView(from: note)
+>>>>>>> f946c825576de7fdbf937b158e65fa2919da6b9b
         navigationController?.popViewController(animated: true)
     }
 

@@ -1,5 +1,10 @@
 import Foundation
+import UIKit
 
 protocol NoteDelegate: AnyObject {
-    func passDataToView(from note: Note)
+    func passData(from note: Note, isChanged: Bool)
+}
+
+protocol ConfigurableCell {
+    func configure(header: String?, body: String?, date: String)
 }
