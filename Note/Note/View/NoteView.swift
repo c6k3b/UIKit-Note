@@ -19,6 +19,7 @@ class NoteView: UIView, ConfigurableNoteView {
         return $0
     }(UILabel())
 
+<<<<<<< HEAD
     private lazy var headerTextField: UITextField = {
         $0.placeholder = "Введите название"
         $0.font = .systemFont(ofSize: 24, weight: .bold)
@@ -31,6 +32,19 @@ class NoteView: UIView, ConfigurableNoteView {
         $0.adjustableKeyboard()
         return $0
     }(UITextView())
+=======
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupHeaderLabel()
+        setupBodyLabel()
+        setupDateLabel()
+        setupGestureRecognizer()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+>>>>>>> f946c825576de7fdbf937b158e65fa2919da6b9b
 
     var model: NoteViewModel?
 
@@ -51,6 +65,16 @@ class NoteView: UIView, ConfigurableNoteView {
         dateLabel.text = model?.date
         headerTextField.text = model?.header
         bodyTextView.text = model?.body
+    }
+
+    private func setupGestureRecognizer() {
+        let recognizer = UITapGestureRecognizer()
+        recognizer.addTarget(self, action: #selector(viewTapped))
+        addGestureRecognizer(recognizer)
+    }
+
+    @objc private func viewTapped() {
+        viewDidTapped(nil)
     }
 }
 

@@ -1,6 +1,7 @@
 import UIKit
 
 class NoteViewController: UIViewController {
+<<<<<<< HEAD
     // MARK: - Props
     private lazy var navigationLeftBarButton: UIBarButtonItem = {
         $0.image = UIImage(named: "backButton")
@@ -45,6 +46,13 @@ class NoteViewController: UIViewController {
     private lazy var isChanged: Bool = {
         headerTextField.text != note.header || bodyTextView.text != note.body
     }()
+=======
+    private let navigationLeftBarButton = UIBarButtonItem()
+    private let navigationRightBarButton = UIBarButtonItem()
+    private let noteHeaderTextField = UITextField()
+    private let noteDateLabel = UILabel()
+    private let noteBodyTextView = UITextView()
+>>>>>>> f946c825576de7fdbf937b158e65fa2919da6b9b
 
     private var note: Note
     weak var noteDelegate: NoteDelegate?
@@ -71,8 +79,16 @@ class NoteViewController: UIViewController {
         navigationLeftBarButton.isEnabled = !editing
         editButtonItem.title = editing ? "Готово" : "Изменить"
 
+<<<<<<< HEAD
         view.isUserInteractionEnabled = editing
         _ = editing ? bodyTextView.becomeFirstResponder() :  bodyTextView.resignFirstResponder()
+=======
+    private func setupNavigation() {
+        navigationLeftBarButton.image = UIImage(named: "backButton")
+        navigationLeftBarButton.target = self
+        navigationLeftBarButton.action = #selector(didLeftBarButtonTapped)
+        navigationItem.leftBarButtonItem = navigationLeftBarButton
+>>>>>>> f946c825576de7fdbf937b158e65fa2919da6b9b
 
         if !editing && isChanged {
             saveNote()
@@ -80,6 +96,7 @@ class NoteViewController: UIViewController {
             dateLabel.shake()
         }
 
+<<<<<<< HEAD
         if !editing && isEmpty() {
             showEmptyFieldsAlert()
             setEditing(!editing, animated: true)
@@ -89,6 +106,13 @@ class NoteViewController: UIViewController {
     // MARK: - Methods
     private func createUI() {
         view.backgroundColor = .systemBackground
+=======
+    private func setupDateLabel() {
+        noteDateLabel.font = .systemFont(ofSize: 14)
+        noteDateLabel.text = note.date.getFormattedDate(format: "dd.MM.yyyy EEEE HH:mm")
+        noteDateLabel.textColor = .systemGray
+        noteDateLabel.textAlignment = .center
+>>>>>>> f946c825576de7fdbf937b158e65fa2919da6b9b
 
         navigationItem.leftBarButtonItem = navigationLeftBarButton
         navigationItem.rightBarButtonItem = editButtonItem
@@ -134,6 +158,35 @@ extension NoteViewController {
         alert.addAction(action)
         present(alert, animated: true)
     }
+<<<<<<< HEAD
+=======
+
+    @objc private func didLeftBarButtonTapped() {
+        noteDelegate?.passDataToView(from: note)
+        navigationController?.popViewController(animated: true)
+    }
+
+    @objc private func didRightBarButtonTapped(_ button: UIBarButtonItem) {
+        isEditingMode = !isEditingMode
+        setUserInteractionState()
+
+        if isEditingMode {
+            navigationRightBarButton.title = "Готово"
+            navigationLeftBarButton.isEnabled = false
+            noteBodyTextView.becomeFirstResponder()
+        } else {
+            navigationRightBarButton.title = "Изменить"
+            navigationLeftBarButton.isEnabled = true
+            saveNote()
+
+            if isEmpty() {
+                showAlert()
+                didRightBarButtonTapped(navigationRightBarButton)
+            }
+            noteBodyTextView.resignFirstResponder()
+        }
+    }
+>>>>>>> f946c825576de7fdbf937b158e65fa2919da6b9b
 }
 
 // MARK: - Constraints
