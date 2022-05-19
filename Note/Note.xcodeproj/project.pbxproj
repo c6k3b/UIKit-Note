@@ -20,6 +20,7 @@
 		00BE4B8027ECE81C00664855 /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00BE4B7F27ECE81C00664855 /* NoteViewController.swift */; };
 		00BE4B8527ECE82000664855 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00BE4B8427ECE82000664855 /* Assets.xcassets */; };
 		00BE4B8827ECE82000664855 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00BE4B8627ECE82000664855 /* LaunchScreen.storyboard */; };
+		00F4C6FA283642C300301DC6 /* Worker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00F4C6F9283642C300301DC6 /* Worker.swift */; };
 		00FC3898280EC0AD00E947D9 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FC3897280EC0AD00E947D9 /* Protocols.swift */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +59,7 @@
 		00BE4B8927ECE82000664855 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00BE4B8E27ECE82100664855 /* NoteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NoteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00BE4B9827ECE82100664855 /* NoteUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NoteUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00F4C6F9283642C300301DC6 /* Worker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Worker.swift; sourceTree = "<group>"; };
 		00FC3897280EC0AD00E947D9 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -90,6 +92,7 @@
 			isa = PBXGroup;
 			children = (
 				003C66BF27FD7EAA00537C70 /* Note.swift */,
+				00F4C6F9283642C300301DC6 /* Worker.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -310,6 +313,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				00BE4B8027ECE81C00664855 /* NoteViewController.swift in Sources */,
+				00F4C6FA283642C300301DC6 /* Worker.swift in Sources */,
 				000920B52807E07E004D1862 /* SampleData.swift in Sources */,
 				002DE1E128210590003F0651 /* Animations.swift in Sources */,
 				0022CCAA28317A1200B68ECC /* NotesTableView.swift in Sources */,
