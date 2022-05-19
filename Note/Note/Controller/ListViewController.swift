@@ -13,8 +13,6 @@ class ListViewController: UIViewController {
         return $0
     }(FloatingButton())
 
-    private var notes = SampleData().notes
-
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,7 +67,7 @@ class ListViewController: UIViewController {
         } else {
             cellsForRemove?.forEach {
                 table.beginUpdates()
-                notes.remove(at: $0.section)
+                SampleData.notes.remove(at: $0.section)
                 table.deleteSections([$0.section], with: .automatic)
                 table.endUpdates()
             }
@@ -79,11 +77,11 @@ class ListViewController: UIViewController {
 
 // MARK: - Datasource
 extension ListViewController: UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int { notes.count }
+    func numberOfSections(in tableView: UITableView) -> Int { SampleData.notes.count }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { 1 }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let note = notes[indexPath.section]
+        let note = SampleData.notes[indexPath.section]
 
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: NoteCell.identifier,
@@ -113,13 +111,13 @@ extension ListViewController: UITableViewDelegate {
         _ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath
     ) {
         if editingStyle == .delete {
-            notes.remove(at: indexPath.section)
+            SampleData.notes.remove(at: indexPath.section)
             tableView.deleteSections([indexPath.section], with: .automatic)
         }
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if !isEditing { pushNoteVC(NoteViewController(note: notes[indexPath.section])) }
+        if !isEditing { pushNoteVC(NoteViewController(note: SampleData.notes[indexPath.section])) }
     }
 }
 
@@ -127,10 +125,10 @@ extension ListViewController: UITableViewDelegate {
 extension ListViewController: NoteDelegate {
     func passData(from note: Note, isChanged: Bool) {
         if isChanged {
-            if let index = notes.firstIndex(where: { $0 === note }) {
-                notes[index] = note
+            if let index = SampleData.notes.firstIndex(where: { $0 === note }) {
+                SampleData.notes[index] = note
             } else {
-                notes.append(note)
+                SampleData.notes.append(note)
             }
             table.reloadData()
         }

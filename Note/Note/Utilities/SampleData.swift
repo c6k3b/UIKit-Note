@@ -1,7 +1,7 @@
 import Foundation
 
 class SampleData {
-    lazy var notes: [Note] = {
+    static var notes: [Note] = {
         [
             Note(
                 header: "Вопросы для интервью",

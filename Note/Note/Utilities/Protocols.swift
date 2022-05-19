@@ -8,3 +8,8 @@ protocol NoteDelegate: AnyObject {
 protocol ConfigurableCell {
     func configure(header: String?, body: String?, date: String)
 }
+
+protocol WorkerType {
+    var session: URLSession { get }
+    func fetch()
+}
