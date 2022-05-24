@@ -71,6 +71,7 @@ class ListViewController: UIViewController {
                 table.deleteSections([$0.section], with: .automatic)
                 table.endUpdates()
             }
+            isEditing = false
         }
     }
 }
