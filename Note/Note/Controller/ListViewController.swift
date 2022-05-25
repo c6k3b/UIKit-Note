@@ -46,10 +46,13 @@ class ListViewController: UIViewController {
     }
 
     private func pushNoteVC(_ viewController: NoteViewController) {
+        table.isUserInteractionEnabled = false
+
         CATransaction.begin()
         CATransaction.setCompletionBlock {
             viewController.noteDelegate = self
             self.navigationController?.pushViewController(viewController, animated: true)
+            self.table.isUserInteractionEnabled = true
         }
 
         floatingButton.shakeOnDisappear()
