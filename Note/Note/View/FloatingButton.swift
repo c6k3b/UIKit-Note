@@ -1,36 +1,44 @@
 import UIKit
 
 class FloatingButton: UIButton {
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        setAppearance()
-        activateCurrentConstraints()
+    // MARK: - Initializers
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        createUI()
     }
 
-    private func setAppearance() {
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - Lifecycle
+    override func didMoveToSuperview() {
+        activateFloatingButtonConstraints()
+    }
+
+    // MARK: - Methods
+    private func createUI() {
         layer.cornerRadius = 25
         clipsToBounds = true
         contentVerticalAlignment = .bottom
         titleLabel?.font = .systemFont(ofSize: 36)
-        setTitle("+", for: .normal)
-        backgroundColor = .systemBlue
+        setImage(UIImage(named: "buttonPlus"), for: .normal)
     }
+}
 
-    private func activateCurrentConstraints() {
+// MARK: - Constraints
+extension FloatingButton {
+    private func activateFloatingButtonConstraints() {
         translatesAutoresizingMaskIntoConstraints = false
         if let superview = superview {
-            NSLayoutConstraint.activate([
-                trailingAnchor.constraint(
-                    equalTo: superview.safeAreaLayoutGuide.trailingAnchor,
-                    constant: -20
-                ),
-                bottomAnchor.constraint(
-                    equalTo: superview.safeAreaLayoutGuide.bottomAnchor,
-                    constant: -20
-                ),
-                heightAnchor.constraint(equalToConstant: 50),
-                widthAnchor.constraint(equalToConstant: 50)
-            ])
+            trailingAnchor.constraint(
+                equalTo: superview.safeAreaLayoutGuide.trailingAnchor, constant: -20
+            ).isActive = true
+            bottomAnchor.constraint(
+                equalTo: superview.safeAreaLayoutGuide.bottomAnchor, constant: -20
+            ).isActive = true
+            heightAnchor.constraint(equalToConstant: 50).isActive = true
+            widthAnchor.constraint(equalToConstant: 50).isActive = true
         }
     }
 }

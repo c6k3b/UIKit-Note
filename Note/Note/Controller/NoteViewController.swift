@@ -1,18 +1,63 @@
 import UIKit
 
 class NoteViewController: UIViewController {
+<<<<<<< HEAD
+    // MARK: - Props
+    private lazy var navigationLeftBarButton: UIBarButtonItem = {
+        $0.image = UIImage(named: "backButton")
+        $0.target = self
+        $0.action = #selector(didNavigationLeftBarButtonTapped)
+        return $0
+    }(UIBarButtonItem())
+
+    private lazy var stackView: UIStackView = {
+        $0.axis = .vertical
+        $0.distribution = .fill
+        $0.spacing = 8
+        $0.addArrangedSubview(dateLabel)
+        $0.addArrangedSubview(headerTextField)
+        $0.addArrangedSubview(bodyTextView)
+        return $0
+    }(UIStackView())
+
+    private lazy var dateLabel: UILabel = {
+        $0.font = .systemFont(ofSize: 14)
+        $0.textColor = .systemGray
+        $0.textAlignment = .center
+        $0.text = setupDateLabel()
+        return $0
+    }(UILabel())
+
+    private lazy var headerTextField: UITextField = {
+        $0.placeholder = "Введите название"
+        $0.font = .systemFont(ofSize: 24, weight: .bold)
+        $0.text = note.header
+        return $0
+    }(UITextField())
+
+    private lazy var bodyTextView: UITextView = {
+        $0.font = .systemFont(ofSize: 16)
+        $0.autocorrectionType = .no
+        $0.adjustableKeyboard()
+        $0.text = note.body
+        return $0
+    }(UITextView())
+
+    private lazy var isChanged: Bool = {
+        headerTextField.text != note.header || bodyTextView.text != note.body
+    }()
+=======
     private let navigationLeftBarButton = UIBarButtonItem()
     private let navigationRightBarButton = UIBarButtonItem()
     private let noteHeaderTextField = UITextField()
     private let noteDateLabel = UILabel()
     private let noteBodyTextView = UITextView()
+>>>>>>> main
 
     private var note: Note
-    private var isEditingMode = false
-    private var isChanged = false
-
     weak var noteDelegate: NoteDelegate?
 
+    // MARK: - Lifecycle
     init(note: Note) {
         self.note = note
         super.init(nibName: nil, bundle: nil)
@@ -24,131 +69,81 @@ class NoteViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.backgroundColor = .systemBackground
-
-        setupNavigation()
-        setupDateLabel()
-        setupHeaderTextField()
-        setupBodyTextView()
-        didRightBarButtonTapped(navigationRightBarButton)
+        createUI()
+        setEditing(true, animated: true)
     }
 
-    private func setupNavigation() {
-        navigationLeftBarButton.image = UIImage(named: "backButton")
-        navigationLeftBarButton.target = self
-        navigationLeftBarButton.action = #selector(didLeftBarButtonTapped)
-        navigationItem.leftBarButtonItem = navigationLeftBarButton
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
 
-        navigationRightBarButton.target = self
-        navigationRightBarButton.action = #selector(didRightBarButtonTapped(_:))
-        navigationItem.rightBarButtonItem = navigationRightBarButton
-    }
+        navigationLeftBarButton.isEnabled = !editing
+        editButtonItem.title = editing ? "Готово" : "Изменить"
 
-    private func setupDateLabel() {
-        noteDateLabel.font = .systemFont(ofSize: 14)
-        noteDateLabel.text = note.date.getFormattedDate(format: "dd.MM.yyyy EEEE HH:mm")
-        noteDateLabel.textColor = .systemGray
-        noteDateLabel.textAlignment = .center
+        view.isUserInteractionEnabled = editing
+        _ = editing ? bodyTextView.becomeFirstResponder() :  bodyTextView.resignFirstResponder()
 
-        view.addSubview(noteDateLabel)
+        if !editing && isChanged {
+            saveNote()
+            dateLabel.text = setupDateLabel()
+            dateLabel.shake()
+        }
 
-        noteDateLabel.translatesAutoresizingMaskIntoConstraints = false
-        noteDateLabel.topAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.topAnchor,
-            constant: 8
-        ).isActive = true
-        noteDateLabel.leadingAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.leadingAnchor,
-            constant: 16
-        ).isActive = true
-        noteDateLabel.trailingAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-            constant: -16
-        ).isActive = true
-    }
-
-    private func setupHeaderTextField() {
-        noteHeaderTextField.placeholder = "Введите название"
-        noteHeaderTextField.font = .systemFont(ofSize: 24, weight: .bold)
-
-        noteHeaderTextField.text = note.header
-
-        view.addSubview(noteHeaderTextField)
-
-        noteHeaderTextField.translatesAutoresizingMaskIntoConstraints = false
-        noteHeaderTextField.topAnchor.constraint(
-            equalTo: noteDateLabel.bottomAnchor,
-            constant: 8
-        ).isActive = true
-        noteHeaderTextField.leadingAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.leadingAnchor,
-            constant: 16
-        ).isActive = true
-        noteHeaderTextField.trailingAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-            constant: -16
-        ).isActive = true
-    }
-
-    private func setupBodyTextView() {
-        noteBodyTextView.font = .systemFont(ofSize: 16)
-        noteBodyTextView.text = note.body
-        noteBodyTextView.autocorrectionType = .no
-        noteBodyTextView.adjustableKeyboard()
-
-        view.addSubview(noteBodyTextView)
-
-        noteBodyTextView.translatesAutoresizingMaskIntoConstraints = false
-        noteBodyTextView.topAnchor.constraint(
-            equalTo: noteHeaderTextField.bottomAnchor,
-            constant: 8
-        ).isActive = true
-        noteBodyTextView.leadingAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.leadingAnchor,
-            constant: 16
-        ).isActive = true
-        noteBodyTextView.trailingAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.trailingAnchor,
-            constant: -16
-        ).isActive = true
-        noteBodyTextView.bottomAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.bottomAnchor,
-            constant: -16
-        ).isActive = true
-    }
-
-    private func setUserInteractionState() {
-        noteHeaderTextField.isUserInteractionEnabled = isEditingMode
-        noteBodyTextView.isUserInteractionEnabled = isEditingMode
-        noteDateLabel.isUserInteractionEnabled = isEditingMode
-    }
-
-    private func saveNote() {
-        if noteHeaderTextField.text != note.header || noteBodyTextView.text != note.body {
-            note.header = noteHeaderTextField.text
-            note.body = noteBodyTextView.text
-            note.date = Date()
-
-            setupDateLabel()
-            isChanged.toggle()
+        if !editing && isEmpty() {
+            showEmptyFieldsAlert()
+            setEditing(!editing, animated: true)
         }
     }
 
-    private func showAlert() {
+    // MARK: - Methods
+    private func createUI() {
+        view.backgroundColor = .systemBackground
+
+        navigationItem.leftBarButtonItem = navigationLeftBarButton
+        navigationItem.rightBarButtonItem = editButtonItem
+
+        view.addSubview(stackView)
+        activateStackViewConstraints()
+    }
+
+    private func setupDateLabel() -> String {
+        note.date.getFormattedDate(format: "dd.MM.yyyy EEEE HH:mm")
+    }
+
+    @objc private func didNavigationLeftBarButtonTapped() {
+        noteDelegate?.passData(from: note, isChanged: isChanged)
+        navigationController?.popViewController(animated: true)
+    }
+
+    private func saveNote() {
+        note.header = headerTextField.text
+        note.body = bodyTextView.text
+        note.date = Date()
+    }
+}
+
+extension NoteViewController {
+    private func isEmpty() -> Bool {
+        return note.isEmpty
+    }
+}
+
+// MARK: - Alerts
+extension NoteViewController {
+    private func showEmptyFieldsAlert() {
         let alert = UIAlertController(
             title: "Поля не заполнены",
             message: "Не могу сохранить пустую заметку",
             preferredStyle: .alert
         )
-
         let action = UIAlertAction(title: "Редактировать", style: .cancel) { _ in
-            self.noteBodyTextView.becomeFirstResponder()
+            self.bodyTextView.becomeFirstResponder()
         }
 
         alert.addAction(action)
         present(alert, animated: true)
     }
+<<<<<<< HEAD
+=======
 
     @objc private func didLeftBarButtonTapped() {
         noteDelegate?.passData(from: note, isChanged: isChanged)
@@ -175,10 +170,24 @@ class NoteViewController: UIViewController {
             noteBodyTextView.resignFirstResponder()
         }
     }
+>>>>>>> main
 }
 
+// MARK: - Constraints
 extension NoteViewController {
-    private func isEmpty() -> Bool {
-        return note.isEmpty
+    private func activateStackViewConstraints() {
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.topAnchor.constraint(
+            equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8
+        ).isActive = true
+        stackView.leadingAnchor.constraint(
+            equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16
+        ).isActive = true
+        stackView.trailingAnchor.constraint(
+            equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16
+        ).isActive = true
+        stackView.bottomAnchor.constraint(
+            equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16
+        ).isActive = true
     }
 }
