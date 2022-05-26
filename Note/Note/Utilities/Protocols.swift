@@ -10,6 +10,5 @@ protocol ConfigurableCell {
 }
 
 protocol WorkerType {
-    var session: URLSession { get }
     func fetch()
 }

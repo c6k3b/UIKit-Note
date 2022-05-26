@@ -2,7 +2,7 @@ import Foundation
 
 class Worker: WorkerType {
     // MARK: - Props
-    var session: URLSession
+    private var session: URLSession
 
     // MARK: - Initializers
     init(session: URLSession = URLSession(configuration: .default)) {
