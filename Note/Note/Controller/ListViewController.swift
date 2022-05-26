@@ -14,12 +14,13 @@ class ListViewController: UIViewController {
     }(FloatingButton())
 
     private let worker: WorkerType = Worker()
-    private var notes = SampleData.notes
+    private var notes = [Note]()
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        addNotes(from: SampleData.notes)
         worker.fetch { addNotes(from: $0) }
     }
 
