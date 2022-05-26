@@ -4,7 +4,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     private let listVC = ListViewController()
     private let navigationController = UINavigationController()
-    private let worker: WorkerType = Worker()
 
     func scene(
         _ scene: UIScene,
@@ -17,9 +16,5 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
         self.window = window
-    }
-
-    func sceneWillEnterForeground(_ scene: UIScene) {
-        worker.fetch()
     }
 }

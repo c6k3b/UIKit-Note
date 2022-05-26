@@ -2,23 +2,22 @@ import Foundation
 
 class Worker: WorkerType {
     // MARK: - Props
-    private var session: URLSession
+    private var session = URLSession(configuration: .default)
 
-    // MARK: - Initializers
-    init(session: URLSession = URLSession(configuration: .default)) {
-        self.session = session
-    }
+    // MARK: - Methods
+    func fetch(completion: ([NoteData]) -> Void) {
+        var decodedData = [NoteData]()
 
-    func fetch() {
         if let url = createURLComponents() {
             do {
                 let data = try Data(contentsOf: url)
-                let decodedData = try JSONDecoder().decode([NoteData].self, from: data)
-                addNotes(from: decodedData)
+                decodedData = try JSONDecoder().decode([NoteData].self, from: data)
             } catch {
                 print(error.localizedDescription)
             }
         }
+
+        completion(decodedData)
     }
 
     private func createURLComponents() -> URL? {
@@ -32,17 +31,5 @@ class Worker: WorkerType {
             URLQueryItem(name: "token", value: "d07f7d4a-141e-4ac5-a2d2-cc936d4e6f18")
         ]
         return urlComponents.url
-    }
-
-    private func addNotes(from data: [NoteData]) {
-        data.forEach { note in
-            SampleData.notes.append(
-                Note(
-                    header: note.header,
-                    body: note.text,
-                    date: Date(timeIntervalSince1970: TimeInterval(note.date ?? 0))
-                )
-            )
-        }
     }
 }

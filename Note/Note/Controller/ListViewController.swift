@@ -13,17 +13,14 @@ class ListViewController: UIViewController {
         return $0
     }(FloatingButton())
 
+    private let worker: WorkerType = Worker()
+    private var notes = SampleData.notes
+
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground.withAlphaComponent(0.97)
-
-        navigationItem.title = "Заметки"
-        editButtonItem.title = "Выбрать"
-        navigationItem.rightBarButtonItem = editButtonItem
-
-        view.addSubview(table)
-        view.addSubview(floatingButton)
+        setupUI()
+        worker.fetch { addNotes(from: $0) }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -43,6 +40,29 @@ class ListViewController: UIViewController {
     // MARK: - Methods
     @objc private func didFloatingButtonTapped() {
         !isEditing ? pushNoteVC(NoteViewController(note: Note())) : removeNotes()
+    }
+
+    private func setupUI() {
+        view.backgroundColor = .systemBackground.withAlphaComponent(0.97)
+
+        navigationItem.title = "Заметки"
+        editButtonItem.title = "Выбрать"
+        navigationItem.rightBarButtonItem = editButtonItem
+
+        view.addSubview(table)
+        view.addSubview(floatingButton)
+    }
+
+    private func addNotes(from data: [NoteData]) {
+        data.forEach { note in
+            notes.append(
+                Note(
+                    header: note.header,
+                    body: note.text,
+                    date: Date(timeIntervalSince1970: TimeInterval(note.date ?? 0))
+                )
+            )
+        }
     }
 
     private func pushNoteVC(_ viewController: NoteViewController) {
@@ -70,7 +90,7 @@ class ListViewController: UIViewController {
 
         cellsForRemove.forEach {
             table.beginUpdates()
-            SampleData.notes.remove(at: $0.section)
+            notes.remove(at: $0.section)
             table.deleteSections([$0.section], with: .automatic)
             table.endUpdates()
         }
@@ -80,11 +100,11 @@ class ListViewController: UIViewController {
 
 // MARK: - Datasource
 extension ListViewController: UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int { SampleData.notes.count }
+    func numberOfSections(in tableView: UITableView) -> Int { notes.count }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { 1 }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let note = SampleData.notes[indexPath.section]
+        let note = notes[indexPath.section]
 
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: NoteCell.identifier,
@@ -114,13 +134,13 @@ extension ListViewController: UITableViewDelegate {
         _ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath
     ) {
         if editingStyle == .delete {
-            SampleData.notes.remove(at: indexPath.section)
+            notes.remove(at: indexPath.section)
             tableView.deleteSections([indexPath.section], with: .automatic)
         }
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if !isEditing { pushNoteVC(NoteViewController(note: SampleData.notes[indexPath.section])) }
+        if !isEditing { pushNoteVC(NoteViewController(note: notes[indexPath.section])) }
     }
 }
 
@@ -128,10 +148,10 @@ extension ListViewController: UITableViewDelegate {
 extension ListViewController: NoteDelegate {
     func passData(from note: Note, isChanged: Bool) {
         if isChanged {
-            if let index = SampleData.notes.firstIndex(where: { $0 === note }) {
-                SampleData.notes[index] = note
+            if let index = notes.firstIndex(where: { $0 === note }) {
+                notes[index] = note
             } else {
-                SampleData.notes.append(note)
+                notes.append(note)
             }
             table.reloadData()
         }

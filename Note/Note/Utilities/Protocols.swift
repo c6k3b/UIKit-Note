@@ -10,5 +10,5 @@ protocol ConfigurableCell {
 }
 
 protocol WorkerType {
-    func fetch()
+    func fetch(completion: ([NoteData]) -> Void)
 }
