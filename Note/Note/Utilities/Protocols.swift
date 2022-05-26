@@ -10,5 +10,9 @@ protocol ConfigurableCell {
 }
 
 protocol WorkerType {
-    func fetch(completion: ([NoteData]) -> Void)
+    func fetch(completion: (Data) -> Void)
+}
+
+protocol DecoderType {
+    func decode(_ data: Data, completion: ([NoteData]) -> Void)
 }

@@ -14,6 +14,7 @@ class ListViewController: UIViewController {
     }(FloatingButton())
 
     private let worker: WorkerType = Worker()
+    private let decoder: DecoderType = Decoder()
     private var notes = [Note]()
 
     // MARK: - Lifecycle
@@ -21,7 +22,7 @@ class ListViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         addNotes(from: SampleData.notes)
-        worker.fetch { addNotes(from: $0) }
+        worker.fetch { decoder.decode($0) { addNotes(from: $0) } }
     }
 
     override func viewWillAppear(_ animated: Bool) {
