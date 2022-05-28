@@ -1,6 +1,6 @@
 import UIKit
 
-class NoteCell: UITableViewCell, ConfigurableCell {
+class NoteCell: UITableViewCell, ConfigurableNoteView {
     // MARK: - Props
     private lazy var stackView: UIStackView = {
         $0.alignment = .leading
@@ -31,6 +31,8 @@ class NoteCell: UITableViewCell, ConfigurableCell {
         return $0
     }(UILabel())
 
+    private let iconView = UIImageView()
+
     static var identifier: String { String(describing: NoteCell.self) }
 
     // MARK: - Initializers
@@ -43,10 +45,11 @@ class NoteCell: UITableViewCell, ConfigurableCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(header: String?, body: String?, date: String) {
-        headerLabel.text = header
-        bodyLabel.text = body
-        dateLabel.text = date
+    func configure(with model: NoteViewModel) {
+        headerLabel.text = model.header
+        bodyLabel.text = model.body
+        dateLabel.text = model.date
+        iconView.image = UIImage(named: model.icon ?? "")
     }
 
     // MARK: - Lifecycle
@@ -65,6 +68,9 @@ class NoteCell: UITableViewCell, ConfigurableCell {
 
         contentView.addSubview(stackView)
         activateStackViewConstraints()
+
+        contentView.addSubview(iconView)
+        activateIconViewConstraints()
     }
 }
 
@@ -84,5 +90,11 @@ extension NoteCell {
         stackView.bottomAnchor.constraint(
             equalTo: contentView.bottomAnchor, constant: -10
         ).isActive = true
+    }
+
+    private func activateIconViewConstraints() {
+        iconView.translatesAutoresizingMaskIntoConstraints = false
+        iconView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16).isActive = true
+        iconView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10).isActive = true
     }
 }

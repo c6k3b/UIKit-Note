@@ -6,7 +6,8 @@ class SampleData {
             NoteData(
                 header: "Вопросы для интервью",
                 text: "Как давно ты стал программистом? (задать после небольшо...",
-                date: 1_649_669_857
+                date: 1_649_669_857,
+                userShareIcon: nil
             ),
             NoteData(
                 header: "Диплом",
@@ -26,37 +27,44 @@ class SampleData {
 
             Пока на этом остановимся, далее будем детально прорабатывать
             """,
-                date: 1_649_669_857
+                date: 1_649_669_857,
+                userShareIcon: nil
             ),
             NoteData(
                 header: "Книги для прочтения",
                 text: "Убить пересмешника, 1984, Ответ",
-                date: 1_649_669_857
+                date: 1_649_669_857,
+                userShareIcon: "avatar1"
             ),
             NoteData(
                 header: "Номера счетов",
                 text: "5445674722 - электроэнергия",
-                date: 1_649_669_857
+                date: 1_649_669_857,
+                userShareIcon: nil
             ),
             NoteData(
                 header: "Куда сходить в Калининграде",
                 text: "Сначала не забыть забронировать стол в Аквамарине, потом...",
-                date: 1_649_669_857
+                date: 1_649_669_857,
+                userShareIcon: "avatar2"
             ),
             NoteData(
                 header: "Фильмы",
                 text: "Скотт Пилигрим против всех, большой Лебовски, типа круты...",
-                date: 1_649_669_857
+                date: 1_649_669_857,
+                userShareIcon: "avatar3"
             ),
             NoteData(
                 header: "Письмо Олесе",
                 text: "Здравствуйте! Меня зовут Евгения, я бы хотела показать вам...",
-                date: 1_649_669_857
+                date: 1_649_669_857,
+                userShareIcon: nil
             ),
             NoteData(
                 header: "Карты Тинькофф",
                 text: "42001522301200 visa",
-                date: 1_649_669_857
+                date: 1_649_669_857,
+                userShareIcon: nil
             )
         ]
     }()

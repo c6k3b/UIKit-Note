@@ -1,6 +1,6 @@
 import UIKit
 
-class NotesTableView: UITableView {
+class NotesTable: UITableView {
     // MARK: - Initializers
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
@@ -27,7 +27,7 @@ class NotesTableView: UITableView {
 }
 
 // MARK: - Constraints
-extension NotesTableView {
+extension NotesTable {
     private func activateTableViewConstraints() {
         translatesAutoresizingMaskIntoConstraints = false
         if let superview = superview {

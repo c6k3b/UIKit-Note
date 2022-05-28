@@ -2,11 +2,11 @@ import UIKit
 
 class ListViewController: UIViewController {
     // MARK: - Props
-    private lazy var table: NotesTableView = {
+    private lazy var table: NotesTable = {
         $0.dataSource = self
         $0.delegate = self
         return $0
-    }(NotesTableView())
+    }(NotesTable())
 
     private lazy var floatingButton: FloatingButton = {
         $0.addTarget(self, action: #selector(didFloatingButtonTapped), for: .touchUpInside)
@@ -61,7 +61,8 @@ class ListViewController: UIViewController {
                 Note(
                     header: note.header,
                     body: note.text,
-                    date: Date(timeIntervalSince1970: TimeInterval(note.date ?? 0))
+                    date: Date(timeIntervalSince1970: TimeInterval(note.date ?? 0)),
+                    icon: note.userShareIcon
                 )
             )
         }
@@ -111,14 +112,17 @@ extension ListViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: NoteCell.identifier,
             for: indexPath
-        ) as? ConfigurableCell else {
+        ) as? ConfigurableNoteView else {
             return UITableViewCell()
         }
 
         cell.configure(
-            header: note.header ?? "N/A",
-            body: note.body ?? "N/A",
-            date: note.date.getFormattedDate(format: "dd MM yyyy")
+            with: NoteViewModel(
+                header: note.header,
+                body: note.body,
+                date: note.date.getFormattedDate(format: "dd MM yyyy"),
+                icon: note.icon
+            )
         )
         return cell as? UITableViewCell ?? UITableViewCell()
     }
