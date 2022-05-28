@@ -2,11 +2,19 @@ import UIKit
 
 class ListViewController: UIViewController {
     // MARK: - Props
-    private lazy var table: NotesTable = {
+    private lazy var table: UITableView = {
+        $0.showsVerticalScrollIndicator = false
+        $0.allowsMultipleSelectionDuringEditing = true
+        $0.backgroundColor = .clear
+        $0.separatorStyle = .none
+        $0.estimatedRowHeight = 90
+
+        $0.register(NoteCell.self, forCellReuseIdentifier: NoteCell.identifier)
+
         $0.dataSource = self
         $0.delegate = self
         return $0
-    }(NotesTable())
+    }(UITableView())
 
     private lazy var floatingButton: FloatingButton = {
         $0.addTarget(self, action: #selector(didFloatingButtonTapped), for: .touchUpInside)
@@ -51,6 +59,8 @@ class ListViewController: UIViewController {
         navigationItem.rightBarButtonItem = editButtonItem
 
         view.addSubview(table)
+        activateTableViewConstraints()
+
         view.addSubview(floatingButton)
     }
 
@@ -175,5 +185,20 @@ extension ListViewController {
         alert.addAction(action)
 
         present(alert, animated: true)
+    }
+}
+
+// MARK: - Constraints
+extension ListViewController {
+    private func activateTableViewConstraints() {
+        table.translatesAutoresizingMaskIntoConstraints = false
+            table.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor, constant: 16
+            ).isActive = true
+            table.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor, constant: -16
+            ).isActive = true
+            table.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+            table.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
 }
