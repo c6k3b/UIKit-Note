@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		000920AC28075898004D1862 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000920AB28075898004D1862 /* ListViewController.swift */; };
-		000920B52807E07E004D1862 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000920B42807E07E004D1862 /* SampleData.swift */; };
 		001070A328410F9400E12EE6 /* NoteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001070A228410F9400E12EE6 /* NoteViewModel.swift */; };
 		0022CCA82831725B00B68ECC /* FloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0022CCA72831725B00B68ECC /* FloatingButton.swift */; };
 		0022CCAA28317A1200B68ECC /* NotesTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0022CCA928317A1200B68ECC /* NotesTable.swift */; };
@@ -46,7 +45,6 @@
 
 /* Begin PBXFileReference section */
 		000920AB28075898004D1862 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
-		000920B42807E07E004D1862 /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
 		001070A228410F9400E12EE6 /* NoteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NoteViewModel.swift; path = ../View/NoteViewModel.swift; sourceTree = "<group>"; };
 		0022CCA72831725B00B68ECC /* FloatingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButton.swift; sourceTree = "<group>"; };
 		0022CCA928317A1200B68ECC /* NotesTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTable.swift; sourceTree = "<group>"; };
@@ -130,7 +128,6 @@
 				00AE68B6280D5C6E00D65C7F /* Extensions.swift */,
 				00FC3897280EC0AD00E947D9 /* Protocols.swift */,
 				002DE1E028210590003F0651 /* Animations.swift */,
-				000920B42807E07E004D1862 /* SampleData.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -340,7 +337,6 @@
 				00BE4B8027ECE81C00664855 /* NoteViewController.swift in Sources */,
 				00F4C7012836AB3A00301DC6 /* NoteData.swift in Sources */,
 				00F4C6FA283642C300301DC6 /* Worker.swift in Sources */,
-				000920B52807E07E004D1862 /* SampleData.swift in Sources */,
 				002DE1E128210590003F0651 /* Animations.swift in Sources */,
 				0022CCAA28317A1200B68ECC /* NotesTable.swift in Sources */,
 				00BE4B7C27ECE81C00664855 /* AppDelegate.swift in Sources */,

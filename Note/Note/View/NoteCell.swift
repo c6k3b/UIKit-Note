@@ -69,7 +69,7 @@ class NoteCell: UITableViewCell, ConfigurableNoteView {
         contentView.addSubview(stackView)
         activateStackViewConstraints()
 
-        contentView.addSubview(iconView)
+        contentView.insertSubview(iconView, aboveSubview: contentView)
         activateIconViewConstraints()
     }
 }

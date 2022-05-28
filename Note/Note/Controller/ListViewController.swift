@@ -21,7 +21,6 @@ class ListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        addNotes(from: SampleData.notes)
         worker.fetch { decoder.decode($0) { addNotes(from: $0) } }
     }
 
