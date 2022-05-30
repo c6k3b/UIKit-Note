@@ -64,6 +64,8 @@ class ListViewController: UIViewController {
     }
 
     private func addNotes(from data: [NoteData]) {
+        let group = DispatchGroup()
+        group.enter()
         data.forEach { note in
             notes.append(
                 Note(
@@ -80,8 +82,8 @@ class ListViewController: UIViewController {
         var image = UIImage()
 
         guard let stringUrl = stringUrl,
-                let url = URL(string: stringUrl)
-        else { return image }
+              let url = URL(string: stringUrl)
+        else { return UIImage() }
 
         URLSession.shared.dataTask(with: url) { data, response, error in
             guard let data = data, error == nil,
@@ -139,17 +141,15 @@ extension ListViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: NoteCell.identifier,
             for: indexPath
-        ) as? ConfigurableNoteView else {
+        ) as? ConfigurableCell else {
             return UITableViewCell()
         }
 
         cell.configure(
-            with: NoteViewModel(
-                header: note.header,
-                body: note.body,
-                date: note.date.getFormattedDate(format: "dd MM yyyy"),
-                icon: note.icon
-            )
+            header: note.header,
+            body: note.body,
+            date: note.date.getFormattedDate(format: "dd MM yyyy"),
+            icon: note.icon
         )
         return cell as? UITableViewCell ?? UITableViewCell()
     }

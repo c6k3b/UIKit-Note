@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		000920AC28075898004D1862 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000920AB28075898004D1862 /* ListViewController.swift */; };
-		001070A328410F9400E12EE6 /* NoteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001070A228410F9400E12EE6 /* NoteViewModel.swift */; };
 		0022CCA82831725B00B68ECC /* FloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0022CCA72831725B00B68ECC /* FloatingButton.swift */; };
 		002DE1E128210590003F0651 /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002DE1E028210590003F0651 /* Animations.swift */; };
 		003C66C027FD7EAA00537C70 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003C66BF27FD7EAA00537C70 /* Note.swift */; };
@@ -43,7 +42,6 @@
 
 /* Begin PBXFileReference section */
 		000920AB28075898004D1862 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
-		001070A228410F9400E12EE6 /* NoteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NoteViewModel.swift; path = ../View/NoteViewModel.swift; sourceTree = "<group>"; };
 		0022CCA72831725B00B68ECC /* FloatingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButton.swift; sourceTree = "<group>"; };
 		002DE1E028210590003F0651 /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
 		003C66BF27FD7EAA00537C70 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
@@ -93,7 +91,6 @@
 			children = (
 				003C66BF27FD7EAA00537C70 /* Note.swift */,
 				00F4C7002836AB3A00301DC6 /* NoteData.swift */,
-				001070A228410F9400E12EE6 /* NoteViewModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -327,7 +324,6 @@
 				0022CCA82831725B00B68ECC /* FloatingButton.swift in Sources */,
 				00A9203F28112E01007DB762 /* NoteCell.swift in Sources */,
 				00AE68B7280D5C6E00D65C7F /* Extensions.swift in Sources */,
-				001070A328410F9400E12EE6 /* NoteViewModel.swift in Sources */,
 				00BE4B7E27ECE81C00664855 /* SceneDelegate.swift in Sources */,
 				000920AC28075898004D1862 /* ListViewController.swift in Sources */,
 				00FC3898280EC0AD00E947D9 /* Protocols.swift in Sources */,

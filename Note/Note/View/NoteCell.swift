@@ -1,6 +1,6 @@
 import UIKit
 
-class NoteCell: UITableViewCell, ConfigurableNoteView {
+class NoteCell: UITableViewCell, ConfigurableCell {
     // MARK: - Props
     private lazy var stackView: UIStackView = {
         $0.alignment = .leading
@@ -45,12 +45,11 @@ class NoteCell: UITableViewCell, ConfigurableNoteView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(with model: NoteViewModel) {
-        headerLabel.text = model.header
-        bodyLabel.text = model.body
-        dateLabel.text = model.date
-        iconView.image = model.icon
-        print(model)
+    func configure(header: String?, body: String?, date: String, icon: UIImage?) {
+        headerLabel.text = header
+        bodyLabel.text = body
+        dateLabel.text = date
+        iconView.image = icon
     }
 
     // MARK: - Lifecycle

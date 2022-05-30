@@ -5,8 +5,8 @@ protocol NoteDelegate: AnyObject {
     func passData(from note: Note, isChanged: Bool)
 }
 
-protocol ConfigurableNoteView {
-    func configure(with model: NoteViewModel)
+protocol ConfigurableCell {
+    func configure(header: String?, body: String?, date: String, icon: UIImage?)
 }
 
 protocol WorkerType {
