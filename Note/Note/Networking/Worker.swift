@@ -17,15 +17,16 @@ struct Worker: WorkerType {
         completion(decodedData)
     }
 
-    func loadImage(from stringUrl: String, completion: (Data) -> Void) {
-        guard let url = URL(string: stringUrl) else { return }
+    func loadImage(from stringUrl: String?) -> Data? {
+        guard let stringUrl = stringUrl,
+              let url = URL(string: stringUrl) else { return nil }
         var imageData = Data()
         do {
             imageData = try Data(contentsOf: url)
         } catch {
             print(error.localizedDescription)
         }
-        completion(imageData)
+        return imageData
     }
 
     private func createURLComponents() -> URL? {

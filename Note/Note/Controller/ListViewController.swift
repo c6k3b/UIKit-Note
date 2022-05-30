@@ -77,7 +77,7 @@ class ListViewController: UIViewController {
                     header: note.header,
                     body: note.text,
                     date: Date(timeIntervalSince1970: TimeInterval(note.date ?? 0)),
-                    icon: UIImage(named: "avatar1")
+                    icon: UIImage(data: worker.loadImage(from: note.userShareIcon) ?? Data())
                 )
             )
         }

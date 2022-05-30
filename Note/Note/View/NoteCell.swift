@@ -96,5 +96,7 @@ extension NoteCell {
         iconView.translatesAutoresizingMaskIntoConstraints = false
         iconView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16).isActive = true
         iconView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10).isActive = true
+        iconView.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        iconView.widthAnchor.constraint(equalToConstant: 24).isActive = true
     }
 }
