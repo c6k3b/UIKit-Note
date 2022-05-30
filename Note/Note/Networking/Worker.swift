@@ -5,18 +5,19 @@ class Worker: WorkerType {
     private var session = URLSession(configuration: .default)
 
     // MARK: - Methods
-    func fetch(completion: (Data) -> Void) {
-        var data = Data()
+    func fetch(completion: ([NoteData]) -> Void) {
+        var decodedData = [NoteData]()
 
         if let url = createURLComponents() {
             do {
-                data = try Data(contentsOf: url)
+                let data = try Data(contentsOf: url)
+                decodedData = try JSONDecoder().decode([NoteData].self, from: data)
             } catch {
                 print(error.localizedDescription)
             }
         }
 
-        completion(data)
+        completion(decodedData)
     }
 
     private func createURLComponents() -> URL? {
