@@ -6,18 +6,26 @@ struct Worker: WorkerType {
 
     // MARK: - Methods
     func fetch(completion: ([NoteData]) -> Void) {
+        guard let url = createURLComponents() else { return }
         var decodedData = [NoteData]()
-
-        if let url = createURLComponents() {
-            do {
-                let data = try Data(contentsOf: url)
-                decodedData = try JSONDecoder().decode([NoteData].self, from: data)
-            } catch {
-                print(error.localizedDescription)
-            }
+        do {
+            let data = try Data(contentsOf: url)
+            decodedData = try JSONDecoder().decode([NoteData].self, from: data)
+        } catch {
+            print(error.localizedDescription)
         }
-
         completion(decodedData)
+    }
+
+    func loadImage(from stringUrl: String, completion: (Data) -> Void) {
+        guard let url = URL(string: stringUrl) else { return }
+        var imageData = Data()
+        do {
+            imageData = try Data(contentsOf: url)
+        } catch {
+            print(error.localizedDescription)
+        }
+        completion(imageData)
     }
 
     private func createURLComponents() -> URL? {

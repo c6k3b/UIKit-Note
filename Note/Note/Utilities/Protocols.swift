@@ -11,4 +11,5 @@ protocol ConfigurableCell {
 
 protocol WorkerType {
     func fetch(completion: ([NoteData]) -> Void)
+    func loadImage(from: String, completion: (Data) -> Void)
 }

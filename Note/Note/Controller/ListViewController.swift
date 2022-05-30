@@ -63,38 +63,24 @@ class ListViewController: UIViewController {
         view.addSubview(floatingButton)
     }
 
-    private func addNotes(from data: [NoteData]) {
+    private func addData() {
         let group = DispatchGroup()
         group.enter()
+
+        group.wait()
+    }
+
+    private func addNotes(from data: [NoteData]) {
         data.forEach { note in
             notes.append(
                 Note(
                     header: note.header,
                     body: note.text,
                     date: Date(timeIntervalSince1970: TimeInterval(note.date ?? 0)),
-                    icon: getImage(from: note.userShareIcon)
+                    icon: UIImage(named: "avatar1")
                 )
             )
         }
-    }
-
-    private func getImage(from stringUrl: String?) -> UIImage {
-        var image = UIImage()
-
-        guard let stringUrl = stringUrl,
-              let url = URL(string: stringUrl)
-        else { return UIImage() }
-
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let data = data, error == nil,
-                  let response = response as? HTTPURLResponse,
-                  response.statusCode == 200
-            else { return }
-            image = UIImage(data: data) ?? image
-        }
-        .resume()
-
-        return image
     }
 
     private func pushNoteVC(_ viewController: NoteViewController) {
