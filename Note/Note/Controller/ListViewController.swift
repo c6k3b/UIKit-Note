@@ -22,14 +22,13 @@ class ListViewController: UIViewController {
     }(FloatingButton())
 
     private let worker: WorkerType = Worker()
-    private let decoder: DecoderType = Decoder()
     private var notes = [Note]()
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        worker.fetch { decoder.decode($0) { addNotes(from: $0) } }
+        worker.fetch { addNotes(from: $0) }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -71,10 +70,29 @@ class ListViewController: UIViewController {
                     header: note.header,
                     body: note.text,
                     date: Date(timeIntervalSince1970: TimeInterval(note.date ?? 0)),
-                    icon: note.userShareIcon
+                    icon: getImage(from: note.userShareIcon)
                 )
             )
         }
+    }
+
+    private func getImage(from stringUrl: String?) -> UIImage {
+        var image = UIImage()
+
+        guard let stringUrl = stringUrl,
+                let url = URL(string: stringUrl)
+        else { return image }
+
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard let data = data, error == nil,
+                  let response = response as? HTTPURLResponse,
+                  response.statusCode == 200
+            else { return }
+            image = UIImage(data: data) ?? image
+        }
+        .resume()
+
+        return image
     }
 
     private func pushNoteVC(_ viewController: NoteViewController) {

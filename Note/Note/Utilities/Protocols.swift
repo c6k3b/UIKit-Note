@@ -10,9 +10,5 @@ protocol ConfigurableNoteView {
 }
 
 protocol WorkerType {
-    func fetch(completion: (Data) -> Void)
-}
-
-protocol DecoderType {
-    func decode(_ data: Data, completion: ([NoteData]) -> Void)
+    func fetch(completion: ([NoteData]) -> Void)
 }

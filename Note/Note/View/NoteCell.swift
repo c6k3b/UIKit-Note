@@ -49,7 +49,8 @@ class NoteCell: UITableViewCell, ConfigurableNoteView {
         headerLabel.text = model.header
         bodyLabel.text = model.body
         dateLabel.text = model.date
-        iconView.image = UIImage(named: model.icon ?? "")
+        iconView.image = model.icon
+        print(model)
     }
 
     // MARK: - Lifecycle
