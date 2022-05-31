@@ -101,17 +101,17 @@ class ListViewController: UIViewController {
     }
 
     private func removeNotes() {
-        guard let cellsForRemove = table.indexPathsForSelectedRows?.sorted(by: >) else {
-            showEmptySelectionAlert()
-            return
+        guard let indexPath = table.indexPathsForSelectedRows?.sorted(by: >) else {
+            return showEmptySelectionAlert()
         }
+        let noteIndexesToRemove = indexPath.map { $0.section }
+        let sectionsForRemove = IndexSet(noteIndexesToRemove)
 
-        cellsForRemove.forEach {
-            table.beginUpdates()
-            notes.remove(at: $0.section)
-            table.deleteSections([$0.section], with: .automatic)
-            table.endUpdates()
-        }
+        noteIndexesToRemove.forEach { notes.remove(at: $0) }
+        table.beginUpdates()
+        table.deleteSections(sectionsForRemove, with: .automatic)
+        table.endUpdates()
+
         isEditing = false
     }
 }
