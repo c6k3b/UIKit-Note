@@ -21,7 +21,10 @@ class ListViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         addNotes(from: SampleData.notes)
-        worker.fetch { addNotes(from: $0) }
+        worker.fetch { [weak self] notesData in
+            guard let self = self else { return }
+            self.addNotes(from: notesData)
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
