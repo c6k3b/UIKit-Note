@@ -75,8 +75,7 @@ class ListViewController: UIViewController {
     private func addNotes() {
         let delay = DispatchTime.now() + .seconds(5)
 
-        DispatchQueue.main.asyncAfter(
-            deadline: delay, qos: .background, flags: .assignCurrentContext) {
+        DispatchQueue.main.asyncAfter(deadline: delay) {
                 self.worker.fetch { noteData in
                     noteData.forEach { note in
                         self.notes.append(Note(
@@ -99,6 +98,9 @@ class ListViewController: UIViewController {
                 icon = UIImage(
                     data: self.worker.loadImage(from: userIcon) ?? Data()
                 ) ?? UIImage()
+                DispatchQueue.main.async {
+                    print("icon loaded")
+                }
             }
         }
         return icon
