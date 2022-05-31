@@ -28,7 +28,8 @@ class ListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        worker.fetch { addNotes(from: $0) }
+//        worker.fetch { addNotes(from: $0) }
+        addNotes()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -63,41 +64,33 @@ class ListViewController: UIViewController {
         view.addSubview(floatingButton)
     }
 
-    private func addData() {
-        let group = DispatchGroup()
-        group.enter()
+    private func addNotes() {
+        let delay = DispatchTime.now() + .seconds(10)
 
-        group.wait()
-    }
-
-    private func addNotes(from data: [NoteData]) {
-        data.forEach { note in
-            notes.append(
-                Note(
-                    header: note.header,
-                    body: note.text,
-                    date: Date(timeIntervalSince1970: TimeInterval(note.date ?? 0)),
-                    icon: UIImage(data: worker.loadImage(from: note.userShareIcon) ?? Data())
-                )
-            )
-        }
-    }
-
-    private func pushNoteVC(_ viewController: NoteViewController) {
-        table.isUserInteractionEnabled = false
-
-        CATransaction.begin()
-        CATransaction.setCompletionBlock {
-            viewController.noteDelegate = self
-            self.navigationController?.pushViewController(viewController, animated: true)
-            self.table.isUserInteractionEnabled = true
-        }
-
-        floatingButton.shakeOnDisappear()
-        UIView.animate(withDuration: 0.2, delay: 0.6, options: []) {
-            self.floatingButton.layer.opacity = 0
-        }
-        CATransaction.commit()
+        DispatchQueue.main.asyncAfter(
+            deadline: delay, qos: .background, flags: .assignCurrentContext) {
+                self.worker.fetch { noteData in
+                    noteData.forEach { note in
+                        var icon = UIImage()
+                        
+                        DispatchQueue.global(qos: .background).async {
+                            icon = UIImage(
+                                data: self.worker.loadImage(from: note.userShareIcon) ?? Data()
+                            ) ?? UIImage()
+                        }
+                        
+                        self.notes.append(
+                            Note(
+                                header: note.header,
+                                body: note.text,
+                                date: Date(timeIntervalSince1970: TimeInterval(note.date ?? 0)),
+                                icon: icon
+                            )
+                        )
+                    }
+                }
+                self.table.reloadData()
+            }
     }
 
     private func removeNotes() {
@@ -113,6 +106,22 @@ class ListViewController: UIViewController {
         table.endUpdates()
 
         isEditing = false
+    }
+
+    private func pushNoteVC(_ viewController: NoteViewController) {
+        table.isUserInteractionEnabled = false
+
+        CATransaction.begin()
+        CATransaction.setCompletionBlock {
+            viewController.noteDelegate = self
+            self.navigationController?.pushViewController(viewController, animated: true)
+            self.table.isUserInteractionEnabled = true
+        }
+        floatingButton.shakeOnDisappear()
+        UIView.animate(withDuration: 0.2, delay: 0.6, options: []) {
+            self.floatingButton.layer.opacity = 0
+        }
+        CATransaction.commit()
     }
 }
 
