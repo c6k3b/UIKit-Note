@@ -2,7 +2,7 @@ import Foundation
 
 class Worker: WorkerType {
     // MARK: - Props
-    private var session = URLSession(configuration: .default)
+    private let session = URLSession(configuration: .default)
 
     // MARK: - Methods
     func fetch(completion: ([NoteData]) -> Void) {
