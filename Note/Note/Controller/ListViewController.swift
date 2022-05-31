@@ -34,7 +34,6 @@ class ListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-//        worker.fetch { addNotes(from: $0) }
         addNotes()
     }
 
@@ -80,30 +79,29 @@ class ListViewController: UIViewController {
             deadline: delay, qos: .background, flags: .assignCurrentContext) {
                 self.worker.fetch { noteData in
                     noteData.forEach { note in
-                        var icon = UIImage()
-
-                        if let userIcon = note.userShareIcon {
-                            DispatchQueue.global(qos: .background).async {
-                                icon = UIImage(
-                                    data: self.worker.loadImage(from: userIcon) ?? Data()
-                                ) ?? UIImage()
-                            }
-                            self.table.reloadData()
-                        }
-
-                        self.notes.append(
-                            Note(
-                                header: note.header,
-                                body: note.text,
-                                date: Date(timeIntervalSince1970: TimeInterval(note.date ?? 0)),
-                                icon: icon
-                            )
-                        )
+                        self.notes.append(Note(
+                            header: note.header,
+                            body: note.text,
+                            date: Date(timeIntervalSince1970: TimeInterval(note.date ?? 0)),
+                            icon: self.addIcon(note.userShareIcon)
+                        ))
                     }
                 }
                 self.table.reloadData()
                 self.activityIndicator.stopAnimating()
         }
+    }
+
+    private func addIcon(_ userIcon: String?) -> UIImage? {
+        var icon = UIImage()
+        if let userIcon = userIcon {
+            DispatchQueue.global(qos: .background).async {
+                icon = UIImage(
+                    data: self.worker.loadImage(from: userIcon) ?? Data()
+                ) ?? UIImage()
+            }
+        }
+        return icon
     }
 
     private func removeNotes() {
