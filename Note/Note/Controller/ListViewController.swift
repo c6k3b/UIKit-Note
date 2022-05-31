@@ -21,6 +21,12 @@ class ListViewController: UIViewController {
         return $0
     }(FloatingButton())
 
+    private let activityIndicator: UIActivityIndicatorView = {
+        $0.startAnimating()
+        $0.style = UIActivityIndicatorView.Style.medium
+        return $0
+    }(UIActivityIndicatorView())
+
     private let worker: WorkerType = Worker()
     private var notes = [Note]()
 
@@ -62,23 +68,29 @@ class ListViewController: UIViewController {
         activateTableViewConstraints()
 
         view.addSubview(floatingButton)
+
+        view.addSubview(activityIndicator)
+        activateActivityIndicatorViewConstraints()
     }
 
     private func addNotes() {
-        let delay = DispatchTime.now() + .seconds(10)
+        let delay = DispatchTime.now() + .seconds(5)
 
         DispatchQueue.main.asyncAfter(
             deadline: delay, qos: .background, flags: .assignCurrentContext) {
                 self.worker.fetch { noteData in
                     noteData.forEach { note in
                         var icon = UIImage()
-                        
-                        DispatchQueue.global(qos: .background).async {
-                            icon = UIImage(
-                                data: self.worker.loadImage(from: note.userShareIcon) ?? Data()
-                            ) ?? UIImage()
+
+                        if let userIcon = note.userShareIcon {
+                            DispatchQueue.global(qos: .background).async {
+                                icon = UIImage(
+                                    data: self.worker.loadImage(from: userIcon) ?? Data()
+                                ) ?? UIImage()
+                            }
+                            self.table.reloadData()
                         }
-                        
+
                         self.notes.append(
                             Note(
                                 header: note.header,
@@ -90,7 +102,8 @@ class ListViewController: UIViewController {
                     }
                 }
                 self.table.reloadData()
-            }
+                self.activityIndicator.stopAnimating()
+        }
     }
 
     private func removeNotes() {
@@ -213,5 +226,11 @@ extension ListViewController {
             ).isActive = true
             table.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
             table.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+    }
+
+    private func activateActivityIndicatorViewConstraints() {
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
 }

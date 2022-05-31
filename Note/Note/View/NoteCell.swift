@@ -33,12 +33,6 @@ class NoteCell: UITableViewCell, ConfigurableCell {
 
     private let iconView = UIImageView()
 
-    private let activityIndicator: UIActivityIndicatorView = {
-        $0.startAnimating()
-        $0.style = UIActivityIndicatorView.Style.medium
-        return $0
-    }(UIActivityIndicatorView())
-
     static var identifier: String { String(describing: NoteCell.self) }
 
     // MARK: - Initializers
@@ -77,9 +71,6 @@ class NoteCell: UITableViewCell, ConfigurableCell {
 
         contentView.insertSubview(iconView, aboveSubview: contentView)
         activateIconViewConstraints()
-
-        contentView.addSubview(activityIndicator)
-        activateActivityIndicatorViewConstraints()
     }
 }
 
@@ -107,11 +98,5 @@ extension NoteCell {
         iconView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10).isActive = true
         iconView.heightAnchor.constraint(equalToConstant: 24).isActive = true
         iconView.widthAnchor.constraint(equalToConstant: 24).isActive = true
-    }
-
-    private func activateActivityIndicatorViewConstraints() {
-        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-        activityIndicator.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-        activityIndicator.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
     }
 }

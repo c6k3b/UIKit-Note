@@ -17,9 +17,8 @@ struct Worker: WorkerType {
         completion(decodedData)
     }
 
-    func loadImage(from stringUrl: String?) -> Data? {
-        guard let stringUrl = stringUrl,
-              let url = URL(string: stringUrl) else { return nil }
+    func loadImage(from stringUrl: String) -> Data? {
+        guard let url = URL(string: stringUrl) else { return nil }
         var imageData = Data()
         do {
             imageData = try Data(contentsOf: url)
