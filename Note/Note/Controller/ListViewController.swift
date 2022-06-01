@@ -29,12 +29,15 @@ class ListViewController: UIViewController {
 
     private let worker: WorkerType = Worker()
     private var notes = [Note]()
+    private let delay = DispatchTime.now() + .seconds(5)
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        addNotes()
+        DispatchQueue.main.asyncAfter(deadline: delay) {
+            self.addNotes()
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -73,37 +76,31 @@ class ListViewController: UIViewController {
     }
 
     private func addNotes() {
-        let delay = DispatchTime.now() + .seconds(5)
-
-        DispatchQueue.main.asyncAfter(deadline: delay) {
-                self.worker.fetch { noteData in
-                    noteData.forEach { note in
-                        self.notes.append(Note(
+        DispatchQueue.global(qos: .background).async { [weak self] in
+            guard let self = self else { return }
+            self.worker.fetch { noteData in
+                noteData.forEach { note in
+                    self.notes.append(
+                        Note(
                             header: note.header,
                             body: note.text,
-                            date: Date(timeIntervalSince1970: TimeInterval(note.date ?? 0)),
-                            icon: self.addIcon(note.userShareIcon)
-                        ))
-                    }
-                }
-                self.table.reloadData()
-                self.activityIndicator.stopAnimating()
-        }
-    }
-
-    private func addIcon(_ userIcon: String?) -> UIImage? {
-        var icon = UIImage()
-        if let userIcon = userIcon {
-            DispatchQueue.global(qos: .background).async {
-                icon = UIImage(
-                    data: self.worker.loadImage(from: userIcon) ?? Data()
-                ) ?? UIImage()
-                DispatchQueue.main.async {
-                    print("icon loaded")
+                            date: Date(
+                                timeIntervalSince1970: TimeInterval(note.date ?? 0)
+                            ),
+                            icon: UIImage(
+                                data: self.worker.loadImage(
+                                    from: note.userShareIcon ?? ""
+                                ) ?? Data()
+                            )
+                        )
+                    )
                 }
             }
+            DispatchQueue.main.async {
+                self.table.reloadData()
+                self.activityIndicator.stopAnimating()
+            }
         }
-        return icon
     }
 
     private func removeNotes() {
