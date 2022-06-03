@@ -19,46 +19,17 @@ class ListViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-<<<<<<< HEAD
         setupUI()
         addNotes(from: SampleData.notes)
         worker.fetch { [weak self] notesData in
             guard let self = self else { return }
             self.addNotes(from: notesData)
         }
-=======
-        view.backgroundColor = .systemBackground.withAlphaComponent(0.97)
 
-        navigationItem.title = "Заметки"
-<<<<<<< HEAD
-        editButtonItem.title = "Выбрать"
-        navigationItem.rightBarButtonItem = editButtonItem
-=======
-        view.backgroundColor = .systemBackground.withAlphaComponent(0.97)
-        table.showsVerticalScrollIndicator = false
-        table.separatorStyle = .none
-        table.backgroundColor = .clear
-        table.estimatedRowHeight = 90
-    }
->>>>>>> main
-
-        view.addSubview(table)
-        view.addSubview(floatingButton)
->>>>>>> c6c39561245dc8877785db0976a34e1d3136ccfc
-    }
-
-<<<<<<< HEAD
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         floatingButton.shakeOnAppear()
         floatingButton.layer.opacity = 1
-=======
-        table.translatesAutoresizingMaskIntoConstraints = false
-        table.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16).isActive = true
-        table.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
-        table.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        table.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
->>>>>>> main
     }
 
     override func setEditing(_ editing: Bool, animated: Bool) {
@@ -132,14 +103,8 @@ class ListViewController: UIViewController {
 
 // MARK: - Datasource
 extension ListViewController: UITableViewDataSource {
-<<<<<<< HEAD
     func numberOfSections(in tableView: UITableView) -> Int { notes.count }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { 1 }
-=======
-    func numberOfSections(in tableView: UITableView) -> Int {
-        notes.count
-    }
->>>>>>> main
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         1
@@ -154,7 +119,6 @@ extension ListViewController: UITableViewDataSource {
         ) as? ConfigurableCell else {
             return UITableViewCell()
         }
-<<<<<<< HEAD
 
         cell.configure(
             header: note.header ?? "N/A",
@@ -162,21 +126,6 @@ extension ListViewController: UITableViewDataSource {
             date: note.date.getFormattedDate(format: "dd MM yyyy")
         )
         return cell as? UITableViewCell ?? UITableViewCell()
-=======
-        let note = notes[indexPath.section]
-        cell.configure(
-            header: note.header ?? "N/A",
-            body: note.body ?? "N/A",
-            date: note.date.getFormattedDate(format: "dd MM yyyy")
-        )
-        return cell
-    }
-
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let noteVC = NoteViewController(note: notes[indexPath.section])
-        noteVC.noteDelegate = self
-        navigationController?.pushViewController(noteVC, animated: true)
->>>>>>> main
     }
 }
 
@@ -186,17 +135,6 @@ extension ListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat { 4 }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         UITableView.automaticDimension
-<<<<<<< HEAD
-=======
-    }
-
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        4
-    }
-
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        UIView()
->>>>>>> main
     }
 
     func tableView(
@@ -204,11 +142,7 @@ extension ListViewController: UITableViewDelegate {
     ) {
         if editingStyle == .delete {
             notes.remove(at: indexPath.section)
-<<<<<<< HEAD
             tableView.deleteSections([indexPath.section], with: .automatic)
-=======
-            tableView.deleteSections([indexPath.section], with: .fade)
->>>>>>> main
         }
     }
 

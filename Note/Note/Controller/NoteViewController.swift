@@ -1,7 +1,6 @@
 import UIKit
 
 class NoteViewController: UIViewController {
-<<<<<<< HEAD
     // MARK: - Props
     private lazy var navigationLeftBarButton: UIBarButtonItem = {
         $0.image = UIImage(named: "backButton")
@@ -46,13 +45,6 @@ class NoteViewController: UIViewController {
     private lazy var isChanged: Bool = {
         headerTextField.text != note.header || bodyTextView.text != note.body
     }()
-=======
-    private let navigationLeftBarButton = UIBarButtonItem()
-    private let navigationRightBarButton = UIBarButtonItem()
-    private let noteHeaderTextField = UITextField()
-    private let noteDateLabel = UILabel()
-    private let noteBodyTextView = UITextView()
->>>>>>> main
 
     private var note: Note
     weak var noteDelegate: NoteDelegate?
@@ -142,35 +134,6 @@ extension NoteViewController {
         alert.addAction(action)
         present(alert, animated: true)
     }
-<<<<<<< HEAD
-=======
-
-    @objc private func didLeftBarButtonTapped() {
-        noteDelegate?.passData(from: note, isChanged: isChanged)
-        navigationController?.popViewController(animated: true)
-    }
-
-    @objc private func didRightBarButtonTapped(_ button: UIBarButtonItem) {
-        isEditingMode = !isEditingMode
-        setUserInteractionState()
-
-        if isEditingMode {
-            navigationRightBarButton.title = "Готово"
-            navigationLeftBarButton.isEnabled = false
-            noteBodyTextView.becomeFirstResponder()
-        } else {
-            navigationRightBarButton.title = "Изменить"
-            navigationLeftBarButton.isEnabled = true
-            saveNote()
-
-            if isEmpty() {
-                showAlert()
-                didRightBarButtonTapped(navigationRightBarButton)
-            }
-            noteBodyTextView.resignFirstResponder()
-        }
-    }
->>>>>>> main
 }
 
 // MARK: - Constraints
