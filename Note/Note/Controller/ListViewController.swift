@@ -25,6 +25,7 @@ class ListViewController: UIViewController {
             guard let self = self else { return }
             self.addNotes(from: notesData)
         }
+    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
