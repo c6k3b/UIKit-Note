@@ -103,9 +103,14 @@
 			isa = PBXGroup;
 			children = (
 				00BE4B8627ECE82000664855 /* LaunchScreen.storyboard */,
+<<<<<<< HEAD
 				0022CCA928317A1200B68ECC /* NotesTableView.swift */,
 				00A9203E28112E01007DB762 /* NoteCell.swift */,
 				0022CCA72831725B00B68ECC /* FloatingButton.swift */,
+=======
+				00A9203E28112E01007DB762 /* NoteCell.swift */,
+				00A920422811367F007DB762 /* FloatingButton.swift */,
+>>>>>>> main
 			);
 			path = View;
 			sourceTree = "<group>";
