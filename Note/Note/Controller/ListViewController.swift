@@ -13,11 +13,20 @@ class ListViewController: UIViewController {
         return $0
     }(FloatingButton())
 
-    private var notes = SampleData().notes
+    private let worker: WorkerType = Worker()
+    private var notes = [Note]()
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+<<<<<<< HEAD
+        setupUI()
+        addNotes(from: SampleData.notes)
+        worker.fetch { [weak self] notesData in
+            guard let self = self else { return }
+            self.addNotes(from: notesData)
+        }
+=======
         view.backgroundColor = .systemBackground.withAlphaComponent(0.97)
 
         navigationItem.title = "Заметки"
@@ -35,6 +44,7 @@ class ListViewController: UIViewController {
 
         view.addSubview(table)
         view.addSubview(floatingButton)
+>>>>>>> c6c39561245dc8877785db0976a34e1d3136ccfc
     }
 
 <<<<<<< HEAD
@@ -64,11 +74,37 @@ class ListViewController: UIViewController {
         !isEditing ? pushNoteVC(NoteViewController(note: Note())) : removeNotes()
     }
 
+    private func setupUI() {
+        view.backgroundColor = .systemBackground.withAlphaComponent(0.97)
+
+        navigationItem.title = "Заметки"
+        editButtonItem.title = "Выбрать"
+        navigationItem.rightBarButtonItem = editButtonItem
+
+        view.addSubview(table)
+        view.addSubview(floatingButton)
+    }
+
+    private func addNotes(from data: [NoteData]) {
+        data.forEach { note in
+            notes.append(
+                Note(
+                    header: note.header,
+                    body: note.text,
+                    date: Date(timeIntervalSince1970: TimeInterval(note.date ?? 0))
+                )
+            )
+        }
+    }
+
     private func pushNoteVC(_ viewController: NoteViewController) {
+        table.isUserInteractionEnabled = false
+
         CATransaction.begin()
         CATransaction.setCompletionBlock {
             viewController.noteDelegate = self
             self.navigationController?.pushViewController(viewController, animated: true)
+            self.table.isUserInteractionEnabled = true
         }
 
         floatingButton.shakeOnDisappear()

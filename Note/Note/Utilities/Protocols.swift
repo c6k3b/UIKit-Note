@@ -8,3 +8,7 @@ protocol NoteDelegate: AnyObject {
 protocol ConfigurableCell {
     func configure(header: String?, body: String?, date: String)
 }
+
+protocol WorkerType {
+    func fetch(completion: ([NoteData]) -> Void)
+}
