@@ -47,7 +47,7 @@ class NoteViewController: UIViewController {
     }()
 
     private var note: Note
-    weak var noteDelegate: NoteDelegate?
+    weak var dataStore: NotesListDataStore?
 
     // MARK: - Lifecycle
     init(note: Note) {
@@ -102,7 +102,7 @@ class NoteViewController: UIViewController {
     }
 
     @objc private func didNavigationLeftBarButtonTapped() {
-        noteDelegate?.passData(from: note, isChanged: isChanged)
+//        dataStore?.passData(from: note, isChanged: isChanged)
         navigationController?.popViewController(animated: true)
     }
 

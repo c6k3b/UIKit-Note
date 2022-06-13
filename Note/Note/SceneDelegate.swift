@@ -2,8 +2,7 @@ import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
-    private let listVC = ListViewController()
-    private let navigationController = UINavigationController()
+    var navigationController: UINavigationController?
 
     func scene(
         _ scene: UIScene,
@@ -12,7 +11,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     ) {
         guard let windowScene = scene as? UIWindowScene else { return }
         let window = UIWindow(windowScene: windowScene)
-        navigationController.viewControllers = [listVC]
+
+        navigationController = UINavigationController()
+        navigationController?.viewControllers = [NotesListAssembly.build()]
+
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
         self.window = window

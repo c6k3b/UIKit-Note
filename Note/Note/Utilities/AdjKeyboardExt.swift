@@ -1,13 +1,5 @@
 import UIKit
 
-extension Date {
-    func getFormattedDate(format: String) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = format
-        return dateFormatter.string(from: self)
-    }
-}
-
 extension UITextView {
     func adjustableKeyboard() {
         let notificationCenter = NotificationCenter.default
