@@ -22,7 +22,7 @@ final class NotesListInteractor: NotesListBusinessLogic, NotesListDataStore {
         }
     }
 
-    private func addNotes() {
+    func addNotes() {
         DispatchQueue.global(qos: .background).async { [weak self] in
             guard let self = self else { return }
             self.worker.fetch { noteData in
