@@ -1,6 +1,6 @@
 import UIKit
 
-class NoteCell: UITableViewCell, NotesListDisplayLogic {
+class NoteCell: UITableViewCell, ConfigurableCell {
     // MARK: - Props
     private lazy var stackView: UIStackView = {
         $0.alignment = .leading
@@ -45,18 +45,11 @@ class NoteCell: UITableViewCell, NotesListDisplayLogic {
         fatalError("init(coder:) has not been implemented")
     }
 
-//    func congigure(with viewModel: NotesListModels.InitForm.ViewModel) {
-//        headerLabel.text = viewModel.header
-//        bodyLabel.text = viewModel.body
-//        dateLabel.text = viewModel.date
-//        iconView.image = viewModel.icon
-//    }
-
-    func displayInitForm(_ viewModel: NotesListModels.InitForm.ViewModel) {
-        headerLabel.text = viewModel.header
-        bodyLabel.text = viewModel.body
-        dateLabel.text = viewModel.date
-        iconView.image = viewModel.icon
+    func configure(header: String?, body: String?, date: String, icon: UIImage?) {
+        headerLabel.text = header
+        bodyLabel.text = body
+        dateLabel.text = date
+        iconView.image = icon
     }
 
     // MARK: - Lifecycle

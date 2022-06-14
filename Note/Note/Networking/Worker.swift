@@ -1,10 +1,11 @@
 import Foundation
 
-final class NotesListWorker: NotesListWorkerLogic {
+struct Worker: WorkerType {
+    // MARK: - Props
     private let session = URLSession(configuration: .default)
 
     // MARK: - Methods
-    func fetchData(completion: ([NoteData]) -> Void) {
+    func fetch(completion: ([NoteData]) -> Void) {
         guard let url = createURLComponents() else { return }
         var decodedData = [NoteData]()
         do {
@@ -16,7 +17,7 @@ final class NotesListWorker: NotesListWorkerLogic {
         completion(decodedData)
     }
 
-    func fetchImage(from stringUrl: String) -> Data? {
+    func loadImage(from stringUrl: String) -> Data? {
         guard let url = URL(string: stringUrl) else { return nil }
         var imageData = Data()
         do {

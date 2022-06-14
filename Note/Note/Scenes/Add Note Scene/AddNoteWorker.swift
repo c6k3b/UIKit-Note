@@ -1,1 +1,1 @@
-import Foundation
+final class AddNoteWorker: AddNoteWorkerLogic {}

@@ -1,21 +1,15 @@
-import Foundation
 import UIKit
 
-enum NotesListModels {
-    enum InitForm {
-        struct Request {
-            let note: Note
-        }
+enum NotesListModel {
+    enum ShowNotesList {
+        struct Request {}
 
         struct Response {
-            let notes: [Note]
+            var notes: [Note]
         }
 
         struct ViewModel {
-            let header: String?
-            let body: String?
-            let date: String
-            let icon: UIImage?
+            let notes: [Note]
         }
     }
 }

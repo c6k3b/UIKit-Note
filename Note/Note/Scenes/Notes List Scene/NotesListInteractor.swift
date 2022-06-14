@@ -1,10 +1,9 @@
-import Foundation
 import UIKit
 
 final class NotesListInteractor: NotesListBusinessLogic, NotesListDataStore {
     private let presenter: NotesListPresentationLogic
     private let worker: NotesListWorkerLogic
-    private(set) var notes: [Note] = []
+    private(set) var notes: [Note]?
 
     init(
         presenter: NotesListPresentationLogic,
@@ -14,20 +13,12 @@ final class NotesListInteractor: NotesListBusinessLogic, NotesListDataStore {
         self.worker = worker
     }
 
-    func requestInitForm(_ request: NotesListModels.InitForm.Request) {
-        DispatchQueue.main.async {
-            self.worker.fetch { _ in
-                self.presenter.presentInitForm(NotesListModels.InitForm.Response(notes: self.notes))
-            }
-        }
-    }
-
-    func addNotes() {
+    func requestNotesList(_ request: NotesListModel.ShowNotesList.Request) {
         DispatchQueue.global(qos: .background).async { [weak self] in
             guard let self = self else { return }
-            self.worker.fetch { noteData in
+            self.worker.fetchData { noteData in
                 noteData.forEach { note in
-                    self.notes.append(
+                    self.notes?.append(
                         Note(
                             header: note.header,
                             body: note.text,
@@ -35,7 +26,7 @@ final class NotesListInteractor: NotesListBusinessLogic, NotesListDataStore {
                                 timeIntervalSince1970: TimeInterval(note.date ?? 0)
                             ),
                             icon: UIImage(
-                                data: self.worker.getImageData(
+                                data: self.worker.fetchImage(
                                     from: note.userShareIcon ?? ""
                                 ) ?? Data()
                             )
@@ -44,7 +35,10 @@ final class NotesListInteractor: NotesListBusinessLogic, NotesListDataStore {
                 }
             }
         }
-    }
 
-//    func passData(from note: Note, isChanged: Bool) {}
+        guard let notes = notes else { return }
+        self.presenter.presentNotesList(
+            NotesListModel.ShowNotesList.Response(notes: notes)
+        )
+    }
 }

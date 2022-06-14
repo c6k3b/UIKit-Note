@@ -27,7 +27,7 @@ class ListViewController: UIViewController {
         return $0
     }(UIActivityIndicatorView())
 
-    private let worker = NotesListWorker()
+    private let worker: WorkerType = Worker()
     private var notes = [Note]()
     private let delay = DispatchTime.now() + .seconds(5)
 
@@ -88,7 +88,7 @@ class ListViewController: UIViewController {
                                 timeIntervalSince1970: TimeInterval(note.date ?? 0)
                             ),
                             icon: UIImage(
-                                data: self.worker.getImageData(
+                                data: self.worker.loadImage(
                                     from: note.userShareIcon ?? ""
                                 ) ?? Data()
                             )
@@ -123,7 +123,7 @@ class ListViewController: UIViewController {
 
         CATransaction.begin()
         CATransaction.setCompletionBlock {
-//            viewController.dataStore = self
+            viewController.noteDelegate = self
             self.navigationController?.pushViewController(viewController, animated: true)
             self.table.isUserInteractionEnabled = true
         }
@@ -146,17 +146,15 @@ extension ListViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(
             withIdentifier: NoteCell.identifier,
             for: indexPath
-        ) as? NotesListDisplayLogic else {
+        ) as? ConfigurableCell else {
             return UITableViewCell()
         }
 
-        cell.displayInitForm(
-            NotesListModels.InitForm.ViewModel(
-                header: note.header,
-                body: note.body,
-                date: note.date.getFormattedDate(format: "dd MM yyyy"),
-                icon: note.icon
-            )
+        cell.configure(
+            header: note.header,
+            body: note.body,
+            date: note.date.getFormattedDate(format: "dd MM yyyy"),
+            icon: note.icon
         )
         return cell as? UITableViewCell ?? UITableViewCell()
     }
@@ -185,7 +183,7 @@ extension ListViewController: UITableViewDelegate {
 }
 
 // MARK: - Note Delegate
-extension ListViewController {
+extension ListViewController: NoteDelegate {
     func passData(from note: Note, isChanged: Bool) {
         if isChanged {
             if let index = notes.firstIndex(where: { $0 === note }) {
