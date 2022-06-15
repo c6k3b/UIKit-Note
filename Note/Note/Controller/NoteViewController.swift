@@ -10,14 +10,11 @@ class NoteViewController: UIViewController {
     }(UIBarButtonItem())
 
     private lazy var stackView: UIStackView = {
-        $0.axis = .vertical
-        $0.distribution = .fill
-        $0.spacing = 8
         $0.addArrangedSubview(dateLabel)
         $0.addArrangedSubview(headerTextField)
         $0.addArrangedSubview(bodyTextView)
         return $0
-    }(UIStackView())
+    }(AddNoteStackView())
 
     private lazy var dateLabel: UILabel = {
         $0.font = .systemFont(ofSize: 14)
@@ -61,7 +58,7 @@ class NoteViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        createUI()
+        setupUI()
         setEditing(true, animated: true)
     }
 
@@ -87,14 +84,13 @@ class NoteViewController: UIViewController {
     }
 
     // MARK: - Methods
-    private func createUI() {
+    private func setupUI() {
         view.backgroundColor = .systemBackground
 
         navigationItem.leftBarButtonItem = navigationLeftBarButton
         navigationItem.rightBarButtonItem = editButtonItem
 
         view.addSubview(stackView)
-        activateStackViewConstraints()
     }
 
     private func setupDateLabel() -> String {
@@ -133,24 +129,5 @@ extension NoteViewController {
 
         alert.addAction(action)
         present(alert, animated: true)
-    }
-}
-
-// MARK: - Constraints
-extension NoteViewController {
-    private func activateStackViewConstraints() {
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.topAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8
-        ).isActive = true
-        stackView.leadingAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16
-        ).isActive = true
-        stackView.trailingAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16
-        ).isActive = true
-        stackView.bottomAnchor.constraint(
-            equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16
-        ).isActive = true
     }
 }

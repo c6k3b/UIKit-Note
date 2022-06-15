@@ -15,3 +15,7 @@ protocol AddNoteDisplayLogic: AnyObject {
 }
 
 protocol AddNoteRoutingLogic {}
+
+protocol NoteDelegate: AnyObject {
+    func passData(from note: Note, isChanged: Bool)
+}

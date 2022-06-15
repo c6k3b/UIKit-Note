@@ -1,35 +1,25 @@
 import UIKit
 
 final class NotesListViewController: UIViewController, NotesListDisplayLogic {
+    // MARK: - Props
+    private let activityIndicator = ActivityIndicator(frame: .zero)
+
+    private lazy var table: UITableView = {
+        $0.dataSource = self
+        $0.delegate = self
+        return $0
+    }(NotesTableView())
+
+    private lazy var floatingButton: FloatingButton = {
+        $0.addTarget(self, action: #selector(didFloatingButtonTapped), for: .touchUpInside)
+        return $0
+    }(FloatingButton())
+
     private let interactor: NotesListBusinessLogic
     private let router: NotesListRoutingLogic
     private lazy var notes: [Note] = []
 
-    private lazy var table: UITableView = {
-        $0.showsVerticalScrollIndicator = false
-        $0.allowsMultipleSelectionDuringEditing = true
-        $0.backgroundColor = .clear
-        $0.separatorStyle = .none
-        $0.estimatedRowHeight = 90
-
-        $0.register(NoteCell.self, forCellReuseIdentifier: NoteCell.identifier)
-
-        $0.dataSource = self
-        $0.delegate = self
-        return $0
-    }(UITableView())
-
-    private lazy var floatingButton: FloatingButton = {
-//        $0.addTarget(self, action: #selector(didFloatingButtonTapped), for: .touchUpInside)
-        return $0
-    }(FloatingButton())
-
-    private let activityIndicator: UIActivityIndicatorView = {
-        $0.startAnimating()
-        $0.style = UIActivityIndicatorView.Style.medium
-        return $0
-    }(UIActivityIndicatorView())
-
+    // MARK: - Initializers
     init(interactor: NotesListBusinessLogic, router: NotesListRoutingLogic) {
         self.interactor = interactor
         self.router = router
@@ -66,6 +56,50 @@ final class NotesListViewController: UIViewController, NotesListDisplayLogic {
         }
     }
 
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        table.setEditing(editing, animated: true)
+        editButtonItem.title = !table.isEditing ? "Выбрать" : "Готово"
+        floatingButton.setImage(UIImage(named: !table.isEditing ? "buttonPlus" : "buttonTrash"), for: .normal)
+        floatingButton.shakeHorizontaly()
+    }
+
+    // MARK: - Methods
+    @objc private func didFloatingButtonTapped() {
+        !isEditing ? pushNoteVC(NoteViewController(note: Note())) : removeNotes()
+    }
+
+    private func removeNotes() {
+        guard let indexPath = table.indexPathsForSelectedRows?.sorted(by: >) else {
+            return showEmptySelectionAlert()
+        }
+        let noteIndexesToRemove = indexPath.map { $0.section }
+        let sectionsForRemove = IndexSet(noteIndexesToRemove)
+
+        noteIndexesToRemove.forEach { notes.remove(at: $0) }
+        table.beginUpdates()
+        table.deleteSections(sectionsForRemove, with: .automatic)
+        table.endUpdates()
+
+        isEditing = false
+    }
+
+    private func pushNoteVC(_ viewController: NoteViewController) {
+        table.isUserInteractionEnabled = false
+
+        CATransaction.begin()
+        CATransaction.setCompletionBlock {
+            viewController.noteDelegate = self
+            self.navigationController?.pushViewController(viewController, animated: true)
+            self.table.isUserInteractionEnabled = true
+        }
+        floatingButton.shakeOnDisappear()
+        UIView.animate(withDuration: 0.2, delay: 0.6, options: []) {
+            self.floatingButton.layer.opacity = 0
+        }
+        CATransaction.commit()
+    }
+
     private func setupUI() {
         view.backgroundColor = .systemBackground.withAlphaComponent(0.97)
 
@@ -74,12 +108,8 @@ final class NotesListViewController: UIViewController, NotesListDisplayLogic {
         navigationItem.rightBarButtonItem = editButtonItem
 
         view.addSubview(table)
-        activateTableViewConstraints()
-
         view.addSubview(floatingButton)
-
         view.addSubview(activityIndicator)
-        activateActivityIndicatorViewConstraints()
     }
 }
 
@@ -125,28 +155,36 @@ extension NotesListViewController: UITableViewDelegate {
         }
     }
 
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        if !isEditing { pushNoteVC(NoteViewController(note: notes[indexPath.section])) }
-//    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if !isEditing { pushNoteVC(NoteViewController(note: notes[indexPath.section])) }
+    }
 }
 
-// MARK: - Constraints
+// MARK: - Alerts
 extension NotesListViewController {
-    private func activateTableViewConstraints() {
-        table.translatesAutoresizingMaskIntoConstraints = false
-            table.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor, constant: 16
-            ).isActive = true
-            table.trailingAnchor.constraint(
-                equalTo: view.trailingAnchor, constant: -16
-            ).isActive = true
-            table.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-            table.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-    }
+    private func showEmptySelectionAlert() {
+        let alert = UIAlertController(
+            title: "Вы не выбрали ни одной заметки",
+            message: nil,
+            preferredStyle: .alert
+        )
+        let action = UIAlertAction(title: "Ok", style: .cancel)
+        alert.addAction(action)
 
-    private func activateActivityIndicatorViewConstraints() {
-        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-        activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        present(alert, animated: true)
+    }
+}
+
+// MARK: - Note Delegate
+extension NotesListViewController: NoteDelegate {
+    func passData(from note: Note, isChanged: Bool) {
+        if isChanged {
+            if let index = notes.firstIndex(where: { $0 === note }) {
+                notes[index] = note
+            } else {
+                notes.append(note)
+            }
+            table.reloadData()
+        }
     }
 }

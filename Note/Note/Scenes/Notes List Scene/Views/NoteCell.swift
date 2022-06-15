@@ -38,7 +38,7 @@ class NoteCell: UITableViewCell, ConfigurableCell {
     // MARK: - Initializers
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        createUI()
+        setupUI()
     }
 
     required init?(coder: NSCoder) {
@@ -59,7 +59,7 @@ class NoteCell: UITableViewCell, ConfigurableCell {
     }
 
     // MARK: - Methods
-    private func createUI() {
+    private func setupUI() {
         contentView.layer.cornerRadius = 14
         contentView.backgroundColor = .systemBackground
 

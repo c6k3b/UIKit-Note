@@ -4,7 +4,7 @@ class FloatingButton: UIButton {
     // MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
-        createUI()
+        setupUI()
     }
 
     required init?(coder: NSCoder) {
@@ -17,7 +17,7 @@ class FloatingButton: UIButton {
     }
 
     // MARK: - Methods
-    private func createUI() {
+    private func setupUI() {
         layer.cornerRadius = 25
         clipsToBounds = true
         contentVerticalAlignment = .bottom
