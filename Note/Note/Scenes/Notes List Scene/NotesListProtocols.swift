@@ -1,4 +1,4 @@
-import Foundation
+import UIKit
 
 protocol NotesListDataStore {
     var notes: [Note] { get }
@@ -22,3 +22,8 @@ protocol NotesListDisplayLogic: AnyObject {
 }
 
 protocol NotesListRoutingLogic {}
+
+protocol ConfigurableCell {
+    func configure(header: String?, body: String?, date: String, icon: UIImage?)
+//    func configure(with viewModel: NotesListModel.ShowNotesList.ViewModel)
+}
