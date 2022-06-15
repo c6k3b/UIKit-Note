@@ -1,6 +1,6 @@
 import UIKit
 
-class NoteViewController: UIViewController {
+class OldNoteViewController: UIViewController, ConfigurableCell {
     // MARK: - Props
     private lazy var navigationLeftBarButton: UIBarButtonItem = {
         $0.image = UIImage(named: "backButton")
@@ -14,28 +14,25 @@ class NoteViewController: UIViewController {
         $0.addArrangedSubview(headerTextField)
         $0.addArrangedSubview(bodyTextView)
         return $0
-    }(AddNoteStackView())
+    }(NoteStackView())
 
-    private lazy var dateLabel: UILabel = {
+    private let dateLabel: UILabel = {
         $0.font = .systemFont(ofSize: 14)
         $0.textColor = .systemGray
         $0.textAlignment = .center
-        $0.text = setupDateLabel()
         return $0
     }(UILabel())
 
-    private lazy var headerTextField: UITextField = {
+    private let headerTextField: UITextField = {
         $0.placeholder = "Введите название"
         $0.font = .systemFont(ofSize: 24, weight: .bold)
-        $0.text = note.header
         return $0
     }(UITextField())
 
-    private lazy var bodyTextView: UITextView = {
+    private let bodyTextView: UITextView = {
         $0.font = .systemFont(ofSize: 16)
         $0.autocorrectionType = .no
         $0.adjustableKeyboard()
-        $0.text = note.body
         return $0
     }(UITextView())
 
@@ -62,6 +59,12 @@ class NoteViewController: UIViewController {
         setEditing(true, animated: true)
     }
 
+    func configure(header: String?, body: String?, date: String, icon: UIImage?) {
+        headerTextField.text = header
+        bodyTextView.text = body
+        dateLabel.text = date
+    }
+
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
 
@@ -73,7 +76,7 @@ class NoteViewController: UIViewController {
 
         if !editing && isChanged {
             saveNote()
-            dateLabel.text = setupDateLabel()
+            dateLabel.text = note.date.getFormattedDate(format: "dd.MM.yyyy EEEE HH:mm")
             dateLabel.shake()
         }
 
@@ -93,10 +96,6 @@ class NoteViewController: UIViewController {
         view.addSubview(stackView)
     }
 
-    private func setupDateLabel() -> String {
-        note.date.getFormattedDate(format: "dd.MM.yyyy EEEE HH:mm")
-    }
-
     @objc private func didNavigationLeftBarButtonTapped() {
         noteDelegate?.passData(from: note, isChanged: isChanged)
         navigationController?.popViewController(animated: true)
@@ -109,14 +108,14 @@ class NoteViewController: UIViewController {
     }
 }
 
-extension NoteViewController {
+extension OldNoteViewController {
     private func isEmpty() -> Bool {
         return note.isEmpty
     }
 }
 
 // MARK: - Alerts
-extension NoteViewController {
+extension OldNoteViewController {
     private func showEmptyFieldsAlert() {
         let alert = UIAlertController(
             title: "Поля не заполнены",

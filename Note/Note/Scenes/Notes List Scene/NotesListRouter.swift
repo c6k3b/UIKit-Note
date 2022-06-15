@@ -1,20 +1,17 @@
 import UIKit
 
 final class NotesListRouter: NotesListRoutingLogic, NotesListDataStore {
-    var notes: [Note] = []
-
+    // MARK: - Properties
     weak var viewController: UIViewController?
     let dataStore: NotesListDataStore
+    var notes: [Note] = []
 
+    // MARK: - Initializers
     init(dataStore: NotesListDataStore) {
         self.dataStore = dataStore
     }
-}
 
-private extension NotesListRouter {
-//    func passDataTo_() {
-//        source: CounterDataStore,
-//        destination: inout SomewhereDataStore
-//    ) {
-//    }
+    // MARK: - Methods
+    func passDataTo(source: NotesListDataStore, destination: inout NoteDataStore) {
+    }
 }

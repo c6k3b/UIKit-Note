@@ -33,8 +33,8 @@ final class NotesListViewController: UIViewController, NotesListDisplayLogic {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        initForm()
         setupUI()
+        initForm()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -66,25 +66,29 @@ final class NotesListViewController: UIViewController, NotesListDisplayLogic {
 
     // MARK: - Methods
     @objc private func didFloatingButtonTapped() {
-        !isEditing ? pushNoteVC(NoteViewController(note: Note())) : removeNotes()
-    }
+        if !isEditing {
+            pushNoteVC(OldNoteViewController(note: Note()))
+//            interactor.pushNoteVC(OldNoteViewController(note: Note()))
+//            router.passDataTo(source: self, destination: &NoteDataStore)
+        } else {
+            guard let indexPath = table.indexPathsForSelectedRows?.sorted(by: >) else {
+                return showEmptySelectionAlert()
+            }
+            let noteIndexesToRemove = indexPath.map { $0.section }
+            let sectionsForRemove = IndexSet(noteIndexesToRemove)
 
-    private func removeNotes() {
-        guard let indexPath = table.indexPathsForSelectedRows?.sorted(by: >) else {
-            return showEmptySelectionAlert()
+            noteIndexesToRemove.forEach {
+                interactor.removeNotesFromTable(at: $0)
+            }
+            table.beginUpdates()
+            table.deleteSections(sectionsForRemove, with: .automatic)
+            table.endUpdates()
+
+            isEditing = false
         }
-        let noteIndexesToRemove = indexPath.map { $0.section }
-        let sectionsForRemove = IndexSet(noteIndexesToRemove)
-
-        noteIndexesToRemove.forEach { notes.remove(at: $0) }
-        table.beginUpdates()
-        table.deleteSections(sectionsForRemove, with: .automatic)
-        table.endUpdates()
-
-        isEditing = false
     }
 
-    private func pushNoteVC(_ viewController: NoteViewController) {
+    private func pushNoteVC(_ viewController: OldNoteViewController) {
         table.isUserInteractionEnabled = false
 
         CATransaction.begin()
@@ -156,7 +160,15 @@ extension NotesListViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if !isEditing { pushNoteVC(NoteViewController(note: notes[indexPath.section])) }
+        let note = notes[indexPath.section]
+        let noteVC = OldNoteViewController(note: note)
+        noteVC.configure(
+            header: note.header,
+            body: note.body,
+            date: note.date.getFormattedDate(format: "dd.MM.yyyy EEEE HH:mm"),
+            icon: note.icon
+        )
+        if !isEditing { pushNoteVC(noteVC) }
     }
 }
 

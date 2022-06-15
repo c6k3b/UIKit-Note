@@ -1,10 +1,10 @@
 import UIKit
 
-final class AddNoteViewController: UIViewController, AddNoteDisplayLogic {
-    private let interactor: AddNoteBusinessLogic
-    private let router: AddNoteRoutingLogic
+final class NoteViewController: UIViewController, NoteDisplayLogic {
+    private let interactor: NoteBusinessLogic
+    private let router: NoteRoutingLogic
 
-    init(interactor: AddNoteBusinessLogic, router: AddNoteRoutingLogic) {
+    init(interactor: NoteBusinessLogic, router: NoteRoutingLogic) {
         self.interactor = interactor
         self.router = router
         super.init(nibName: nil, bundle: nil)
@@ -22,11 +22,11 @@ final class AddNoteViewController: UIViewController, AddNoteDisplayLogic {
 
     // MARK: - DisplayLogic
 
-    func displayNote(_ viewModel: AddNoteModel.InitForm.ViewModel) {}
+    func displayNote(_ viewModel: NoteModel.InitForm.ViewModel) {}
 
     // MARK: - Private
 
     private func initForm() {
-        interactor.requestNote(AddNoteModel.InitForm.Request())
+        interactor.requestNote(NoteModel.InitForm.Request())
     }
 }

@@ -1,18 +1,18 @@
 import UIKit
 
 final class NotesListInteractor: NotesListBusinessLogic, NotesListDataStore {
+    // MARK: - Props
     private let presenter: NotesListPresentationLogic
     private let worker: NotesListWorkerLogic
     private(set) var notes: [Note] = []
 
-    init(
-        presenter: NotesListPresentationLogic,
-        worker: NotesListWorkerLogic
-    ) {
+    // MARK: - Initializers
+    init(presenter: NotesListPresentationLogic, worker: NotesListWorkerLogic) {
         self.presenter = presenter
         self.worker = worker
     }
 
+    // MARK: - Methods
     func requestNotesList(_ request: NotesListModel.ShowNotesList.Request) {
         DispatchQueue.global(qos: .background).async { [weak self] in
             guard let self = self else { return }
@@ -36,5 +36,12 @@ final class NotesListInteractor: NotesListBusinessLogic, NotesListDataStore {
                 NotesListModel.ShowNotesList.Response(notes: self.notes)
             )
         }
+    }
+
+    func removeNotesFromTable(at index: Int) {
+        notes.remove(at: index)
+        presenter.presentNotesList(
+            NotesListModel.ShowNotesList.Response(notes: self.notes)
+        )
     }
 }

@@ -1,6 +1,6 @@
 import UIKit
 
-class AddNoteStackView: UIStackView {
+class NoteStackView: UIStackView {
     // MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -24,7 +24,7 @@ class AddNoteStackView: UIStackView {
 }
 
 // MARK: - Constraints
-extension AddNoteStackView {
+extension NoteStackView {
     private func activateStackViewConstraints() {
         translatesAutoresizingMaskIntoConstraints = false
         if let superview = superview {
