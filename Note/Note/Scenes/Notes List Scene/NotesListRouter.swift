@@ -1,7 +1,7 @@
 import UIKit
 
 final class NotesListRouter: NotesListRoutingLogic, NotesListDataStore {
-    var notes: [Note]?
+    var notes: [Note] = []
 
     weak var viewController: UIViewController?
     let dataStore: NotesListDataStore

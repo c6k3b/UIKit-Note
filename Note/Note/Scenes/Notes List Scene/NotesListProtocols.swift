@@ -1,7 +1,7 @@
 import Foundation
 
 protocol NotesListDataStore {
-    var notes: [Note]? { get }
+    var notes: [Note] { get }
 }
 
 protocol NotesListBusinessLogic {
