@@ -1,6 +1,6 @@
 import UIKit
 
-final class NotesListViewController: UIViewController, NotesListDisplayLogic {
+final class ListViewController: UIViewController, ListDisplayLogic {
     // MARK: - Props
     private let activityIndicator = ActivityIndicator(frame: .zero)
 
@@ -15,12 +15,12 @@ final class NotesListViewController: UIViewController, NotesListDisplayLogic {
         return $0
     }(FloatingButton())
 
-    private let interactor: NotesListBusinessLogic
-    private let router: NotesListRoutingLogic
-    private lazy var notes: [Note] = []
+    private let interactor: ListBusinessLogic
+    private let router: (ListRoutingLogic & ListDataPassing)
+    private var notes: [ListModel.ViewModel.PresentedNoteCell] = []
 
     // MARK: - Initializers
-    init(interactor: NotesListBusinessLogic, router: NotesListRoutingLogic) {
+    init(interactor: ListBusinessLogic, router: ListRoutingLogic & ListDataPassing) {
         self.interactor = interactor
         self.router = router
         super.init(nibName: nil, bundle: nil)
@@ -31,29 +31,32 @@ final class NotesListViewController: UIViewController, NotesListDisplayLogic {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - DisplayLogic
+    func displayNotes(_ viewModel: ListModel.ViewModel) {
+        notes = viewModel.presentedCells
+        let delay = DispatchTime.now() + .seconds(1)
+        DispatchQueue.main.asyncAfter(deadline: delay, execute: {
+            self.activityIndicator.stopAnimating()
+            self.table.reloadData()
+        })
+    }
+
+    // MARK: - Interactor request
+    private func getNotes() {
+        interactor.requestNotes(ListModel.Request())
+    }
+
+    // MARK: - Controller lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        initForm()
+        getNotes()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         floatingButton.shakeOnAppear()
         floatingButton.layer.opacity = 1
-    }
-
-    private func initForm() {
-        interactor.requestNotesList(NotesListModel.ShowNotesList.Request())
-    }
-
-    func displayNotesList(_ viewModel: NotesListModel.ShowNotesList.ViewModel) {
-        notes = viewModel.notes
-
-        DispatchQueue.main.async {
-            self.table.reloadData()
-            self.activityIndicator.stopAnimating()
-        }
     }
 
     override func setEditing(_ editing: Bool, animated: Bool) {
@@ -64,37 +67,22 @@ final class NotesListViewController: UIViewController, NotesListDisplayLogic {
         floatingButton.shakeHorizontaly()
     }
 
-    // MARK: - Methods
+    // MARK: - Routing
     @objc private func didFloatingButtonTapped() {
         if !isEditing {
-            pushNoteVC(OldNoteViewController(note: Note()))
-//            interactor.pushNoteVC(OldNoteViewController(note: Note()))
-//            router.passDataTo(source: self, destination: &NoteDataStore)
+            navigate()
         } else {
-            guard let indexPath = table.indexPathsForSelectedRows?.sorted(by: >) else {
-                return showEmptySelectionAlert()
-            }
-            let noteIndexesToRemove = indexPath.map { $0.section }
-            let sectionsForRemove = IndexSet(noteIndexesToRemove)
-
-            noteIndexesToRemove.forEach {
-                interactor.removeNotesFromTable(at: $0)
-            }
-            table.beginUpdates()
-            table.deleteSections(sectionsForRemove, with: .automatic)
-            table.endUpdates()
-
-            isEditing = false
+            remove()
         }
     }
 
-    private func pushNoteVC(_ viewController: OldNoteViewController) {
+    private func navigate() {
         table.isUserInteractionEnabled = false
 
         CATransaction.begin()
         CATransaction.setCompletionBlock {
-            viewController.noteDelegate = self
-            self.navigationController?.pushViewController(viewController, animated: true)
+//            viewController.noteDelegate = self
+            self.router.route()
             self.table.isUserInteractionEnabled = true
         }
         floatingButton.shakeOnDisappear()
@@ -104,6 +92,7 @@ final class NotesListViewController: UIViewController, NotesListDisplayLogic {
         CATransaction.commit()
     }
 
+    // MARK: - Methods
     private func setupUI() {
         view.backgroundColor = .systemBackground.withAlphaComponent(0.97)
 
@@ -115,10 +104,25 @@ final class NotesListViewController: UIViewController, NotesListDisplayLogic {
         view.addSubview(floatingButton)
         view.addSubview(activityIndicator)
     }
+
+    private func remove() {
+        guard let indexPath = table.indexPathsForSelectedRows?.sorted(by: >) else {
+            return showEmptySelectionAlert()
+        }
+        let noteIndexesToRemove = indexPath.map { $0.section }
+        let sectionsForRemove = IndexSet(noteIndexesToRemove)
+
+        noteIndexesToRemove.forEach { interactor.removeNote(at: $0) }
+        table.beginUpdates()
+        table.deleteSections(sectionsForRemove, with: .left)
+        table.endUpdates()
+
+        isEditing = false
+    }
 }
 
 // MARK: - Datasource
-    extension NotesListViewController: UITableViewDataSource {
+    extension ListViewController: UITableViewDataSource {
         func numberOfSections(in tableView: UITableView) -> Int { notes.count }
         func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { 1 }
 
@@ -143,7 +147,7 @@ final class NotesListViewController: UIViewController, NotesListDisplayLogic {
     }
 
 // MARK: - Delegate
-extension NotesListViewController: UITableViewDelegate {
+extension ListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? { UIView() }
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat { 4 }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -154,26 +158,26 @@ extension NotesListViewController: UITableViewDelegate {
         _ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath
     ) {
         if editingStyle == .delete {
-            notes.remove(at: indexPath.section)
-            tableView.deleteSections([indexPath.section], with: .automatic)
+            interactor.removeNote(at: indexPath.section)
+            tableView.deleteSections([indexPath.section], with: .left)
         }
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let note = notes[indexPath.section]
-        let noteVC = OldNoteViewController(note: note)
-        noteVC.configure(
-            header: note.header,
-            body: note.body,
-            date: note.date.getFormattedDate(format: "dd.MM.yyyy EEEE HH:mm"),
-            icon: note.icon
-        )
-        if !isEditing { pushNoteVC(noteVC) }
+//        let noteVC = OldNoteViewController(note: note as? Note ?? Note())
+//        noteVC.configure(
+//            header: note.header,
+//            body: note.body,
+//            date: note.date.getFormattedDate(format: "dd.MM.yyyy EEEE HH:mm"),
+//            icon: note.icon
+//        )
+        if !isEditing { navigate() }
     }
 }
 
 // MARK: - Alerts
-extension NotesListViewController {
+extension ListViewController {
     private func showEmptySelectionAlert() {
         let alert = UIAlertController(
             title: "Вы не выбрали ни одной заметки",
@@ -188,15 +192,15 @@ extension NotesListViewController {
 }
 
 // MARK: - Note Delegate
-extension NotesListViewController: NoteDelegate {
-    func passData(from note: Note, isChanged: Bool) {
-        if isChanged {
-            if let index = notes.firstIndex(where: { $0 === note }) {
-                notes[index] = note
-            } else {
-                notes.append(note)
-            }
-            table.reloadData()
-        }
-    }
-}
+//    extension NotesListViewController: NoteDelegate {
+//        func passData(from note: Note, isChanged: Bool) {
+//            if isChanged {
+//                if let index = notes.firstIndex(where: { $0 === note }) {
+//                    notes[index] = note
+//                } else {
+//                    notes.append(note)
+//                }
+//                table.reloadData()
+//            }
+//        }
+//    }

@@ -1,7 +1,14 @@
+import Foundation
 enum NoteModel {
-    enum InitForm {
-        struct Request {}
-        struct Response {}
-        struct ViewModel {}
+    struct Request {}
+
+    struct Response {
+        let note: Note
+    }
+
+    struct ViewModel {
+        let date: Date
+        let header: String
+        let body: String
     }
 }

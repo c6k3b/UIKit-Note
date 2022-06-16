@@ -13,7 +13,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScene)
 
         navigationController = UINavigationController()
-        navigationController?.viewControllers = [NotesListAssembly.build()]
+        navigationController?.viewControllers = [ListAssembly.build()]
 
         window.rootViewController = navigationController
         window.makeKeyAndVisible()

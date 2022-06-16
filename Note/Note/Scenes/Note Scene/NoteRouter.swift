@@ -1,18 +1,16 @@
 import UIKit
 
-final class NoteRouter: NoteRoutingLogic, NoteDataStore {
+final class NoteRouter: NoteRoutingLogic, NoteDataPassing {
+    // MARK: - Props
     weak var viewController: UIViewController?
-    let dataStore: NoteDataStore
+    var dataStore: NoteDataStore
 
+    // MARK: - Initializers
     init(dataStore: NoteDataStore) {
         self.dataStore = dataStore
     }
-}
 
-private extension NoteRouter {
-//    func passDataTo_() {
-//        source: CounterDataStore,
-//        destination: inout SomewhereDataStore
-//    ) {
-//    }
+    // MARK: - Routing
+    func route() {
+    }
 }

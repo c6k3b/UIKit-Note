@@ -1,6 +1,7 @@
 import Foundation
 
-final class NotesListWorker: NotesListWorkerLogic {
+struct NetworkManager {
+    // MARK: - Props
     private let session = URLSession(configuration: .default)
 
     // MARK: - Methods
@@ -27,6 +28,7 @@ final class NotesListWorker: NotesListWorkerLogic {
         return imageData
     }
 
+    // MARK: - Private
     private func createURLComponents() -> URL? {
         var urlComponents = URLComponents()
 
