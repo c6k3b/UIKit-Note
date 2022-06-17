@@ -11,7 +11,7 @@ enum ListModel {
         struct PresentedNoteCell {
             let header: String
             let body: String
-            let date: Date
+            let date: String
             let icon: UIImage
         }
         let presentedCells: [PresentedNoteCell]

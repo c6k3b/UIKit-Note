@@ -38,13 +38,11 @@ final class NoteViewController: UIViewController, NoteDisplayLogic {
 
     private let interactor: NoteBusinessLogic
     let router: (NoteRoutingLogic & NoteDataPassing)
-//    private var note: NoteModel.ViewModel
 
     // MARK: - Initializers
     init(interactor: NoteBusinessLogic, router: NoteRoutingLogic & NoteDataPassing) {
         self.interactor = interactor
         self.router = router
-//        self.note = note
         super.init(nibName: nil, bundle: nil)
     }
 

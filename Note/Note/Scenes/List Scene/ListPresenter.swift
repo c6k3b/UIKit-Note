@@ -9,7 +9,7 @@ final class ListPresenter: ListPresentationLogic {
             let presentedNote = ListModel.ViewModel.PresentedNoteCell(
                 header: cell.header ?? "",
                 body: cell.body ?? "",
-                date: cell.date,
+                date: cell.date.getFormattedDate(format: "dd MM yyyy"),
                 icon: cell.icon ?? UIImage()
             )
             presentedNotes.append(presentedNote)

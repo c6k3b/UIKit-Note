@@ -129,7 +129,7 @@ final class ListViewController: UIViewController, ListDisplayLogic {
             cell.configure(
                 header: note.header,
                 body: note.body,
-                date: note.date.getFormattedDate(format: "dd MM yyyy"),
+                date: note.date,
                 icon: note.icon
             )
             return cell as? UITableViewCell ?? UITableViewCell()
