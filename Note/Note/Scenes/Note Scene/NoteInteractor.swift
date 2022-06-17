@@ -13,7 +13,17 @@ final class NoteInteractor: NoteBusinessLogic, NoteDataStore {
         self.worker = worker
     }
 
-    func requestNote(_ request: NoteModel.Request) {
-        self.presenter.presentNote(NoteModel.Response(note: note))
+    func displayNote(_ request: NoteModel.PresentNote.Request) {
+        presenter.presentNote(NoteModel.PresentNote.Response(note: note))
+    }
+
+    func saveNote(_ request: NoteModel.SaveNote.Request) {
+        guard let date = request.date, !date.isEmpty,
+              let header = request.header, !header.isEmpty,
+              let body = request.body, !body.isEmpty
+        else { return }
+
+        note.header = header
+        note.body = body
     }
 }

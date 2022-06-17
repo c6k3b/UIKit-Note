@@ -7,17 +7,18 @@ protocol NoteDataStore {
 }
 
 protocol NoteBusinessLogic {
-    func requestNote(_ request: NoteModel.Request)
+    func displayNote(_ request: NoteModel.PresentNote.Request)
+    func saveNote(_ request: NoteModel.SaveNote.Request)
 }
 
 protocol NoteWorkerLogic {}
 
 protocol NotePresentationLogic {
-    func presentNote(_ response: NoteModel.Response)
+    func presentNote(_ response: NoteModel.PresentNote.Response)
 }
 
 protocol NoteDisplayLogic: AnyObject {
-    func displayNote(_ viewModel: NoteModel.ViewModel)
+    func displayNote(_ viewModel: NoteModel.PresentNote.ViewModel)
 }
 
 protocol NoteRoutingLogic {

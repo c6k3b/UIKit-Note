@@ -52,7 +52,7 @@ final class NoteViewController: UIViewController, NoteDisplayLogic {
     }
 
     // MARK: - DisplayLogic
-    func displayNote(_ viewModel: NoteModel.ViewModel) {
+    func displayNote(_ viewModel: NoteModel.PresentNote.ViewModel) {
         dateLabel.text = viewModel.date
         headerTextField.text = viewModel.header
         bodyTextView.text = viewModel.body
@@ -62,7 +62,7 @@ final class NoteViewController: UIViewController, NoteDisplayLogic {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        interactor.requestNote(NoteModel.Request())
+        interactor.displayNote(NoteModel.PresentNote.Request())
         setEditing(true, animated: true)
     }
 
@@ -73,11 +73,13 @@ final class NoteViewController: UIViewController, NoteDisplayLogic {
         editButtonItem.title = editing ? "Готово" : "Изменить"
 
         view.isUserInteractionEnabled = editing
-        _ = editing ? bodyTextView.becomeFirstResponder() :  bodyTextView.resignFirstResponder()
 
-        if !editing {
-//            dateLabel.text = note.date.getFormattedDate(format: "dd.MM.yyyy EEEE HH:mm")
+        if editing {
+            bodyTextView.becomeFirstResponder()
+        } else {
+            bodyTextView.resignFirstResponder()
             dateLabel.shake()
+            save()
         }
 
         if !editing && (headerTextField.text == "") && bodyTextView.text.isEmpty {
@@ -94,6 +96,15 @@ final class NoteViewController: UIViewController, NoteDisplayLogic {
         navigationItem.rightBarButtonItem = editButtonItem
 
         view.addSubview(stackView)
+    }
+
+    private func save() {
+        let request = NoteModel.SaveNote.Request(
+            date: Date().getFormattedDate(format: "dd.MM.yyyy EEEE HH:mm"),
+            header: headerTextField.text,
+            body: bodyTextView.text
+        )
+        interactor.saveNote(request)
     }
 
     @objc private func didNavigationLeftBarButtonTapped() {

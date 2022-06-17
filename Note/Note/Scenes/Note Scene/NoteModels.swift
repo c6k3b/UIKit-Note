@@ -1,14 +1,29 @@
 enum NoteModel {
-    struct Request {}
+    enum PresentNote {
+        struct Request {}
 
-    struct Response {
-        let note: Note
+        struct Response {
+            let note: Note
+        }
+
+        struct ViewModel {
+            let date: String
+            let header: String
+            let body: String
+        }
     }
 
-    struct ViewModel {
-        let date: String
-        let header: String
-        let body: String
-//        let note: Note
+    enum SaveNote {
+        struct Request {
+            let date: String?
+            let header: String?
+            let body: String?
+        }
+
+        struct Response {
+            let note: Note
+        }
+
+        struct ViewModel {}
     }
 }
