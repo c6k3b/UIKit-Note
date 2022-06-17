@@ -12,5 +12,6 @@ final class NoteRouter: NoteRoutingLogic, NoteDataPassing {
 
     // MARK: - Routing
     func route() {
+        viewController?.navigationController?.popViewController(animated: true)
     }
 }

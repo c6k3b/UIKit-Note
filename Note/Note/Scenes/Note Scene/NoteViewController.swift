@@ -80,7 +80,7 @@ final class NoteViewController: UIViewController, NoteDisplayLogic {
             dateLabel.shake()
         }
 
-        if !editing && isEmpty() {
+        if !editing && (headerTextField.text == "") && bodyTextView.text.isEmpty {
             showEmptyFieldsAlert()
             setEditing(!editing, animated: true)
         }
@@ -97,14 +97,7 @@ final class NoteViewController: UIViewController, NoteDisplayLogic {
     }
 
     @objc private func didNavigationLeftBarButtonTapped() {
-        navigationController?.popViewController(animated: true)
-    }
-}
-
-extension NoteViewController {
-    private func isEmpty() -> Bool {
-        false
-//        note.header.isEmpty && note.body.isEmpty
+        router.route()
     }
 }
 
