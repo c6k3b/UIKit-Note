@@ -16,7 +16,7 @@ final class ListViewController: UIViewController, ListDisplayLogic {
     }(FloatingButton())
 
     private let interactor: ListBusinessLogic
-    private let router: (ListRoutingLogic & ListDataPassing)
+    let router: (ListRoutingLogic & ListDataPassing)
     private var notes: [ListModel.ViewModel.PresentedNoteCell] = []
 
     // MARK: - Initializers

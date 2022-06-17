@@ -27,6 +27,5 @@ final class ListRouter: ListRoutingLogic, ListDataPassing {
     // MARK: - Passing data
     private func passData(source: ListDataStore, destination: inout NoteDataStore) {
         destination.note = source.note
-        dump(destination.note)
     }
 }
