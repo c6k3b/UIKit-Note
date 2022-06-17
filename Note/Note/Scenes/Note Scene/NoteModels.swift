@@ -1,4 +1,3 @@
-import Foundation
 enum NoteModel {
     struct Request {}
 
@@ -7,8 +6,9 @@ enum NoteModel {
     }
 
     struct ViewModel {
-        let date: Date
+        let date: String
         let header: String
         let body: String
+//        let note: Note
     }
 }

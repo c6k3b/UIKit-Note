@@ -14,6 +14,6 @@ final class NoteInteractor: NoteBusinessLogic, NoteDataStore {
     }
 
     func requestNote(_ request: NoteModel.Request) {
-        self.presenter.presentNote(NoteModel.Response(note: Note()))
+        self.presenter.presentNote(NoteModel.Response(note: note))
     }
 }

@@ -36,16 +36,9 @@ final class NoteViewController: UIViewController, NoteDisplayLogic {
         return $0
     }(UITextView())
 
-    private lazy var isChanged: Bool = {
-        headerTextField.text != note.header || bodyTextView.text != note.body
-    }()
-
     private let interactor: NoteBusinessLogic
     let router: (NoteRoutingLogic & NoteDataPassing)
-    // viewmodel
-
-    private var note: Note = Note()
-    weak var noteDelegate: NoteDelegate?
+//    private var note: NoteModel.ViewModel
 
     // MARK: - Initializers
     init(interactor: NoteBusinessLogic, router: NoteRoutingLogic & NoteDataPassing) {
@@ -61,23 +54,18 @@ final class NoteViewController: UIViewController, NoteDisplayLogic {
     }
 
     // MARK: - DisplayLogic
-    private func initForm() {
-        interactor.requestNote(NoteModel.Request())
+    func displayNote(_ viewModel: NoteModel.ViewModel) {
+        dateLabel.text = viewModel.date
+        headerTextField.text = viewModel.header
+        bodyTextView.text = viewModel.body
     }
-    func displayNote(_ viewModel: NoteModel.ViewModel) {}
 
     // MARK: - Controller lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        initForm()
+        interactor.requestNote(NoteModel.Request())
         setEditing(true, animated: true)
-    }
-
-    func configure(header: String?, body: String?, date: String, icon: UIImage?) {
-        headerTextField.text = header
-        bodyTextView.text = body
-        dateLabel.text = date
     }
 
     override func setEditing(_ editing: Bool, animated: Bool) {
@@ -89,9 +77,8 @@ final class NoteViewController: UIViewController, NoteDisplayLogic {
         view.isUserInteractionEnabled = editing
         _ = editing ? bodyTextView.becomeFirstResponder() :  bodyTextView.resignFirstResponder()
 
-        if !editing && isChanged {
-            saveNote()
-            dateLabel.text = note.date.getFormattedDate(format: "dd.MM.yyyy EEEE HH:mm")
+        if !editing {
+//            dateLabel.text = note.date.getFormattedDate(format: "dd.MM.yyyy EEEE HH:mm")
             dateLabel.shake()
         }
 
@@ -112,20 +99,14 @@ final class NoteViewController: UIViewController, NoteDisplayLogic {
     }
 
     @objc private func didNavigationLeftBarButtonTapped() {
-        noteDelegate?.passData(from: note, isChanged: isChanged)
         navigationController?.popViewController(animated: true)
-    }
-
-    private func saveNote() {
-        note.header = headerTextField.text
-        note.body = bodyTextView.text
-        note.date = Date()
     }
 }
 
 extension NoteViewController {
     private func isEmpty() -> Bool {
-        return note.isEmpty
+        false
+//        note.header.isEmpty && note.body.isEmpty
     }
 }
 
