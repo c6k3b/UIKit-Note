@@ -3,7 +3,7 @@ protocol NoteDataPassing {
 }
 
 protocol NoteDataStore {
-    var notes: [Note] { get set }
+    var note: Note { get set }
 }
 
 protocol NoteBusinessLogic {

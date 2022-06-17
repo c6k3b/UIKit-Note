@@ -5,11 +5,13 @@ protocol ListDataPassing {
 }
 
 protocol ListDataStore {
-    var notes: [Note] { get set }
+    var notes: [Note] { get }
+    var note: Note { get set }
 }
 
 protocol ListBusinessLogic {
     func requestNotes(_ request: ListModel.Request)
+    func getSelectedNoteIndex(_ index: Int?)
     func removeNote(at index: Int)
 }
 

@@ -41,16 +41,11 @@ final class ListViewController: UIViewController, ListDisplayLogic {
         })
     }
 
-    // MARK: - Interactor request
-    private func getNotes() {
-        interactor.requestNotes(ListModel.Request())
-    }
-
     // MARK: - Controller lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        getNotes()
+        interactor.requestNotes(ListModel.Request())
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -69,11 +64,7 @@ final class ListViewController: UIViewController, ListDisplayLogic {
 
     // MARK: - Routing
     @objc private func didFloatingButtonTapped() {
-        if !isEditing {
-            navigate()
-        } else {
-            remove()
-        }
+        !isEditing ? navigate() : remove()
     }
 
     private func navigate() {
@@ -81,7 +72,6 @@ final class ListViewController: UIViewController, ListDisplayLogic {
 
         CATransaction.begin()
         CATransaction.setCompletionBlock {
-//            viewController.noteDelegate = self
             self.router.route()
             self.table.isUserInteractionEnabled = true
         }
@@ -164,14 +154,7 @@ extension ListViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let note = notes[indexPath.section]
-//        let noteVC = OldNoteViewController(note: note as? Note ?? Note())
-//        noteVC.configure(
-//            header: note.header,
-//            body: note.body,
-//            date: note.date.getFormattedDate(format: "dd.MM.yyyy EEEE HH:mm"),
-//            icon: note.icon
-//        )
+        interactor.getSelectedNoteIndex(indexPath.section)
         if !isEditing { navigate() }
     }
 }
@@ -190,17 +173,3 @@ extension ListViewController {
         present(alert, animated: true)
     }
 }
-
-// MARK: - Note Delegate
-//    extension NotesListViewController: NoteDelegate {
-//        func passData(from note: Note, isChanged: Bool) {
-//            if isChanged {
-//                if let index = notes.firstIndex(where: { $0 === note }) {
-//                    notes[index] = note
-//                } else {
-//                    notes.append(note)
-//                }
-//                table.reloadData()
-//            }
-//        }
-//    }

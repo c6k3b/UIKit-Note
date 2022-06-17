@@ -3,6 +3,7 @@ import UIKit
 final class ListRouter: ListRoutingLogic, ListDataPassing {
     // MARK: - Props
     weak var viewController: UIViewController?
+    weak var table: UITableView?
     var dataStore: ListDataStore
 
     // MARK: - Initializers
@@ -25,6 +26,7 @@ final class ListRouter: ListRoutingLogic, ListDataPassing {
 
     // MARK: - Passing data
     private func passData(source: ListDataStore, destination: inout NoteDataStore) {
-        destination.notes = source.notes
+        destination.note = source.note
+        dump(destination.note)
     }
 }

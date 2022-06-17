@@ -4,7 +4,8 @@ final class ListInteractor: ListBusinessLogic, ListDataStore {
     // MARK: - Props
     private let presenter: ListPresentationLogic
     private let worker: ListWorkerLogic
-    var notes: [Note] = []
+    private(set) var notes: [Note] = []
+    var note: Note = Note()
 
     // MARK: - Initializers
     init(presenter: ListPresentationLogic, worker: ListWorkerLogic) {
@@ -19,6 +20,12 @@ final class ListInteractor: ListBusinessLogic, ListDataStore {
             self.notes = self.worker.getNotes()
             let response = ListModel.Response(notes: self.notes)
             self.presenter.presentNotes(response)
+        }
+    }
+
+    func getSelectedNoteIndex(_ index: Int?) {
+        if let index = index {
+            self.note = notes[index]
         }
     }
 

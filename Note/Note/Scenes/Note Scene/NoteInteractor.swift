@@ -3,7 +3,7 @@ import Foundation
 final class NoteInteractor: NoteBusinessLogic, NoteDataStore {
     private let presenter: NotePresentationLogic
     private let worker: NoteWorkerLogic
-    var notes: [Note] = []
+    var note: Note = Note()
 
     init(
         presenter: NotePresentationLogic,
