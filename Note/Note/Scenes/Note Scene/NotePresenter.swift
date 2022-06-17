@@ -5,7 +5,7 @@ final class NotePresenter: NotePresentationLogic {
 
     func presentNote(_ response: NoteModel.Response) {
         let viewModel = NoteModel.ViewModel(
-            date: response.note.date.getFormattedDate(format: "dd.MM.yyyy EEEE HH:mm"),
+            date: (response.note.date ?? Date()).getFormattedDate(format: "dd.MM.yyyy EEEE HH:mm"),
             header: response.note.header ?? "N/A",
             body: response.note.body ?? "N/A"
         )

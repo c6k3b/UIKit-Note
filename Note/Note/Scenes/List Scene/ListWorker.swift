@@ -1,4 +1,4 @@
-import UIKit
+import Foundation
 
 final class ListWorker: ListWorkerLogic {
     private let networkManager = NetworkManager()
@@ -11,9 +11,9 @@ final class ListWorker: ListWorkerLogic {
                     header: $0.header,
                     body: $0.text,
                     date: Date(timeIntervalSince1970: TimeInterval($0.date ?? 0)),
-                    icon: UIImage(data: self.networkManager.fetchImage(
+                    icon: self.networkManager.fetchImage(
                             from: $0.userShareIcon ?? ""
-                        ) ?? Data())
+                        )
                 )
             }
         }
