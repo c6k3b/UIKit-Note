@@ -37,17 +37,22 @@ final class ListInteractor: ListBusinessLogic, ListDataStore {
         presenter.presentNotes(response)
     }
 
-    func showNoSelectionAlert() {
-        let response = ListModel.Alert.Response()
-        presenter.presentNoSelectionAlert(response)
-    }
-
     func updateNotesList() {
         if let index = index {
             notes[index] = note
+        } else if index == nil && ((note.header != nil) || (note.body != nil)) {
+            notes.append(note)
         }
-        index = nil
+
         let response = ListModel.PresentList.Response(notes: self.notes)
         presenter.presentNotes(response)
+
+        index = nil
+        note = Note()
+    }
+
+    func showNoSelectionAlert() {
+        let response = ListModel.Alert.Response()
+        presenter.presentNoSelectionAlert(response)
     }
 }

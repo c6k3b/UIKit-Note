@@ -3,7 +3,6 @@ import UIKit
 final class ListRouter: ListRoutingLogic, ListDataPassing {
     // MARK: - Props
     weak var viewController: UIViewController?
-    weak var table: UITableView?
     var dataStore: ListDataStore
 
     // MARK: - Initializers
