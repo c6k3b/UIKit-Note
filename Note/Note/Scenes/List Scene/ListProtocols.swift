@@ -13,6 +13,7 @@ protocol ListBusinessLogic {
     func requestNotes(_ request: ListModel.Request)
     func getSelectedNoteIndex(_ index: Int?)
     func removeNote(at index: Int)
+    func updateNotesList()
 }
 
 protocol ListWorkerLogic {

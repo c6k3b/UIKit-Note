@@ -37,6 +37,7 @@ final class ListViewController: UIViewController, ListDisplayLogic {
         let delay = DispatchTime.now() + .seconds(1)
         DispatchQueue.main.asyncAfter(deadline: delay, execute: {
             self.activityIndicator.stopAnimating()
+            self.interactor.updateNotesList()
             self.table.reloadData()
         })
     }

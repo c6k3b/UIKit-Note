@@ -6,6 +6,7 @@ final class ListInteractor: ListBusinessLogic, ListDataStore {
     private let worker: ListWorkerLogic
     private(set) var notes: [Note] = []
     var note: Note = Note()
+    private var index: Int?
 
     // MARK: - Initializers
     init(presenter: ListPresentationLogic, worker: ListWorkerLogic) {
@@ -26,11 +27,21 @@ final class ListInteractor: ListBusinessLogic, ListDataStore {
     func getSelectedNoteIndex(_ index: Int?) {
         if let index = index {
             self.note = notes[index]
+            self.index = index
         }
     }
 
     func removeNote(at index: Int) {
         notes.remove(at: index)
+        let response = ListModel.Response(notes: self.notes)
+        presenter.presentNotes(response)
+    }
+
+    func updateNotesList() {
+        if let index = index {
+            notes[index] = note
+        }
+        index = nil
         let response = ListModel.Response(notes: self.notes)
         presenter.presentNotes(response)
     }
