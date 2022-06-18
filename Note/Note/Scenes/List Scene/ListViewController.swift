@@ -17,7 +17,7 @@ final class ListViewController: UIViewController, ListDisplayLogic {
 
     private let interactor: ListBusinessLogic
     let router: (ListRoutingLogic & ListDataPassing)
-    private var notes: [ListModel.ViewModel.PresentedNoteCell] = []
+    private var notes: [ListModel.PresentList.ViewModel.PresentedNoteCell] = []
 
     // MARK: - Initializers
     init(interactor: ListBusinessLogic, router: ListRoutingLogic & ListDataPassing) {
@@ -32,27 +32,35 @@ final class ListViewController: UIViewController, ListDisplayLogic {
     }
 
     // MARK: - DisplayLogic
-    func displayNotes(_ viewModel: ListModel.ViewModel) {
+    func displayNotes(_ viewModel: ListModel.PresentList.ViewModel) {
         notes = viewModel.presentedCells
         let delay = DispatchTime.now() + .seconds(1)
         DispatchQueue.main.asyncAfter(deadline: delay, execute: {
             self.activityIndicator.stopAnimating()
-            self.interactor.updateNotesList()
             self.table.reloadData()
         })
+    }
+
+    func displayNoSelectionAlert(_ viewModel: ListModel.Alert.ViewModel) {
+        showAlert(
+            title: viewModel.title,
+            message: viewModel.message,
+            actionTitle: viewModel.actionTitle
+        )
     }
 
     // MARK: - Controller lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        interactor.requestNotes(ListModel.Request())
+        interactor.requestNotes(ListModel.PresentList.Request())
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         floatingButton.shakeOnAppear()
         floatingButton.layer.opacity = 1
+        self.interactor.updateNotesList()
     }
 
     override func setEditing(_ editing: Bool, animated: Bool) {
@@ -98,7 +106,7 @@ final class ListViewController: UIViewController, ListDisplayLogic {
 
     private func remove() {
         guard let indexPath = table.indexPathsForSelectedRows?.sorted(by: >) else {
-            return showEmptySelectionAlert()
+            return interactor.showNoSelectionAlert()
         }
         let noteIndexesToRemove = indexPath.map { $0.section }
         let sectionsForRemove = IndexSet(noteIndexesToRemove)
@@ -157,20 +165,5 @@ extension ListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         interactor.getSelectedNoteIndex(indexPath.section)
         if !isEditing { navigate() }
-    }
-}
-
-// MARK: - Alerts
-extension ListViewController {
-    private func showEmptySelectionAlert() {
-        let alert = UIAlertController(
-            title: "Вы не выбрали ни одной заметки",
-            message: nil,
-            preferredStyle: .alert
-        )
-        let action = UIAlertAction(title: "Ok", style: .cancel)
-        alert.addAction(action)
-
-        present(alert, animated: true)
     }
 }

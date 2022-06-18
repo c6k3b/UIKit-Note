@@ -38,6 +38,7 @@
 		00BE4B7C27ECE81C00664855 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00BE4B7B27ECE81C00664855 /* AppDelegate.swift */; };
 		00BE4B7E27ECE81C00664855 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00BE4B7D27ECE81C00664855 /* SceneDelegate.swift */; };
 		00BE4B8527ECE82000664855 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00BE4B8427ECE82000664855 /* Assets.xcassets */; };
+		00D2AC8E285D8FDF0020E9F3 /* AlertExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D2AC8D285D8FDF0020E9F3 /* AlertExt.swift */; };
 		00F4C7012836AB3A00301DC6 /* NoteData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00F4C7002836AB3A00301DC6 /* NoteData.swift */; };
 /* End PBXBuildFile section */
 
@@ -94,6 +95,7 @@
 		00BE4B8927ECE82000664855 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00BE4B8E27ECE82100664855 /* NoteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NoteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00BE4B9827ECE82100664855 /* NoteUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NoteUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00D2AC8D285D8FDF0020E9F3 /* AlertExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertExt.swift; sourceTree = "<group>"; };
 		00F4C7002836AB3A00301DC6 /* NoteData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -216,8 +218,9 @@
 		00A78900285A6DA000CE980A /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				00AE68B6280D5C6E00D65C7F /* DateFormatterExt.swift */,
 				00262A42284D2D4F00DC3B0B /* AdjKeyboardExt.swift */,
+				00D2AC8D285D8FDF0020E9F3 /* AlertExt.swift */,
+				00AE68B6280D5C6E00D65C7F /* DateFormatterExt.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -426,6 +429,7 @@
 				005E373A2857A6CC00222370 /* ListRouter.swift in Sources */,
 				002DE1E128210590003F0651 /* Animations.swift in Sources */,
 				005E372C2857A59B00222370 /* NoteCell.swift in Sources */,
+				00D2AC8E285D8FDF0020E9F3 /* AlertExt.swift in Sources */,
 				004F90C22857B6670091009A /* NoteWorker.swift in Sources */,
 				00BE4B7C27ECE81C00664855 /* AppDelegate.swift in Sources */,
 				004F90BC2857B5A00091009A /* NoteViewController.swift in Sources */,

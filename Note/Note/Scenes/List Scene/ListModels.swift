@@ -1,19 +1,29 @@
 import UIKit
 
 enum ListModel {
-    struct Request {}
-
-    struct Response {
-        let notes: [Note]
+    enum PresentList {
+        struct Request {}
+        struct Response {
+            let notes: [Note]
+        }
+        struct ViewModel { // swiftlint:disable nesting
+            struct PresentedNoteCell {
+                let header: String
+                let body: String
+                let date: String
+                let icon: UIImage
+            }
+            let presentedCells: [PresentedNoteCell]
+        }
     }
 
-    struct ViewModel {
-        struct PresentedNoteCell {
-            let header: String
-            let body: String
-            let date: String
-            let icon: UIImage
+    enum Alert {
+        struct Request {}
+        struct Response {}
+        struct ViewModel {
+            let title: String
+            let message: String
+            let actionTitle: String
         }
-        let presentedCells: [PresentedNoteCell]
     }
 }

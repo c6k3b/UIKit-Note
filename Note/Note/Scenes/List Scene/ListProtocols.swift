@@ -10,9 +10,10 @@ protocol ListDataStore {
 }
 
 protocol ListBusinessLogic {
-    func requestNotes(_ request: ListModel.Request)
+    func requestNotes(_ request: ListModel.PresentList.Request)
     func getSelectedNoteIndex(_ index: Int?)
     func removeNote(at index: Int)
+    func showNoSelectionAlert()
     func updateNotesList()
 }
 
@@ -21,11 +22,13 @@ protocol ListWorkerLogic {
 }
 
 protocol ListPresentationLogic {
-    func presentNotes(_ response: ListModel.Response)
+    func presentNotes(_ response: ListModel.PresentList.Response)
+    func presentNoSelectionAlert(_ response: ListModel.Alert.Response)
 }
 
 protocol ListDisplayLogic: AnyObject {
-    func displayNotes(_ viewModel: ListModel.ViewModel)
+    func displayNotes(_ viewModel: ListModel.PresentList.ViewModel)
+    func displayNoSelectionAlert(_ viewModel: ListModel.Alert.ViewModel)
 }
 
 protocol ListRoutingLogic {

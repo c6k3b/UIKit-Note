@@ -58,6 +58,15 @@ final class NoteViewController: UIViewController, NoteDisplayLogic {
         bodyTextView.text = viewModel.body
     }
 
+    func displayEmptyFieldsAlert(_ viewModel: NoteModel.Alert.ViewModel) {
+        showAlert(
+            title: viewModel.title,
+            message: viewModel.message,
+            actionTitle: viewModel.actionTitle
+        )
+        isEditing.toggle()
+    }
+
     // MARK: - Controller lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,11 +90,6 @@ final class NoteViewController: UIViewController, NoteDisplayLogic {
             dateLabel.shake()
             save()
         }
-
-        if !editing && (headerTextField.text == "") && bodyTextView.text.isEmpty {
-            showEmptyFieldsAlert()
-            setEditing(!editing, animated: true)
-        }
     }
 
     // MARK: - Methods
@@ -100,7 +104,6 @@ final class NoteViewController: UIViewController, NoteDisplayLogic {
 
     private func save() {
         let request = NoteModel.SaveNote.Request(
-            date: Date().getFormattedDate(format: "dd.MM.yyyy EEEE HH:mm"),
             header: headerTextField.text,
             body: bodyTextView.text
         )
@@ -109,22 +112,5 @@ final class NoteViewController: UIViewController, NoteDisplayLogic {
 
     @objc private func didNavigationLeftBarButtonTapped() {
         router.route()
-    }
-}
-
-// MARK: - Alerts
-extension NoteViewController {
-    private func showEmptyFieldsAlert() {
-        let alert = UIAlertController(
-            title: "Поля не заполнены",
-            message: "Не могу сохранить пустую заметку",
-            preferredStyle: .alert
-        )
-        let action = UIAlertAction(title: "Редактировать", style: .cancel) { _ in
-            self.bodyTextView.becomeFirstResponder()
-        }
-
-        alert.addAction(action)
-        present(alert, animated: true)
     }
 }
