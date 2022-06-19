@@ -34,11 +34,8 @@ final class ListViewController: UIViewController, ListDisplayLogic {
     // MARK: - DisplayLogic
     func displayNotes(_ viewModel: ListModel.PresentList.ViewModel) {
         notes = viewModel.presentedCells
-        let delay = DispatchTime.now() + .seconds(1)
-        DispatchQueue.main.asyncAfter(deadline: delay, execute: {
-            self.activityIndicator.stopAnimating()
-            self.table.reloadData()
-        })
+        self.activityIndicator.stopAnimating()
+        self.table.reloadData()
     }
 
     func displayNoSelectionAlert(_ viewModel: ListModel.Alert.ViewModel) {

@@ -3,7 +3,7 @@ import Foundation
 final class ListWorker: ListWorkerLogic {
     private let networkManager = NetworkManager()
 
-    func getNotes() -> [Note] {
+    func getNotes(completion: ([Note]) -> Void) {
         var store: [Note] = []
         networkManager.fetchData { noteData in
             store = noteData.map {
@@ -17,6 +17,6 @@ final class ListWorker: ListWorkerLogic {
                 )
             }
         }
-        return store
+        completion(store)
     }
 }
