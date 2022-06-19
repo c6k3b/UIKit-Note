@@ -50,14 +50,14 @@ final class ListViewController: UIViewController, ListDisplayLogic {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        interactor.requestNotes(ListModel.PresentList.Request())
+        interactor.request(ListModel.PresentList.Request())
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         floatingButton.shakeOnAppear()
         floatingButton.layer.opacity = 1
-        self.interactor.updateNotesList()
+        self.interactor.update()
     }
 
     override func setEditing(_ editing: Bool, animated: Bool) {
@@ -108,8 +108,8 @@ final class ListViewController: UIViewController, ListDisplayLogic {
         let noteIndexesToRemove = indexPath.map { $0.section }
         let sectionsForRemove = IndexSet(noteIndexesToRemove)
 
-        noteIndexesToRemove.forEach { interactor.removeNote(at: $0) }
         table.beginUpdates()
+        interactor.remove(noteIndexesToRemove)
         table.deleteSections(sectionsForRemove, with: .left)
         table.endUpdates()
 
@@ -154,8 +154,10 @@ extension ListViewController: UITableViewDelegate {
         _ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath
     ) {
         if editingStyle == .delete {
-            interactor.removeNote(at: indexPath.section)
+            table.beginUpdates()
+            interactor.remove([indexPath.section])
             tableView.deleteSections([indexPath.section], with: .left)
+            table.endUpdates()
         }
     }
 

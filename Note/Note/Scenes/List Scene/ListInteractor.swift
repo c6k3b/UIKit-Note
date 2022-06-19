@@ -15,7 +15,7 @@ final class ListInteractor: ListBusinessLogic, ListDataStore {
     }
 
     // MARK: - Methods
-    func requestNotes(_ request: ListModel.PresentList.Request) {
+    func request(_ request: ListModel.PresentList.Request) {
         DispatchQueue.global(qos: .background).async { [weak self] in
             guard let self = self else { return }
             self.worker.getNotes { self.notes = $0 }
@@ -33,13 +33,13 @@ final class ListInteractor: ListBusinessLogic, ListDataStore {
         }
     }
 
-    func removeNote(at index: Int) {
-        notes.remove(at: index)
+    func remove(_ index: [Int]) {
+        index.forEach { notes.remove(at: $0) }
         let response = ListModel.PresentList.Response(notes: self.notes)
         presenter.presentNotes(response)
     }
 
-    func updateNotesList() {
+    func update() {
         if let index = index {
             notes[index] = note
         } else if index == nil && ((note.header != nil) || (note.body != nil)) {
