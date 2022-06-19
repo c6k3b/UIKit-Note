@@ -1,15 +1,15 @@
 import Foundation
 
-class Note {
+struct Note {
     var header: String?
     var body: String?
     var date: Date?
     var icon: Data?
+}
 
-    init(header: String? = nil, body: String? = nil, date: Date? = nil, icon: Data? = nil) {
-        self.header = header
-        self.body = body
-        self.date = date ?? Date()
-        self.icon = icon
-    }
+struct NoteData: Decodable {
+    let header: String?
+    let text: String?
+    let date: Int64?
+    let userShareIcon: String?
 }

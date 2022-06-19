@@ -67,6 +67,11 @@ final class NoteViewController: UIViewController, NoteDisplayLogic {
         isEditing.toggle()
     }
 
+    // MARK: - Routing
+    @objc private func didNavigationLeftBarButtonTapped() {
+        router.route()
+    }
+
     // MARK: - Controller lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -108,9 +113,5 @@ final class NoteViewController: UIViewController, NoteDisplayLogic {
             body: bodyTextView.text
         )
         interactor.saveNote(request)
-    }
-
-    @objc private func didNavigationLeftBarButtonTapped() {
-        router.route()
     }
 }
