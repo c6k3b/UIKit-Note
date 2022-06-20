@@ -9,7 +9,9 @@ final class ListPresenter: ListPresentationLogic {
             let presentedNote = ListModel.PresentList.ViewModel.PresentedNote(
                 header: note.header ?? "",
                 body: note.body ?? "",
-                date: (note.date ?? Date()).getFormattedDate(format: "dd MM yyyy"),
+                date: (note.date ?? Date()).getFormattedDate(
+                    format: Styles.DateFormat.inCell
+                ),
                 icon: UIImage(data: note.icon ?? Data()) ?? UIImage()
             )
             presentedNotes.append(presentedNote)
@@ -23,9 +25,9 @@ final class ListPresenter: ListPresentationLogic {
 
     func presentNoSelectionAlert(_ response: ListModel.Alert.Response) {
         let viewModel = ListModel.Alert.ViewModel(
-            title: "Вы не выбрали ни одной заметки",
-            message: "",
-            actionTitle: "Ok"
+            title: Styles.AlertNoSelection.title,
+            message: Styles.AlertNoSelection.message,
+            actionTitle: Styles.AlertNoSelection.actionTitle
         )
         view?.displayNoSelectionAlert(viewModel)
     }

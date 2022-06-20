@@ -2,7 +2,9 @@ import UIKit
 
 extension ListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? { UIView() }
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat { 4 }
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        Styles.ListVC.cellSpacing
+    }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         UITableView.automaticDimension
     }

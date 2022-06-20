@@ -18,11 +18,11 @@ class FloatingButton: UIButton {
 
     // MARK: - Methods
     private func setupUI() {
-        layer.cornerRadius = 25
+        layer.cornerRadius = Styles.FloatingBtn.cornerRadius
         clipsToBounds = true
         contentVerticalAlignment = .bottom
-        titleLabel?.font = .systemFont(ofSize: 36)
-        setImage(UIImage(named: "buttonPlus"), for: .normal)
+        titleLabel?.font = Styles.FloatingBtn.font
+        setImage(Styles.FloatingBtn.img, for: .normal)
     }
 }
 
@@ -32,13 +32,19 @@ extension FloatingButton {
         translatesAutoresizingMaskIntoConstraints = false
         if let superview = superview {
             trailingAnchor.constraint(
-                equalTo: superview.safeAreaLayoutGuide.trailingAnchor, constant: -20
+                equalTo: superview.safeAreaLayoutGuide.trailingAnchor,
+                constant: Styles.FloatingBtn.trailingConstraint
             ).isActive = true
             bottomAnchor.constraint(
-                equalTo: superview.safeAreaLayoutGuide.bottomAnchor, constant: -20
+                equalTo: superview.safeAreaLayoutGuide.bottomAnchor,
+                constant: Styles.FloatingBtn.bottomConstraint
             ).isActive = true
-            heightAnchor.constraint(equalToConstant: 50).isActive = true
-            widthAnchor.constraint(equalToConstant: 50).isActive = true
+            heightAnchor.constraint(
+                equalToConstant: Styles.FloatingBtn.height
+            ).isActive = true
+            widthAnchor.constraint(
+                equalToConstant: Styles.FloatingBtn.width
+            ).isActive = true
         }
     }
 }

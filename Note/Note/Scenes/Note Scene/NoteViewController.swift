@@ -3,7 +3,7 @@ import UIKit
 final class NoteViewController: UIViewController, NoteDisplayLogic {
     // MARK: - Props
     private lazy var navigationLeftBarButton: UIBarButtonItem = {
-        $0.image = UIImage(named: "backButton")
+        $0.image = Styles.NoteVC.backBtnImg
         $0.target = self
         $0.action = #selector(didNavigationLeftBarButtonTapped)
         return $0
@@ -54,7 +54,9 @@ final class NoteViewController: UIViewController, NoteDisplayLogic {
         super.setEditing(editing, animated: animated)
 
         navigationLeftBarButton.isEnabled = !editing
-        editButtonItem.title = editing ? "Готово" : "Изменить"
+        editButtonItem.title = !editing
+            ? Styles.NoteVC.navBarEditBtnTitle
+            : Styles.NoteVC.navBarEditBtnTitleEditing
 
         view.isUserInteractionEnabled = editing
 

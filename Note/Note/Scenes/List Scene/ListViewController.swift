@@ -63,17 +63,27 @@ final class ListViewController: UIViewController, ListDisplayLogic {
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
         table.setEditing(editing, animated: true)
-        editButtonItem.title = !table.isEditing ? "Выбрать" : "Готово"
-        floatingButton.setImage(UIImage(named: !table.isEditing ? "buttonPlus" : "buttonTrash"), for: .normal)
+
+        editButtonItem.title = !table.isEditing
+            ? Styles.ListVC.navBarEditBtnTitle
+            : Styles.ListVC.navBarEditBtnTitleEditing
+
+        floatingButton.setImage(
+            !table.isEditing
+                ? Styles.FloatingBtn.img
+                : Styles.FloatingBtn.imgEditing,
+            for: .normal
+        )
+
         floatingButton.shakeHorizontaly()
     }
 
     // MARK: - Methods
     private func setupUI() {
-        view.backgroundColor = .systemBackground.withAlphaComponent(0.97)
+        view.backgroundColor = Styles.ListVC.bgColor
 
-        navigationItem.title = "Заметки"
-        editButtonItem.title = "Выбрать"
+        navigationItem.title = Styles.ListVC.navBarTitle
+        editButtonItem.title = Styles.ListVC.navBarEditBtnTitle
         navigationItem.rightBarButtonItem = editButtonItem
 
         view.addSubview(table)

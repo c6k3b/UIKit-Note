@@ -19,7 +19,7 @@ class NoteStackView: UIStackView {
     private func setupUI() {
         axis = .vertical
         distribution = .fill
-        spacing = 8
+        spacing = Styles.NoteStackView.spacing
     }
 }
 
@@ -28,21 +28,21 @@ extension NoteStackView {
     private func activateStackViewConstraints() {
         translatesAutoresizingMaskIntoConstraints = false
         if let superview = superview {
-            topAnchor.constraint(
-                equalTo: superview.safeAreaLayoutGuide.topAnchor,
-                constant: 8
-            ).isActive = true
             leadingAnchor.constraint(
                 equalTo: superview.safeAreaLayoutGuide.leadingAnchor,
-                constant: 16
+                constant: Styles.NoteStackView.leadingConstraint
             ).isActive = true
             trailingAnchor.constraint(
                 equalTo: superview.safeAreaLayoutGuide.trailingAnchor,
-                constant: -16
+                constant: Styles.NoteStackView.trailingConstraint
+            ).isActive = true
+            topAnchor.constraint(
+                equalTo: superview.safeAreaLayoutGuide.topAnchor,
+                constant: Styles.NoteStackView.topConstraint
             ).isActive = true
             bottomAnchor.constraint(
                 equalTo: superview.safeAreaLayoutGuide.bottomAnchor,
-                constant: -16
+                constant: Styles.NoteStackView.bottomConstraint
             ).isActive = true
         }
     }

@@ -9,25 +9,25 @@ class NoteCell: UITableViewCell, ConfigurableCell {
         $0.addArrangedSubview(headerLabel)
         $0.addArrangedSubview(bodyLabel)
         $0.addArrangedSubview(dateLabel)
-        $0.setCustomSpacing(4, after: headerLabel)
-        $0.setCustomSpacing(20, after: bodyLabel)
+        $0.setCustomSpacing(Styles.NoteCell.bodySpacing, after: headerLabel)
+        $0.setCustomSpacing(Styles.NoteCell.dateSpacing, after: bodyLabel)
         return $0
     }(UIStackView())
 
     private let headerLabel: UILabel = {
-        $0.font = .systemFont(ofSize: 15)
+        $0.font = Styles.NoteCell.headerFont
         return $0
     }(UILabel())
 
     private let bodyLabel: UILabel = {
-        $0.font = .systemFont(ofSize: 10)
-        $0.textColor = .systemGray
+        $0.font = Styles.NoteCell.bodyFont
+        $0.textColor = Styles.NoteCell.bodyFontColor
         return $0
     }(UILabel())
 
     private let dateLabel: UILabel = {
-        $0.font = .systemFont(ofSize: 10)
-        $0.textColor = .systemGray
+        $0.font = Styles.NoteCell.dateFont
+        $0.textColor = Styles.NoteCell.dateFontColor
         return $0
     }(UILabel())
 
@@ -55,13 +55,13 @@ class NoteCell: UITableViewCell, ConfigurableCell {
     // MARK: - Lifecycle
     override func layoutSubviews() {
         super.layoutSubviews()
-        layer.cornerRadius = 14
+        layer.cornerRadius = Styles.NoteCell.cornerRadius
     }
 
     // MARK: - Methods
     private func setupUI() {
-        contentView.layer.cornerRadius = 14
-        contentView.backgroundColor = .systemBackground
+        contentView.layer.cornerRadius = Styles.NoteCell.cornerRadius
+        contentView.backgroundColor = Styles.NoteCell.bgColor
 
         backgroundView = UIView(frame: bounds)
         selectedBackgroundView = UIView(frame: bounds)
@@ -80,19 +80,19 @@ extension NoteCell {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.leadingAnchor.constraint(
             equalTo: contentView.leadingAnchor,
-            constant: 16
+            constant: Styles.NoteCell.leadingConstraint
         ).isActive = true
         stackView.trailingAnchor.constraint(
             equalTo: contentView.trailingAnchor,
-            constant: -16
+            constant: Styles.NoteCell.trailingConstraint
         ).isActive = true
         stackView.topAnchor.constraint(
             equalTo: contentView.topAnchor,
-            constant: 10
+            constant: Styles.NoteCell.topConstraint
         ).isActive = true
         stackView.bottomAnchor.constraint(
             equalTo: contentView.bottomAnchor,
-            constant: -10
+            constant: Styles.NoteCell.bottomConstraint
         ).isActive = true
     }
 
@@ -100,13 +100,17 @@ extension NoteCell {
         iconView.translatesAutoresizingMaskIntoConstraints = false
         iconView.trailingAnchor.constraint(
             equalTo: contentView.trailingAnchor,
-            constant: -16
+            constant: Styles.NoteCell.iconTrailingConstraint
         ).isActive = true
         iconView.bottomAnchor.constraint(
             equalTo: contentView.bottomAnchor,
-            constant: -10
+            constant: Styles.NoteCell.iconBottomConstraint
         ).isActive = true
-        iconView.heightAnchor.constraint(equalToConstant: 24).isActive = true
-        iconView.widthAnchor.constraint(equalToConstant: 24).isActive = true
+        iconView.heightAnchor.constraint(
+            equalToConstant: Styles.NoteCell.iconHeight
+        ).isActive = true
+        iconView.widthAnchor.constraint(
+            equalToConstant: Styles.NoteCell.iconWidth
+        ).isActive = true
     }
 }

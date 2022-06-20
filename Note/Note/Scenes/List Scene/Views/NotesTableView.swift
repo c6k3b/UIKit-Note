@@ -19,9 +19,9 @@ class NotesTableView: UITableView {
     private func setupUI() {
         showsVerticalScrollIndicator = false
         allowsMultipleSelectionDuringEditing = true
-        backgroundColor = .clear
+        backgroundColor = Styles.NotesTableView.color
         separatorStyle = .none
-        estimatedRowHeight = 90
+        estimatedRowHeight = Styles.NotesTableView.rowHeight
 
         register(NoteCell.self, forCellReuseIdentifier: NoteCell.identifier)
     }
@@ -33,10 +33,12 @@ extension NotesTableView {
         translatesAutoresizingMaskIntoConstraints = false
         if let superview = superview {
             leadingAnchor.constraint(
-                equalTo: superview.leadingAnchor, constant: 16
+                equalTo: superview.leadingAnchor,
+                constant: Styles.NotesTableView.leadingConstraint
             ).isActive = true
             trailingAnchor.constraint(
-                equalTo: superview.trailingAnchor, constant: -16
+                equalTo: superview.trailingAnchor,
+                constant: Styles.NotesTableView.trailingConstraint
             ).isActive = true
             topAnchor.constraint(equalTo: superview.topAnchor).isActive = true
             bottomAnchor.constraint(equalTo: superview.bottomAnchor).isActive = true

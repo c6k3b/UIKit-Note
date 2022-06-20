@@ -10,20 +10,20 @@ class NoteView: UIView {
     }(NoteStackView())
 
     let dateLabel: UILabel = {
-        $0.font = .systemFont(ofSize: 14)
-        $0.textColor = .systemGray
+        $0.font = Styles.NoteView.dateFont
+        $0.textColor = Styles.NoteView.dateFontColor
         $0.textAlignment = .center
         return $0
     }(UILabel())
 
     let headerTextField: UITextField = {
-        $0.placeholder = "Введите название"
-        $0.font = .systemFont(ofSize: 24, weight: .bold)
+        $0.placeholder = Styles.NoteView.placeholder
+        $0.font = Styles.NoteView.headerFont
         return $0
     }(UITextField())
 
     let bodyTextView: UITextView = {
-        $0.font = .systemFont(ofSize: 16)
+        $0.font = Styles.NoteView.bodyFont
         $0.autocorrectionType = .no
         $0.adjustableKeyboard()
         return $0
@@ -41,7 +41,7 @@ class NoteView: UIView {
 
     // MARK: - Methods
     private func setupUI() {
-        backgroundColor = .systemBackground
+        backgroundColor = Styles.NoteView.bgColor
         addSubview(stackView)
     }
 }
