@@ -79,23 +79,33 @@ extension NoteCell {
     private func activateStackViewConstraints() {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.leadingAnchor.constraint(
-            equalTo: contentView.leadingAnchor, constant: 16
+            equalTo: contentView.leadingAnchor,
+            constant: 16
         ).isActive = true
         stackView.trailingAnchor.constraint(
-            equalTo: contentView.trailingAnchor, constant: -16
+            equalTo: contentView.trailingAnchor,
+            constant: -16
         ).isActive = true
         stackView.topAnchor.constraint(
-            equalTo: contentView.topAnchor, constant: 10
+            equalTo: contentView.topAnchor,
+            constant: 10
         ).isActive = true
         stackView.bottomAnchor.constraint(
-            equalTo: contentView.bottomAnchor, constant: -10
+            equalTo: contentView.bottomAnchor,
+            constant: -10
         ).isActive = true
     }
 
     private func activateIconViewConstraints() {
         iconView.translatesAutoresizingMaskIntoConstraints = false
-        iconView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16).isActive = true
-        iconView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10).isActive = true
+        iconView.trailingAnchor.constraint(
+            equalTo: contentView.trailingAnchor,
+            constant: -16
+        ).isActive = true
+        iconView.bottomAnchor.constraint(
+            equalTo: contentView.bottomAnchor,
+            constant: -10
+        ).isActive = true
         iconView.heightAnchor.constraint(equalToConstant: 24).isActive = true
         iconView.widthAnchor.constraint(equalToConstant: 24).isActive = true
     }

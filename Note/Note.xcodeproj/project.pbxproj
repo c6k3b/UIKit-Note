@@ -10,6 +10,9 @@
 		00262A43284D2D4F00DC3B0B /* AdjKeyboardExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00262A42284D2D4F00DC3B0B /* AdjKeyboardExt.swift */; };
 		00262A58284D331D00DC3B0B /* Assembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00262A57284D331D00DC3B0B /* Assembly.swift */; };
 		002DE1E128210590003F0651 /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002DE1E028210590003F0651 /* Animations.swift */; };
+		0034950F286042D50034714A /* DataSourceExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0034950E286042D50034714A /* DataSourceExt.swift */; };
+		003495122860438C0034714A /* DelegateExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003495112860438C0034714A /* DelegateExt.swift */; };
+		0034951428605A3D0034714A /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0034951328605A3D0034714A /* NoteView.swift */; };
 		003C66C027FD7EAA00537C70 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003C66BF27FD7EAA00537C70 /* Note.swift */; };
 		004F90B62857B54F0091009A /* NoteInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004F90B52857B54F0091009A /* NoteInteractor.swift */; };
 		004F90BA2857B5850091009A /* NoteProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004F90B92857B5850091009A /* NoteProtocols.swift */; };
@@ -60,6 +63,9 @@
 		00262A42284D2D4F00DC3B0B /* AdjKeyboardExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjKeyboardExt.swift; sourceTree = "<group>"; };
 		00262A57284D331D00DC3B0B /* Assembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assembly.swift; sourceTree = "<group>"; };
 		002DE1E028210590003F0651 /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
+		0034950E286042D50034714A /* DataSourceExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSourceExt.swift; sourceTree = "<group>"; };
+		003495112860438C0034714A /* DelegateExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelegateExt.swift; sourceTree = "<group>"; };
+		0034951328605A3D0034714A /* NoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
 		003C66BF27FD7EAA00537C70 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		004F90B52857B54F0091009A /* NoteInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteInteractor.swift; sourceTree = "<group>"; };
 		004F90B92857B5850091009A /* NoteProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteProtocols.swift; sourceTree = "<group>"; };
@@ -139,6 +145,7 @@
 			isa = PBXGroup;
 			children = (
 				005E37272857A59B00222370 /* Views */,
+				003495102860436C0034714A /* Extensions */,
 				005E373D2857A72D00222370 /* ListPresenter.swift */,
 				005E373B2857A70D00222370 /* ListWorker.swift */,
 				005E37312857A65600222370 /* ListInteractor.swift */,
@@ -165,6 +172,15 @@
 			path = "Note Scene";
 			sourceTree = "<group>";
 		};
+		003495102860436C0034714A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				0034950E286042D50034714A /* DataSourceExt.swift */,
+				003495112860438C0034714A /* DelegateExt.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		005E37272857A59B00222370 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -179,6 +195,7 @@
 		00A788F72859D25D00CE980A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				0034951328605A3D0034714A /* NoteView.swift */,
 				00A788F82859D28A00CE980A /* NoteStackView.swift */,
 			);
 			path = Views;
@@ -413,16 +430,19 @@
 				005E372C2857A59B00222370 /* NoteCell.swift in Sources */,
 				00D2AC8E285D8FDF0020E9F3 /* AlertExt.swift in Sources */,
 				004F90C22857B6670091009A /* NoteWorker.swift in Sources */,
+				003495122860438C0034714A /* DelegateExt.swift in Sources */,
 				00BE4B7C27ECE81C00664855 /* AppDelegate.swift in Sources */,
 				004F90BC2857B5A00091009A /* NoteViewController.swift in Sources */,
 				00AE68B7280D5C6E00D65C7F /* DateFormatterExt.swift in Sources */,
 				00BE4B7E27ECE81C00664855 /* SceneDelegate.swift in Sources */,
 				00262A58284D331D00DC3B0B /* Assembly.swift in Sources */,
 				004F90BE2857B6360091009A /* NoteModels.swift in Sources */,
+				0034951428605A3D0034714A /* NoteView.swift in Sources */,
 				004F90C42857B67B0091009A /* NotePresenter.swift in Sources */,
 				00A788F42859C48300CE980A /* ActivityIndicator.swift in Sources */,
 				004F90BA2857B5850091009A /* NoteProtocols.swift in Sources */,
 				0099C3B5285AFAA600D4B369 /* NetworkManager.swift in Sources */,
+				0034950F286042D50034714A /* DataSourceExt.swift in Sources */,
 				00262A43284D2D4F00DC3B0B /* AdjKeyboardExt.swift in Sources */,
 				005E373C2857A70D00222370 /* ListWorker.swift in Sources */,
 				005E37362857A69800222370 /* ListViewController.swift in Sources */,

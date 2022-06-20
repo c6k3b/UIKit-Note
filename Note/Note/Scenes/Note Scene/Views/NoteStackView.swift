@@ -29,16 +29,20 @@ extension NoteStackView {
         translatesAutoresizingMaskIntoConstraints = false
         if let superview = superview {
             topAnchor.constraint(
-                equalTo: superview.safeAreaLayoutGuide.topAnchor, constant: 8
+                equalTo: superview.safeAreaLayoutGuide.topAnchor,
+                constant: 8
             ).isActive = true
             leadingAnchor.constraint(
-                equalTo: superview.safeAreaLayoutGuide.leadingAnchor, constant: 16
+                equalTo: superview.safeAreaLayoutGuide.leadingAnchor,
+                constant: 16
             ).isActive = true
             trailingAnchor.constraint(
-                equalTo: superview.safeAreaLayoutGuide.trailingAnchor, constant: -16
+                equalTo: superview.safeAreaLayoutGuide.trailingAnchor,
+                constant: -16
             ).isActive = true
             bottomAnchor.constraint(
-                equalTo: superview.safeAreaLayoutGuide.bottomAnchor, constant: -16
+                equalTo: superview.safeAreaLayoutGuide.bottomAnchor,
+                constant: -16
             ).isActive = true
         }
     }

@@ -4,13 +4,13 @@ final class ListPresenter: ListPresentationLogic {
     weak var view: ListDisplayLogic?
 
     func presentNotes(_ response: ListModel.PresentList.Response) {
-        var presentedNotes: [ListModel.PresentList.ViewModel.PresentedNoteCell] = []
-        for cell in response.notes {
-            let presentedNote = ListModel.PresentList.ViewModel.PresentedNoteCell(
-                header: cell.header ?? "",
-                body: cell.body ?? "",
-                date: (cell.date ?? Date()).getFormattedDate(format: "dd MM yyyy"),
-                icon: UIImage(data: cell.icon ?? Data()) ?? UIImage()
+        var presentedNotes: [ListModel.PresentList.ViewModel.PresentedNote] = []
+        for note in response.notes {
+            let presentedNote = ListModel.PresentList.ViewModel.PresentedNote(
+                header: note.header ?? "",
+                body: note.body ?? "",
+                date: (note.date ?? Date()).getFormattedDate(format: "dd MM yyyy"),
+                icon: UIImage(data: note.icon ?? Data()) ?? UIImage()
             )
             presentedNotes.append(presentedNote)
         }

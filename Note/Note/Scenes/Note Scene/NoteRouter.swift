@@ -12,11 +12,13 @@ final class NoteRouter: NoteRoutingLogic, NoteDataPassing {
 
     // MARK: - Routing
     func route() {
-        let index = viewController!.navigationController!.viewControllers.count - 2
-        let destinationVC = viewController!.navigationController?.viewControllers[index] as? ListViewController
-        var destinationDS = destinationVC?.router.dataStore
-        passData(source: dataStore, destination: &destinationDS!)
-        navigate()
+        if let navigationController = viewController?.navigationController {
+            let index = navigationController.viewControllers.count - 2
+            let destinationVC = navigationController.viewControllers[index] as? ListViewController
+            var destinationDS = destinationVC?.router.dataStore
+            passData(source: dataStore, destination: &destinationDS!)
+            navigate()
+        }
     }
 
     // MARK: - Navigation

@@ -7,13 +7,13 @@ enum ListModel {
             let notes: [Note]
         }
         struct ViewModel { // swiftlint:disable nesting
-            struct PresentedNoteCell {
+            struct PresentedNote {
                 let header: String
                 let body: String
                 let date: String
                 let icon: UIImage
             }
-            let presentedCells: [PresentedNoteCell]
+            let presentedCells: [PresentedNote]
         }
     }
 

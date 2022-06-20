@@ -26,13 +26,6 @@ final class ListInteractor: ListBusinessLogic, ListDataStore {
         }
     }
 
-    func getSelectedNoteIndex(_ index: Int?) {
-        if let index = index {
-            self.note = notes[index]
-            self.index = index
-        }
-    }
-
     func remove(_ index: [Int]) {
         index.forEach { notes.remove(at: $0) }
         let response = ListModel.PresentList.Response(notes: self.notes)
@@ -51,6 +44,13 @@ final class ListInteractor: ListBusinessLogic, ListDataStore {
 
         index = nil
         note = Note()
+    }
+
+    func getSelectedNoteIndex(_ index: Int?) {
+        if let index = index {
+            self.note = notes[index]
+            self.index = index
+        }
     }
 
     func showNoSelectionAlert() {

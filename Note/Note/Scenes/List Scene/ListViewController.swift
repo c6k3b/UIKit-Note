@@ -4,7 +4,7 @@ final class ListViewController: UIViewController, ListDisplayLogic {
     // MARK: - Props
     private let activityIndicator = ActivityIndicator(frame: .zero)
 
-    private lazy var table: UITableView = {
+    lazy var table: UITableView = {
         $0.dataSource = self
         $0.delegate = self
         return $0
@@ -17,7 +17,7 @@ final class ListViewController: UIViewController, ListDisplayLogic {
 
     private let interactor: ListBusinessLogic
     let router: (ListRoutingLogic & ListDataPassing)
-    private var notes: [ListModel.PresentList.ViewModel.PresentedNoteCell] = []
+    var notes: [ListModel.PresentList.ViewModel.PresentedNote] = []
 
     // MARK: - Initializers
     init(interactor: ListBusinessLogic, router: ListRoutingLogic & ListDataPassing) {
@@ -68,12 +68,35 @@ final class ListViewController: UIViewController, ListDisplayLogic {
         floatingButton.shakeHorizontaly()
     }
 
-    // MARK: - Routing
-    @objc private func didFloatingButtonTapped() {
-        !isEditing ? navigate() : remove()
+    // MARK: - Methods
+    private func setupUI() {
+        view.backgroundColor = .systemBackground.withAlphaComponent(0.97)
+
+        navigationItem.title = "Заметки"
+        editButtonItem.title = "Выбрать"
+        navigationItem.rightBarButtonItem = editButtonItem
+
+        view.addSubview(table)
+        view.addSubview(floatingButton)
+        view.addSubview(activityIndicator)
     }
 
-    private func navigate() {
+    @objc private func didFloatingButtonTapped() {
+        if isEditing {
+            guard let indexPath = table.indexPathsForSelectedRows?.sorted(by: >) else {
+                return interactor.showNoSelectionAlert()
+            }
+            let noteIndexesToRemove = indexPath.map { $0.section }
+            let sectionsForRemove = IndexSet(noteIndexesToRemove)
+
+            remove(indices: noteIndexesToRemove, cells: sectionsForRemove)
+            isEditing = false
+        } else {
+            navigate()
+        }
+    }
+
+    func navigate() {
         table.isUserInteractionEnabled = false
 
         CATransaction.begin()
@@ -88,81 +111,14 @@ final class ListViewController: UIViewController, ListDisplayLogic {
         CATransaction.commit()
     }
 
-    // MARK: - Methods
-    private func setupUI() {
-        view.backgroundColor = .systemBackground.withAlphaComponent(0.97)
-
-        navigationItem.title = "Заметки"
-        editButtonItem.title = "Выбрать"
-        navigationItem.rightBarButtonItem = editButtonItem
-
-        view.addSubview(table)
-        view.addSubview(floatingButton)
-        view.addSubview(activityIndicator)
-    }
-
-    private func remove() {
-        guard let indexPath = table.indexPathsForSelectedRows?.sorted(by: >) else {
-            return interactor.showNoSelectionAlert()
-        }
-        let noteIndexesToRemove = indexPath.map { $0.section }
-        let sectionsForRemove = IndexSet(noteIndexesToRemove)
-
+    func remove(indices: [Int], cells: IndexSet) {
         table.beginUpdates()
-        interactor.remove(noteIndexesToRemove)
-        table.deleteSections(sectionsForRemove, with: .left)
+        interactor.remove(indices)
+        table.deleteSections(cells, with: .left)
         table.endUpdates()
-
-        isEditing = false
-    }
-}
-
-// MARK: - Datasource
-    extension ListViewController: UITableViewDataSource {
-        func numberOfSections(in tableView: UITableView) -> Int { notes.count }
-        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { 1 }
-
-        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-            let note = notes[indexPath.section]
-
-            guard let cell = tableView.dequeueReusableCell(
-                withIdentifier: NoteCell.identifier,
-                for: indexPath
-            ) as? ConfigurableCell else {
-                return UITableViewCell()
-            }
-
-            cell.configure(
-                header: note.header,
-                body: note.body,
-                date: note.date,
-                icon: note.icon
-            )
-            return cell as? UITableViewCell ?? UITableViewCell()
-        }
     }
 
-// MARK: - Delegate
-extension ListViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? { UIView() }
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat { 4 }
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        UITableView.automaticDimension
-    }
-
-    func tableView(
-        _ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath
-    ) {
-        if editingStyle == .delete {
-            table.beginUpdates()
-            interactor.remove([indexPath.section])
-            tableView.deleteSections([indexPath.section], with: .left)
-            table.endUpdates()
-        }
-    }
-
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        interactor.getSelectedNoteIndex(indexPath.section)
-        if !isEditing { navigate() }
+    func passSelectedNoteIndex(_ index: Int?) {
+        interactor.getSelectedNoteIndex(index)
     }
 }

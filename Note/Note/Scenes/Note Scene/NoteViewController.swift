@@ -9,32 +9,7 @@ final class NoteViewController: UIViewController, NoteDisplayLogic {
         return $0
     }(UIBarButtonItem())
 
-    private lazy var stackView: UIStackView = {
-        $0.addArrangedSubview(dateLabel)
-        $0.addArrangedSubview(headerTextField)
-        $0.addArrangedSubview(bodyTextView)
-        return $0
-    }(NoteStackView())
-
-    private let dateLabel: UILabel = {
-        $0.font = .systemFont(ofSize: 14)
-        $0.textColor = .systemGray
-        $0.textAlignment = .center
-        return $0
-    }(UILabel())
-
-    private let headerTextField: UITextField = {
-        $0.placeholder = "Введите название"
-        $0.font = .systemFont(ofSize: 24, weight: .bold)
-        return $0
-    }(UITextField())
-
-    private let bodyTextView: UITextView = {
-        $0.font = .systemFont(ofSize: 16)
-        $0.autocorrectionType = .no
-        $0.adjustableKeyboard()
-        return $0
-    }(UITextView())
+    private let noteView = NoteView()
 
     private let interactor: NoteBusinessLogic
     let router: (NoteRoutingLogic & NoteDataPassing)
@@ -53,9 +28,9 @@ final class NoteViewController: UIViewController, NoteDisplayLogic {
 
     // MARK: - DisplayLogic
     func displayNote(_ viewModel: NoteModel.PresentNote.ViewModel) {
-        dateLabel.text = viewModel.date
-        headerTextField.text = viewModel.header
-        bodyTextView.text = viewModel.body
+        noteView.dateLabel.text = viewModel.date
+        noteView.headerTextField.text = viewModel.header
+        noteView.bodyTextView.text = viewModel.body
     }
 
     func displayEmptyFieldsAlert(_ viewModel: NoteModel.Alert.ViewModel) {
@@ -65,11 +40,6 @@ final class NoteViewController: UIViewController, NoteDisplayLogic {
             actionTitle: viewModel.actionTitle
         )
         isEditing.toggle()
-    }
-
-    // MARK: - Routing
-    @objc private func didNavigationLeftBarButtonTapped() {
-        router.route()
     }
 
     // MARK: - Controller lifecycle
@@ -89,28 +59,29 @@ final class NoteViewController: UIViewController, NoteDisplayLogic {
         view.isUserInteractionEnabled = editing
 
         if editing {
-            bodyTextView.becomeFirstResponder()
+            noteView.bodyTextView.becomeFirstResponder()
         } else {
-            bodyTextView.resignFirstResponder()
-            dateLabel.shake()
+            noteView.bodyTextView.resignFirstResponder()
+            noteView.dateLabel.shake()
             save()
         }
     }
 
     // MARK: - Methods
     private func setupUI() {
-        view.backgroundColor = .systemBackground
-
+        view = noteView
         navigationItem.leftBarButtonItem = navigationLeftBarButton
         navigationItem.rightBarButtonItem = editButtonItem
+    }
 
-        view.addSubview(stackView)
+    @objc private func didNavigationLeftBarButtonTapped() {
+        router.route()
     }
 
     private func save() {
         let request = NoteModel.SaveNote.Request(
-            header: headerTextField.text,
-            body: bodyTextView.text
+            header: noteView.headerTextField.text,
+            body: noteView.bodyTextView.text
         )
         interactor.saveNote(request)
     }
