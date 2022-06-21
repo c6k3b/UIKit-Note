@@ -2,28 +2,41 @@ import UIKit
 
 class ListViewController: UIViewController {
     // MARK: - Props
-    private lazy var table: NotesTableView = {
+    private lazy var table: UITableView = {
+        $0.showsVerticalScrollIndicator = false
+        $0.allowsMultipleSelectionDuringEditing = true
+        $0.backgroundColor = .clear
+        $0.separatorStyle = .none
+        $0.estimatedRowHeight = 90
+
+        $0.register(NoteCell.self, forCellReuseIdentifier: NoteCell.identifier)
+
         $0.dataSource = self
         $0.delegate = self
         return $0
-    }(NotesTableView())
+    }(UITableView())
 
     private lazy var floatingButton: FloatingButton = {
         $0.addTarget(self, action: #selector(didFloatingButtonTapped), for: .touchUpInside)
         return $0
     }(FloatingButton())
 
+    private let activityIndicator: UIActivityIndicatorView = {
+        $0.startAnimating()
+        $0.style = UIActivityIndicatorView.Style.medium
+        return $0
+    }(UIActivityIndicatorView())
+
     private let worker: WorkerType = Worker()
     private var notes = [Note]()
+    private let delay = DispatchTime.now() + .seconds(5)
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        addNotes(from: SampleData.notes)
-        worker.fetch { [weak self] notesData in
-            guard let self = self else { return }
-            self.addNotes(from: notesData)
+        DispatchQueue.main.asyncAfter(deadline: delay) {
+            self.addNotes()
         }
     }
 
@@ -54,19 +67,55 @@ class ListViewController: UIViewController {
         navigationItem.rightBarButtonItem = editButtonItem
 
         view.addSubview(table)
+        activateTableViewConstraints()
+
         view.addSubview(floatingButton)
+
+        view.addSubview(activityIndicator)
+        activateActivityIndicatorViewConstraints()
     }
 
-    private func addNotes(from data: [NoteData]) {
-        data.forEach { note in
-            notes.append(
-                Note(
-                    header: note.header,
-                    body: note.text,
-                    date: Date(timeIntervalSince1970: TimeInterval(note.date ?? 0))
-                )
-            )
+    private func addNotes() {
+        DispatchQueue.global(qos: .background).async { [weak self] in
+            guard let self = self else { return }
+            self.worker.fetch { noteData in
+                noteData.forEach { note in
+                    self.notes.append(
+                        Note(
+                            header: note.header,
+                            body: note.text,
+                            date: Date(
+                                timeIntervalSince1970: TimeInterval(note.date ?? 0)
+                            ),
+                            icon: UIImage(
+                                data: self.worker.loadImage(
+                                    from: note.userShareIcon ?? ""
+                                ) ?? Data()
+                            )
+                        )
+                    )
+                }
+            }
+            DispatchQueue.main.async {
+                self.table.reloadData()
+                self.activityIndicator.stopAnimating()
+            }
         }
+    }
+
+    private func removeNotes() {
+        guard let indexPath = table.indexPathsForSelectedRows?.sorted(by: >) else {
+            return showEmptySelectionAlert()
+        }
+        let noteIndexesToRemove = indexPath.map { $0.section }
+        let sectionsForRemove = IndexSet(noteIndexesToRemove)
+
+        noteIndexesToRemove.forEach { notes.remove(at: $0) }
+        table.beginUpdates()
+        table.deleteSections(sectionsForRemove, with: .automatic)
+        table.endUpdates()
+
+        isEditing = false
     }
 
     private func pushNoteVC(_ viewController: NoteViewController) {
@@ -78,27 +127,11 @@ class ListViewController: UIViewController {
             self.navigationController?.pushViewController(viewController, animated: true)
             self.table.isUserInteractionEnabled = true
         }
-
         floatingButton.shakeOnDisappear()
         UIView.animate(withDuration: 0.2, delay: 0.6, options: []) {
             self.floatingButton.layer.opacity = 0
         }
         CATransaction.commit()
-    }
-
-    private func removeNotes() {
-        guard let cellsForRemove = table.indexPathsForSelectedRows?.sorted(by: >) else {
-            showEmptySelectionAlert()
-            return
-        }
-
-        cellsForRemove.forEach {
-            table.beginUpdates()
-            notes.remove(at: $0.section)
-            table.deleteSections([$0.section], with: .automatic)
-            table.endUpdates()
-        }
-        isEditing = false
     }
 }
 
@@ -118,9 +151,10 @@ extension ListViewController: UITableViewDataSource {
         }
 
         cell.configure(
-            header: note.header ?? "N/A",
-            body: note.body ?? "N/A",
-            date: note.date.getFormattedDate(format: "dd MM yyyy")
+            header: note.header,
+            body: note.body,
+            date: note.date.getFormattedDate(format: "dd MM yyyy"),
+            icon: note.icon
         )
         return cell as? UITableViewCell ?? UITableViewCell()
     }
@@ -174,5 +208,26 @@ extension ListViewController {
         alert.addAction(action)
 
         present(alert, animated: true)
+    }
+}
+
+// MARK: - Constraints
+extension ListViewController {
+    private func activateTableViewConstraints() {
+        table.translatesAutoresizingMaskIntoConstraints = false
+            table.leadingAnchor.constraint(
+                equalTo: view.leadingAnchor, constant: 16
+            ).isActive = true
+            table.trailingAnchor.constraint(
+                equalTo: view.trailingAnchor, constant: -16
+            ).isActive = true
+            table.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+            table.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+    }
+
+    private func activateActivityIndicatorViewConstraints() {
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
 }

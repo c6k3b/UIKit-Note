@@ -6,9 +6,10 @@ protocol NoteDelegate: AnyObject {
 }
 
 protocol ConfigurableCell {
-    func configure(header: String?, body: String?, date: String)
+    func configure(header: String?, body: String?, date: String, icon: UIImage?)
 }
 
 protocol WorkerType {
     func fetch(completion: ([NoteData]) -> Void)
+    func loadImage(from stringUrl: String) -> Data?
 }

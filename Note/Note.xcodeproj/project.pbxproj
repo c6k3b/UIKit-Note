@@ -8,19 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		000920AC28075898004D1862 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000920AB28075898004D1862 /* ListViewController.swift */; };
-		000920B52807E07E004D1862 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000920B42807E07E004D1862 /* SampleData.swift */; };
 		0022CCA82831725B00B68ECC /* FloatingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0022CCA72831725B00B68ECC /* FloatingButton.swift */; };
-		0022CCAA28317A1200B68ECC /* NotesTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0022CCA928317A1200B68ECC /* NotesTableView.swift */; };
 		002DE1E128210590003F0651 /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002DE1E028210590003F0651 /* Animations.swift */; };
 		003C66C027FD7EAA00537C70 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003C66BF27FD7EAA00537C70 /* Note.swift */; };
 		00A9203F28112E01007DB762 /* NoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A9203E28112E01007DB762 /* NoteCell.swift */; };
 		00AE68B7280D5C6E00D65C7F /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00AE68B6280D5C6E00D65C7F /* Extensions.swift */; };
+		00B0D16E2845304D00B89B70 /* Worker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B0D16D2845304D00B89B70 /* Worker.swift */; };
 		00BE4B7C27ECE81C00664855 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00BE4B7B27ECE81C00664855 /* AppDelegate.swift */; };
 		00BE4B7E27ECE81C00664855 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00BE4B7D27ECE81C00664855 /* SceneDelegate.swift */; };
 		00BE4B8027ECE81C00664855 /* NoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00BE4B7F27ECE81C00664855 /* NoteViewController.swift */; };
 		00BE4B8527ECE82000664855 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00BE4B8427ECE82000664855 /* Assets.xcassets */; };
 		00BE4B8827ECE82000664855 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00BE4B8627ECE82000664855 /* LaunchScreen.storyboard */; };
-		00F4C6FA283642C300301DC6 /* Worker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00F4C6F9283642C300301DC6 /* Worker.swift */; };
 		00F4C7012836AB3A00301DC6 /* NoteData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00F4C7002836AB3A00301DC6 /* NoteData.swift */; };
 		00FC3898280EC0AD00E947D9 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FC3897280EC0AD00E947D9 /* Protocols.swift */; };
 /* End PBXBuildFile section */
@@ -44,13 +42,12 @@
 
 /* Begin PBXFileReference section */
 		000920AB28075898004D1862 /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
-		000920B42807E07E004D1862 /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
 		0022CCA72831725B00B68ECC /* FloatingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButton.swift; sourceTree = "<group>"; };
-		0022CCA928317A1200B68ECC /* NotesTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTableView.swift; sourceTree = "<group>"; };
 		002DE1E028210590003F0651 /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
 		003C66BF27FD7EAA00537C70 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		00A9203E28112E01007DB762 /* NoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCell.swift; sourceTree = "<group>"; };
 		00AE68B6280D5C6E00D65C7F /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		00B0D16D2845304D00B89B70 /* Worker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Worker.swift; sourceTree = "<group>"; };
 		00BE4B7827ECE81C00664855 /* Note.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Note.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		00BE4B7B27ECE81C00664855 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		00BE4B7D27ECE81C00664855 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -60,7 +57,6 @@
 		00BE4B8927ECE82000664855 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00BE4B8E27ECE82100664855 /* NoteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NoteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00BE4B9827ECE82100664855 /* NoteUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NoteUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		00F4C6F9283642C300301DC6 /* Worker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Worker.swift; sourceTree = "<group>"; };
 		00F4C7002836AB3A00301DC6 /* NoteData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteData.swift; sourceTree = "<group>"; };
 		00FC3897280EC0AD00E947D9 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -103,7 +99,6 @@
 			isa = PBXGroup;
 			children = (
 				00BE4B8627ECE82000664855 /* LaunchScreen.storyboard */,
-				0022CCA928317A1200B68ECC /* NotesTableView.swift */,
 				00A9203E28112E01007DB762 /* NoteCell.swift */,
 				0022CCA72831725B00B68ECC /* FloatingButton.swift */,
 			);
@@ -125,9 +120,16 @@
 				00AE68B6280D5C6E00D65C7F /* Extensions.swift */,
 				00FC3897280EC0AD00E947D9 /* Protocols.swift */,
 				002DE1E028210590003F0651 /* Animations.swift */,
-				000920B42807E07E004D1862 /* SampleData.swift */,
 			);
 			path = Utilities;
+			sourceTree = "<group>";
+		};
+		00B0D16C2845303400B89B70 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				00B0D16D2845304D00B89B70 /* Worker.swift */,
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 		00BE4B6F27ECE81C00664855 = {
@@ -154,7 +156,7 @@
 				000920AD28075C88004D1862 /* Model */,
 				000920AE28075D03004D1862 /* View */,
 				000920AF28075D1B004D1862 /* Controller */,
-				00F4C6FB283643BE00301DC6 /* Networking */,
+				00B0D16C2845303400B89B70 /* Networking */,
 				00AE68B8280D5CC300D65C7F /* Utilities */,
 				00BE4B7B27ECE81C00664855 /* AppDelegate.swift */,
 				00BE4B7D27ECE81C00664855 /* SceneDelegate.swift */,
@@ -162,14 +164,6 @@
 				00BE4B8927ECE82000664855 /* Info.plist */,
 			);
 			path = Note;
-			sourceTree = "<group>";
-		};
-		00F4C6FB283643BE00301DC6 /* Networking */ = {
-			isa = PBXGroup;
-			children = (
-				00F4C6F9283642C300301DC6 /* Worker.swift */,
-			);
-			path = Networking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -325,10 +319,7 @@
 			files = (
 				00BE4B8027ECE81C00664855 /* NoteViewController.swift in Sources */,
 				00F4C7012836AB3A00301DC6 /* NoteData.swift in Sources */,
-				00F4C6FA283642C300301DC6 /* Worker.swift in Sources */,
-				000920B52807E07E004D1862 /* SampleData.swift in Sources */,
 				002DE1E128210590003F0651 /* Animations.swift in Sources */,
-				0022CCAA28317A1200B68ECC /* NotesTableView.swift in Sources */,
 				00BE4B7C27ECE81C00664855 /* AppDelegate.swift in Sources */,
 				0022CCA82831725B00B68ECC /* FloatingButton.swift in Sources */,
 				00A9203F28112E01007DB762 /* NoteCell.swift in Sources */,
@@ -337,6 +328,7 @@
 				000920AC28075898004D1862 /* ListViewController.swift in Sources */,
 				00FC3898280EC0AD00E947D9 /* Protocols.swift in Sources */,
 				003C66C027FD7EAA00537C70 /* Note.swift in Sources */,
+				00B0D16E2845304D00B89B70 /* Worker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

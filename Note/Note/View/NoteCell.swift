@@ -31,6 +31,8 @@ class NoteCell: UITableViewCell, ConfigurableCell {
         return $0
     }(UILabel())
 
+    private let iconView = UIImageView()
+
     static var identifier: String { String(describing: NoteCell.self) }
 
     // MARK: - Initializers
@@ -43,10 +45,11 @@ class NoteCell: UITableViewCell, ConfigurableCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(header: String?, body: String?, date: String) {
+    func configure(header: String?, body: String?, date: String, icon: UIImage?) {
         headerLabel.text = header
         bodyLabel.text = body
         dateLabel.text = date
+        iconView.image = icon
     }
 
     // MARK: - Lifecycle
@@ -65,6 +68,9 @@ class NoteCell: UITableViewCell, ConfigurableCell {
 
         contentView.addSubview(stackView)
         activateStackViewConstraints()
+
+        contentView.insertSubview(iconView, aboveSubview: contentView)
+        activateIconViewConstraints()
     }
 }
 
@@ -84,5 +90,13 @@ extension NoteCell {
         stackView.bottomAnchor.constraint(
             equalTo: contentView.bottomAnchor, constant: -10
         ).isActive = true
+    }
+
+    private func activateIconViewConstraints() {
+        iconView.translatesAutoresizingMaskIntoConstraints = false
+        iconView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16).isActive = true
+        iconView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10).isActive = true
+        iconView.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        iconView.widthAnchor.constraint(equalToConstant: 24).isActive = true
     }
 }
