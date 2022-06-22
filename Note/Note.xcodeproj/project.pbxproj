@@ -49,7 +49,6 @@
 		00C85EE92863337100A66E7F /* NoteViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C85EE82863337100A66E7F /* NoteViewControllerTests.swift */; };
 		00C85EEC2863342700A66E7F /* ListPresenterMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C85EEB2863342700A66E7F /* ListPresenterMock.swift */; };
 		00C85EEE286335C500A66E7F /* ListWorkerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C85EED286335C500A66E7F /* ListWorkerMock.swift */; };
-		00C85EF0286336D700A66E7F /* ListStorageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C85EEF286336D700A66E7F /* ListStorageMock.swift */; };
 		00C85EF22863372400A66E7F /* NotePresenterMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C85EF12863372400A66E7F /* NotePresenterMock.swift */; };
 		00C85EF42863379300A66E7F /* NoteStorageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C85EF32863379300A66E7F /* NoteStorageMock.swift */; };
 		00C85EF6286338E200A66E7F /* ListAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C85EF5286338E200A66E7F /* ListAssembly.swift */; };
@@ -113,7 +112,6 @@
 		00C85EE82863337100A66E7F /* NoteViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewControllerTests.swift; sourceTree = "<group>"; };
 		00C85EEB2863342700A66E7F /* ListPresenterMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListPresenterMock.swift; sourceTree = "<group>"; };
 		00C85EED286335C500A66E7F /* ListWorkerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListWorkerMock.swift; sourceTree = "<group>"; };
-		00C85EEF286336D700A66E7F /* ListStorageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListStorageMock.swift; sourceTree = "<group>"; };
 		00C85EF12863372400A66E7F /* NotePresenterMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotePresenterMock.swift; sourceTree = "<group>"; };
 		00C85EF32863379300A66E7F /* NoteStorageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteStorageMock.swift; sourceTree = "<group>"; };
 		00C85EF5286338E200A66E7F /* ListAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAssembly.swift; sourceTree = "<group>"; };
@@ -209,12 +207,12 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		00876CE42861CF4C004733EF /* NoteTests */ = {
+		00876CE42861CF4C004733EF /* UnitNoteTests */ = {
 			isa = PBXGroup;
 			children = (
 				00C85ED228632C4700A66E7F /* Scenes */,
 			);
-			path = NoteTests;
+			path = UnitNoteTests;
 			sourceTree = "<group>";
 		};
 		00A788F72859D25D00CE980A /* Views */ = {
@@ -250,7 +248,7 @@
 			isa = PBXGroup;
 			children = (
 				00BE4B7A27ECE81C00664855 /* Note */,
-				00876CE42861CF4C004733EF /* NoteTests */,
+				00876CE42861CF4C004733EF /* UnitNoteTests */,
 				00BE4B7927ECE81C00664855 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -284,7 +282,6 @@
 			children = (
 				00C85EEB2863342700A66E7F /* ListPresenterMock.swift */,
 				00C85EED286335C500A66E7F /* ListWorkerMock.swift */,
-				00C85EEF286336D700A66E7F /* ListStorageMock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -457,7 +454,6 @@
 				00C85ED128632ADF00A66E7F /* ListWorkerTests.swift in Sources */,
 				00C85EF22863372400A66E7F /* NotePresenterMock.swift in Sources */,
 				00C85EF42863379300A66E7F /* NoteStorageMock.swift in Sources */,
-				00C85EF0286336D700A66E7F /* ListStorageMock.swift in Sources */,
 				00C85ED828632DE000A66E7F /* ListRouterTests.swift in Sources */,
 				00C85EE72863332C00A66E7F /* NoteRouterTests.swift in Sources */,
 				00C85EEC2863342700A66E7F /* ListPresenterMock.swift in Sources */,

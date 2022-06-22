@@ -1,4 +1,5 @@
 import XCTest
+@testable import Note
 
 final class ListPresenterTests: XCTestCase {
     override func setUp() {

@@ -18,7 +18,7 @@ protocol ListBusinessLogic {
 }
 
 protocol ListWorkerLogic {
-    func getNotes(completion: ([Note]) -> Void)
+    func getNotes(completion: ([Note]?) -> Void)
 }
 
 protocol ListPresentationLogic {

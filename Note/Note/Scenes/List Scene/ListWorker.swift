@@ -1,8 +1,8 @@
 import Foundation
 
 final class ListWorker: ListWorkerLogic {
-    func getNotes(completion: ([Note]) -> Void) {
-        var store: [Note] = []
+    func getNotes(completion: ([Note]?) -> Void) {
+        var store: [Note]?
         fetchData { noteData in
             store = noteData.map {
                 Note(

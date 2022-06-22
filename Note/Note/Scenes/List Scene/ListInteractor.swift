@@ -18,7 +18,9 @@ final class ListInteractor: ListBusinessLogic, ListDataStore {
     func request(_ request: ListModel.PresentList.Request) {
         DispatchQueue.global(qos: .background).async { [weak self] in
             guard let self = self else { return }
-            self.worker.getNotes { self.notes = $0 }
+            self.worker.getNotes {
+                if $0 != nil { self.notes = $0! }
+            }
             DispatchQueue.main.async {
                 let response = ListModel.PresentList.Response(notes: self.notes)
                 self.presenter.presentNotes(response)
