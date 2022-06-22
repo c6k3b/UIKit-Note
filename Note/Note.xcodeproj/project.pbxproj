@@ -32,8 +32,6 @@
 		005E373A2857A6CC00222370 /* ListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 005E37392857A6CC00222370 /* ListRouter.swift */; };
 		005E373C2857A70D00222370 /* ListWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 005E373B2857A70D00222370 /* ListWorker.swift */; };
 		005E373E2857A72D00222370 /* ListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 005E373D2857A72D00222370 /* ListPresenter.swift */; };
-		00876CE62861CF4C004733EF /* NoteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00876CE52861CF4C004733EF /* NoteTests.swift */; };
-		0099C3B5285AFAA600D4B369 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0099C3B4285AFAA600D4B369 /* NetworkManager.swift */; };
 		00A788F42859C48300CE980A /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A788F32859C48300CE980A /* ActivityIndicator.swift */; };
 		00A788F62859CD3300CE980A /* NotesTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A788F52859CD3300CE980A /* NotesTableView.swift */; };
 		00A788F92859D28A00CE980A /* NoteStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A788F82859D28A00CE980A /* NoteStackView.swift */; };
@@ -41,6 +39,20 @@
 		00BE4B7C27ECE81C00664855 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00BE4B7B27ECE81C00664855 /* AppDelegate.swift */; };
 		00BE4B7E27ECE81C00664855 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00BE4B7D27ECE81C00664855 /* SceneDelegate.swift */; };
 		00BE4B8527ECE82000664855 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00BE4B8427ECE82000664855 /* Assets.xcassets */; };
+		00C85ED128632ADF00A66E7F /* ListWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C85ED028632ADF00A66E7F /* ListWorkerTests.swift */; };
+		00C85ED428632D3900A66E7F /* ListViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C85ED328632D3900A66E7F /* ListViewControllerTests.swift */; };
+		00C85ED628632D8B00A66E7F /* ListInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C85ED528632D8B00A66E7F /* ListInteractorTests.swift */; };
+		00C85ED828632DE000A66E7F /* ListRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C85ED728632DE000A66E7F /* ListRouterTests.swift */; };
+		00C85EDA28632E0700A66E7F /* ListPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C85ED928632E0700A66E7F /* ListPresenterTests.swift */; };
+		00C85EE3286332D000A66E7F /* NotePresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C85EE2286332D000A66E7F /* NotePresenterTests.swift */; };
+		00C85EE52863330500A66E7F /* NoteInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C85EE42863330500A66E7F /* NoteInteractorTests.swift */; };
+		00C85EE72863332C00A66E7F /* NoteRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C85EE62863332C00A66E7F /* NoteRouterTests.swift */; };
+		00C85EE92863337100A66E7F /* NoteViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C85EE82863337100A66E7F /* NoteViewControllerTests.swift */; };
+		00C85EEC2863342700A66E7F /* ListPresenterMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C85EEB2863342700A66E7F /* ListPresenterMock.swift */; };
+		00C85EEE286335C500A66E7F /* ListWorkerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C85EED286335C500A66E7F /* ListWorkerMock.swift */; };
+		00C85EF0286336D700A66E7F /* ListStorageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C85EEF286336D700A66E7F /* ListStorageMock.swift */; };
+		00C85EF22863372400A66E7F /* NotePresenterMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C85EF12863372400A66E7F /* NotePresenterMock.swift */; };
+		00C85EF42863379300A66E7F /* NoteStorageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C85EF32863379300A66E7F /* NoteStorageMock.swift */; };
 		00D2AC8E285D8FDF0020E9F3 /* AlertExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D2AC8D285D8FDF0020E9F3 /* AlertExt.swift */; };
 /* End PBXBuildFile section */
 
@@ -81,8 +93,6 @@
 		005E373B2857A70D00222370 /* ListWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListWorker.swift; sourceTree = "<group>"; };
 		005E373D2857A72D00222370 /* ListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListPresenter.swift; sourceTree = "<group>"; };
 		00876CE32861CF4C004733EF /* NoteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NoteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		00876CE52861CF4C004733EF /* NoteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteTests.swift; sourceTree = "<group>"; };
-		0099C3B4285AFAA600D4B369 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		00A788F32859C48300CE980A /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		00A788F52859CD3300CE980A /* NotesTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTableView.swift; sourceTree = "<group>"; };
 		00A788F82859D28A00CE980A /* NoteStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteStackView.swift; sourceTree = "<group>"; };
@@ -92,6 +102,20 @@
 		00BE4B7D27ECE81C00664855 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		00BE4B8427ECE82000664855 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		00BE4B8927ECE82000664855 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		00C85ED028632ADF00A66E7F /* ListWorkerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListWorkerTests.swift; sourceTree = "<group>"; };
+		00C85ED328632D3900A66E7F /* ListViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewControllerTests.swift; sourceTree = "<group>"; };
+		00C85ED528632D8B00A66E7F /* ListInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListInteractorTests.swift; sourceTree = "<group>"; };
+		00C85ED728632DE000A66E7F /* ListRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRouterTests.swift; sourceTree = "<group>"; };
+		00C85ED928632E0700A66E7F /* ListPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListPresenterTests.swift; sourceTree = "<group>"; };
+		00C85EE2286332D000A66E7F /* NotePresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotePresenterTests.swift; sourceTree = "<group>"; };
+		00C85EE42863330500A66E7F /* NoteInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteInteractorTests.swift; sourceTree = "<group>"; };
+		00C85EE62863332C00A66E7F /* NoteRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteRouterTests.swift; sourceTree = "<group>"; };
+		00C85EE82863337100A66E7F /* NoteViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewControllerTests.swift; sourceTree = "<group>"; };
+		00C85EEB2863342700A66E7F /* ListPresenterMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListPresenterMock.swift; sourceTree = "<group>"; };
+		00C85EED286335C500A66E7F /* ListWorkerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListWorkerMock.swift; sourceTree = "<group>"; };
+		00C85EEF286336D700A66E7F /* ListStorageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListStorageMock.swift; sourceTree = "<group>"; };
+		00C85EF12863372400A66E7F /* NotePresenterMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotePresenterMock.swift; sourceTree = "<group>"; };
+		00C85EF32863379300A66E7F /* NoteStorageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteStorageMock.swift; sourceTree = "<group>"; };
 		00D2AC8D285D8FDF0020E9F3 /* AlertExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertExt.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -184,7 +208,7 @@
 		00876CE42861CF4C004733EF /* NoteTests */ = {
 			isa = PBXGroup;
 			children = (
-				00876CE52861CF4C004733EF /* NoteTests.swift */,
+				00C85ED228632C4700A66E7F /* Scenes */,
 			);
 			path = NoteTests;
 			sourceTree = "<group>";
@@ -204,14 +228,6 @@
 				00262A57284D331D00DC3B0B /* Assembly.swift */,
 			);
 			path = "Scenes Factories";
-			sourceTree = "<group>";
-		};
-		00A788FC285A6C8000CE980A /* Managers */ = {
-			isa = PBXGroup;
-			children = (
-				0099C3B4285AFAA600D4B369 /* NetworkManager.swift */,
-			);
-			path = Managers;
 			sourceTree = "<group>";
 		};
 		00A78900285A6DA000CE980A /* Extensions */ = {
@@ -255,7 +271,6 @@
 		00BE4B7A27ECE81C00664855 /* Note */ = {
 			isa = PBXGroup;
 			children = (
-				00A788FC285A6C8000CE980A /* Managers */,
 				000920AD28075C88004D1862 /* Models */,
 				00A788FA285A6C0500CE980A /* Scenes Factories */,
 				00262A3F284D2C8100DC3B0B /* Scenes */,
@@ -267,6 +282,59 @@
 				00BE4B8927ECE82000664855 /* Info.plist */,
 			);
 			path = Note;
+			sourceTree = "<group>";
+		};
+		00C85EC728632A0100A66E7F /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				00C85EEB2863342700A66E7F /* ListPresenterMock.swift */,
+				00C85EED286335C500A66E7F /* ListWorkerMock.swift */,
+				00C85EEF286336D700A66E7F /* ListStorageMock.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		00C85EC828632A1F00A66E7F /* ListScene */ = {
+			isa = PBXGroup;
+			children = (
+				00C85EC728632A0100A66E7F /* Mocks */,
+				00C85ED928632E0700A66E7F /* ListPresenterTests.swift */,
+				00C85ED028632ADF00A66E7F /* ListWorkerTests.swift */,
+				00C85ED528632D8B00A66E7F /* ListInteractorTests.swift */,
+				00C85ED728632DE000A66E7F /* ListRouterTests.swift */,
+				00C85ED328632D3900A66E7F /* ListViewControllerTests.swift */,
+			);
+			path = ListScene;
+			sourceTree = "<group>";
+		};
+		00C85EC928632A3000A66E7F /* NoteScene */ = {
+			isa = PBXGroup;
+			children = (
+				00C85EEA286333E400A66E7F /* Mocks */,
+				00C85EE2286332D000A66E7F /* NotePresenterTests.swift */,
+				00C85EE42863330500A66E7F /* NoteInteractorTests.swift */,
+				00C85EE62863332C00A66E7F /* NoteRouterTests.swift */,
+				00C85EE82863337100A66E7F /* NoteViewControllerTests.swift */,
+			);
+			path = NoteScene;
+			sourceTree = "<group>";
+		};
+		00C85ED228632C4700A66E7F /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				00C85EC828632A1F00A66E7F /* ListScene */,
+				00C85EC928632A3000A66E7F /* NoteScene */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		00C85EEA286333E400A66E7F /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				00C85EF12863372400A66E7F /* NotePresenterMock.swift */,
+				00C85EF32863379300A66E7F /* NoteStorageMock.swift */,
+			);
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -390,7 +458,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00876CE62861CF4C004733EF /* NoteTests.swift in Sources */,
+				00C85EE52863330500A66E7F /* NoteInteractorTests.swift in Sources */,
+				00C85ED128632ADF00A66E7F /* ListWorkerTests.swift in Sources */,
+				00C85EF22863372400A66E7F /* NotePresenterMock.swift in Sources */,
+				00C85EF42863379300A66E7F /* NoteStorageMock.swift in Sources */,
+				00C85EF0286336D700A66E7F /* ListStorageMock.swift in Sources */,
+				00C85ED828632DE000A66E7F /* ListRouterTests.swift in Sources */,
+				00C85EE72863332C00A66E7F /* NoteRouterTests.swift in Sources */,
+				00C85EEC2863342700A66E7F /* ListPresenterMock.swift in Sources */,
+				00C85EDA28632E0700A66E7F /* ListPresenterTests.swift in Sources */,
+				00C85ED628632D8B00A66E7F /* ListInteractorTests.swift in Sources */,
+				00C85EE92863337100A66E7F /* NoteViewControllerTests.swift in Sources */,
+				00C85ED428632D3900A66E7F /* ListViewControllerTests.swift in Sources */,
+				00C85EE3286332D000A66E7F /* NotePresenterTests.swift in Sources */,
+				00C85EEE286335C500A66E7F /* ListWorkerMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -418,7 +499,6 @@
 				004F90C42857B67B0091009A /* NotePresenter.swift in Sources */,
 				00A788F42859C48300CE980A /* ActivityIndicator.swift in Sources */,
 				004F90BA2857B5850091009A /* NoteProtocols.swift in Sources */,
-				0099C3B5285AFAA600D4B369 /* NetworkManager.swift in Sources */,
 				0034950F286042D50034714A /* DataSourceExt.swift in Sources */,
 				00262A43284D2D4F00DC3B0B /* AdjKeyboardExt.swift in Sources */,
 				005E373C2857A70D00222370 /* ListWorker.swift in Sources */,
