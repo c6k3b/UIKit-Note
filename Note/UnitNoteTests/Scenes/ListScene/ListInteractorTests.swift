@@ -37,8 +37,7 @@ final class ListInteractorTests: XCTestCase {
     }
 
     func testWorkerResponse() {
-        let expectation = expectation(description: "should send correct response to presenter")
-//        workerMock.result = true
+        let expectation = expectation(description: "should send response to presenter")
         presenterMock.fetchResponse = {
             XCTAssertTrue(self.presenterMock.presenterWasCalled)
             XCTAssertTrue(self.workerMock.getNotesWasCalled)
