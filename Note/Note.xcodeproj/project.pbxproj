@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		00262A43284D2D4F00DC3B0B /* AdjKeyboardExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00262A42284D2D4F00DC3B0B /* AdjKeyboardExt.swift */; };
-		00262A58284D331D00DC3B0B /* Assembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00262A57284D331D00DC3B0B /* Assembly.swift */; };
 		002DE1E128210590003F0651 /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002DE1E028210590003F0651 /* Animations.swift */; };
 		0034950F286042D50034714A /* DataSourceExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0034950E286042D50034714A /* DataSourceExt.swift */; };
 		003495122860438C0034714A /* DelegateExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 003495112860438C0034714A /* DelegateExt.swift */; };
@@ -53,6 +52,8 @@
 		00C85EF0286336D700A66E7F /* ListStorageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C85EEF286336D700A66E7F /* ListStorageMock.swift */; };
 		00C85EF22863372400A66E7F /* NotePresenterMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C85EF12863372400A66E7F /* NotePresenterMock.swift */; };
 		00C85EF42863379300A66E7F /* NoteStorageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C85EF32863379300A66E7F /* NoteStorageMock.swift */; };
+		00C85EF6286338E200A66E7F /* ListAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C85EF5286338E200A66E7F /* ListAssembly.swift */; };
+		00C85EF92863391600A66E7F /* NoteAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C85EF82863391600A66E7F /* NoteAssembly.swift */; };
 		00D2AC8E285D8FDF0020E9F3 /* AlertExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D2AC8D285D8FDF0020E9F3 /* AlertExt.swift */; };
 /* End PBXBuildFile section */
 
@@ -68,7 +69,6 @@
 
 /* Begin PBXFileReference section */
 		00262A42284D2D4F00DC3B0B /* AdjKeyboardExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjKeyboardExt.swift; sourceTree = "<group>"; };
-		00262A57284D331D00DC3B0B /* Assembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assembly.swift; sourceTree = "<group>"; };
 		002DE1E028210590003F0651 /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
 		0034950E286042D50034714A /* DataSourceExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSourceExt.swift; sourceTree = "<group>"; };
 		003495112860438C0034714A /* DelegateExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelegateExt.swift; sourceTree = "<group>"; };
@@ -116,6 +116,8 @@
 		00C85EEF286336D700A66E7F /* ListStorageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListStorageMock.swift; sourceTree = "<group>"; };
 		00C85EF12863372400A66E7F /* NotePresenterMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotePresenterMock.swift; sourceTree = "<group>"; };
 		00C85EF32863379300A66E7F /* NoteStorageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteStorageMock.swift; sourceTree = "<group>"; };
+		00C85EF5286338E200A66E7F /* ListAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAssembly.swift; sourceTree = "<group>"; };
+		00C85EF82863391600A66E7F /* NoteAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteAssembly.swift; sourceTree = "<group>"; };
 		00D2AC8D285D8FDF0020E9F3 /* AlertExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertExt.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -166,6 +168,7 @@
 				005E37352857A69800222370 /* ListViewController.swift */,
 				005E37372857A6B500222370 /* ListModels.swift */,
 				005E37332857A67C00222370 /* ListProtocols.swift */,
+				00C85EF5286338E200A66E7F /* ListAssembly.swift */,
 			);
 			path = "List Scene";
 			sourceTree = "<group>";
@@ -181,6 +184,7 @@
 				004F90BB2857B5A00091009A /* NoteViewController.swift */,
 				004F90BD2857B6360091009A /* NoteModels.swift */,
 				004F90B92857B5850091009A /* NoteProtocols.swift */,
+				00C85EF82863391600A66E7F /* NoteAssembly.swift */,
 			);
 			path = "Note Scene";
 			sourceTree = "<group>";
@@ -220,14 +224,6 @@
 				00A788F82859D28A00CE980A /* NoteStackView.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		00A788FA285A6C0500CE980A /* Scenes Factories */ = {
-			isa = PBXGroup;
-			children = (
-				00262A57284D331D00DC3B0B /* Assembly.swift */,
-			);
-			path = "Scenes Factories";
 			sourceTree = "<group>";
 		};
 		00A78900285A6DA000CE980A /* Extensions */ = {
@@ -272,7 +268,6 @@
 			isa = PBXGroup;
 			children = (
 				000920AD28075C88004D1862 /* Models */,
-				00A788FA285A6C0500CE980A /* Scenes Factories */,
 				00262A3F284D2C8100DC3B0B /* Scenes */,
 				00AE68B8280D5CC300D65C7F /* Utilities */,
 				00BE4B7B27ECE81C00664855 /* AppDelegate.swift */,
@@ -488,12 +483,13 @@
 				00D2AC8E285D8FDF0020E9F3 /* AlertExt.swift in Sources */,
 				004F90C22857B6670091009A /* NoteWorker.swift in Sources */,
 				003495122860438C0034714A /* DelegateExt.swift in Sources */,
+				00C85EF6286338E200A66E7F /* ListAssembly.swift in Sources */,
 				00BE4B7C27ECE81C00664855 /* AppDelegate.swift in Sources */,
 				004F90BC2857B5A00091009A /* NoteViewController.swift in Sources */,
 				003495162860610C0034714A /* Styles.swift in Sources */,
 				00AE68B7280D5C6E00D65C7F /* DateFormatterExt.swift in Sources */,
+				00C85EF92863391600A66E7F /* NoteAssembly.swift in Sources */,
 				00BE4B7E27ECE81C00664855 /* SceneDelegate.swift in Sources */,
-				00262A58284D331D00DC3B0B /* Assembly.swift in Sources */,
 				004F90BE2857B6360091009A /* NoteModels.swift in Sources */,
 				0034951428605A3D0034714A /* NoteView.swift in Sources */,
 				004F90C42857B67B0091009A /* NotePresenter.swift in Sources */,
