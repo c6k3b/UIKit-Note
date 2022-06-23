@@ -7,7 +7,7 @@ protocol NoteDataStore {
 }
 
 protocol NoteBusinessLogic {
-    func displayNote(_ request: NoteModel.PresentNote.Request)
+    func requestNote(_ request: NoteModel.PresentNote.Request)
     func saveNote(_ request: NoteModel.SaveNote.Request)
 }
 

@@ -13,7 +13,7 @@ final class NoteInteractor: NoteBusinessLogic, NoteDataStore {
         self.worker = worker
     }
 
-    func displayNote(_ request: NoteModel.PresentNote.Request) {
+    func requestNote(_ request: NoteModel.PresentNote.Request) {
         let response = NoteModel.PresentNote.Response(note: note)
         presenter.presentNote(response)
     }

@@ -46,7 +46,7 @@ final class NoteViewController: UIViewController, NoteDisplayLogic {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        interactor.displayNote(NoteModel.PresentNote.Request())
+        interactor.requestNote(NoteModel.PresentNote.Request())
         setEditing(true, animated: true)
     }
 
