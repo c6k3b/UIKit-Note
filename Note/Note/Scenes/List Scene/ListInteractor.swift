@@ -28,10 +28,15 @@ final class ListInteractor: ListBusinessLogic, ListDataStore {
         }
     }
 
-    func remove(_ index: [Int]) {
-        index.forEach { notes.remove(at: $0) }
-        let response = ListModel.PresentList.Response(notes: self.notes)
-        presenter.presentNotes(response)
+    func remove(_ index: [Int]?) {
+        if let index = index {
+            index.forEach { notes.remove(at: $0) }
+            let response = ListModel.PresentList.Response(notes: self.notes)
+            presenter.presentNotes(response)
+        } else {
+            let response = ListModel.Alert.Response()
+            presenter.presentNoSelectionAlert(response)
+        }
     }
 
     func update() {
@@ -53,10 +58,5 @@ final class ListInteractor: ListBusinessLogic, ListDataStore {
             self.note = notes[index]
             self.index = index
         }
-    }
-
-    func showNoSelectionAlert() {
-        let response = ListModel.Alert.Response()
-        presenter.presentNoSelectionAlert(response)
     }
 }

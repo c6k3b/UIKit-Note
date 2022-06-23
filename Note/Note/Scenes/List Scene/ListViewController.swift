@@ -94,7 +94,7 @@ final class ListViewController: UIViewController, ListDisplayLogic {
     @objc private func didFloatingButtonTapped() {
         if isEditing {
             guard let indexPath = table.indexPathsForSelectedRows?.sorted(by: >) else {
-                return interactor.showNoSelectionAlert()
+                return remove(indices: nil, cells: nil)
             }
             let noteIndexesToRemove = indexPath.map { $0.section }
             let sectionsForRemove = IndexSet(noteIndexesToRemove)
@@ -123,10 +123,14 @@ final class ListViewController: UIViewController, ListDisplayLogic {
         CATransaction.commit()
     }
 
-    func remove(indices: [Int], cells: IndexSet) {
-        table.beginUpdates()
-        interactor.remove(indices)
-        table.deleteSections(cells, with: .left)
-        table.endUpdates()
+    func remove(indices: [Int]?, cells: IndexSet?) {
+        if let cells = cells {
+            table.beginUpdates()
+            interactor.remove(indices)
+            table.deleteSections(cells, with: .left)
+            table.endUpdates()
+        } else {
+            interactor.remove(indices)
+        }
     }
 }

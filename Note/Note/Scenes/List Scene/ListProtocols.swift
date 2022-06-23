@@ -11,10 +11,9 @@ protocol ListDataStore {
 
 protocol ListBusinessLogic {
     func request(_ request: ListModel.PresentList.Request)
-    func remove(_ index: [Int])
+    func remove(_ index: [Int]?)
     func update()
     func getSelectedNoteIndex(_ index: Int?)
-    func showNoSelectionAlert()
 }
 
 protocol ListWorkerLogic {
