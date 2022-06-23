@@ -17,7 +17,7 @@ final class ListViewController: UIViewController, ListDisplayLogic {
 
     private let interactor: ListBusinessLogic
     let router: (ListRoutingLogic & ListDataPassing)
-    var notes: [ListModel.PresentList.ViewModel.PresentedNote] = []
+    var notes: [ListModel.SingleNote.ViewModel] = []
 
     // MARK: - Initializers
     init(interactor: ListBusinessLogic, router: ListRoutingLogic & ListDataPassing) {
@@ -32,8 +32,8 @@ final class ListViewController: UIViewController, ListDisplayLogic {
     }
 
     // MARK: - DisplayLogic
-    func displayNotes(_ viewModel: ListModel.PresentList.ViewModel) {
-        notes = viewModel.presentedCells
+    func displayNotes(_ viewModel: ListModel.NotesList.ViewModel) {
+        notes = viewModel.notes
         self.activityIndicator.stopAnimating()
         self.table.reloadData()
     }
@@ -50,7 +50,7 @@ final class ListViewController: UIViewController, ListDisplayLogic {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        interactor.request(ListModel.PresentList.Request())
+        interactor.fetchNotes(ListModel.NotesList.Request())
     }
 
     override func viewWillAppear(_ animated: Bool) {

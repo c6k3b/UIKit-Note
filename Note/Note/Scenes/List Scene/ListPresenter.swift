@@ -3,10 +3,10 @@ import UIKit
 final class ListPresenter: ListPresentationLogic {
     weak var view: ListDisplayLogic?
 
-    func presentNotes(_ response: ListModel.PresentList.Response) {
-        var presentedNotes: [ListModel.PresentList.ViewModel.PresentedNote] = []
+    func presentNotes(_ response: ListModel.NotesList.Response) {
+        var presentedNotes: [ListModel.SingleNote.ViewModel] = []
         for note in response.notes {
-            let presentedNote = ListModel.PresentList.ViewModel.PresentedNote(
+            let presentedNote = ListModel.SingleNote.ViewModel(
                 header: note.header ?? "",
                 body: note.body ?? "",
                 date: (note.date ?? Date()).getFormattedDate(
@@ -17,8 +17,8 @@ final class ListPresenter: ListPresentationLogic {
             presentedNotes.append(presentedNote)
         }
 
-        let viewModel = ListModel.PresentList.ViewModel(
-            presentedCells: presentedNotes
+        let viewModel = ListModel.NotesList.ViewModel(
+            notes: presentedNotes
         )
         view?.displayNotes(viewModel)
     }
