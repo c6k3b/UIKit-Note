@@ -106,8 +106,10 @@ final class ListViewController: UIViewController, ListDisplayLogic {
         }
     }
 
-    func navigate() {
+    func navigate(noteIndexToReturn: Int? = nil) {
         table.isUserInteractionEnabled = false
+
+        interactor.getSelectedNoteIndex(noteIndexToReturn)
 
         CATransaction.begin()
         CATransaction.setCompletionBlock {
@@ -126,9 +128,5 @@ final class ListViewController: UIViewController, ListDisplayLogic {
         interactor.remove(indices)
         table.deleteSections(cells, with: .left)
         table.endUpdates()
-    }
-
-    func passSelectedNoteIndex(_ index: Int?) {
-        interactor.getSelectedNoteIndex(index)
     }
 }

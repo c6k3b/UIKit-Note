@@ -5,8 +5,8 @@ final class ListInteractor: ListBusinessLogic, ListDataStore {
     private let presenter: ListPresentationLogic
     private let worker: ListWorkerLogic
     private(set) var notes: [Note] = []
+    private(set) var index: Int?
     var note: Note = Note()
-    private var index: Int?
 
     // MARK: - Initializers
     init(presenter: ListPresentationLogic, worker: ListWorkerLogic) {
