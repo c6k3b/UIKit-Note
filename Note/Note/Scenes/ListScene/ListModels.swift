@@ -5,7 +5,7 @@ enum ListModel {
             let notes: [Note]
         }
         struct ViewModel {
-            let notes: [NoteCell.NoteViewModel]
+            let notes: [NoteCell.Model]
         }
     }
 

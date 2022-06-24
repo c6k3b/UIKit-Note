@@ -4,9 +4,9 @@ final class ListPresenter: ListPresentationLogic {
     weak var view: ListDisplayLogic?
 
     func presentNotes(_ response: ListModel.NotesList.Response) {
-        var presentedNotes: [NoteCell.NoteViewModel] = []
+        var presentedNotes: [NoteCell.Model] = []
         for note in response.notes {
-            let presentedNote = NoteCell.NoteViewModel(
+            let presentedNote = NoteCell.Model(
                 header: note.header ?? "",
                 body: note.body ?? "",
                 date: (note.date ?? Date()).getFormattedDate(

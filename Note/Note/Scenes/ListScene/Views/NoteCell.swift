@@ -45,7 +45,7 @@ class NoteCell: UITableViewCell, ConfigurableCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(with model: NoteCell.NoteViewModel) {
+    func configure(with model: NoteCell.Model) {
         headerLabel.text = model.header
         bodyLabel.text = model.body
         dateLabel.text = model.date

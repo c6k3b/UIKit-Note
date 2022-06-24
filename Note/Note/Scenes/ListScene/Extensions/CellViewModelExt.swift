@@ -1,7 +1,7 @@
 import UIKit
 
 extension NoteCell {
-    struct NoteViewModel {
+    struct Model {
         let header: String
         let body: String
         let date: String
