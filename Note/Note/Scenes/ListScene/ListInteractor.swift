@@ -29,6 +29,7 @@ final class ListInteractor: ListBusinessLogic, ListDataStore {
     }
 
     func performNotesRemoving(_ request: ListModel.NotesRemoving.Request) {
+        request.indicesToRemove.forEach { notes.remove(at: $0) }
         presenter.presentNotesRemoving(
             ListModel.NotesRemoving.Response(indicesToRemove: request.indicesToRemove)
         )
