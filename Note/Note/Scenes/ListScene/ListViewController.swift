@@ -17,7 +17,7 @@ final class ListViewController: UIViewController, ListDisplayLogic {
 
     private let interactor: ListBusinessLogic
     let router: (ListRoutingLogic & ListDataPassing)
-    var notes: [ListModel.SingleNote.ViewModel] = []
+    var notes: [NoteCell.NoteViewModel] = []
 
     // MARK: - Initializers
     init(interactor: ListBusinessLogic, router: ListRoutingLogic & ListDataPassing) {

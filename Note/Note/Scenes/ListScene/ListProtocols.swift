@@ -35,5 +35,5 @@ protocol ListRoutingLogic {
 }
 
 protocol ConfigurableCell {
-    func configure(header: String?, body: String?, date: String, icon: UIImage?)
+    func configure(with model: NoteCell.NoteViewModel)
 }

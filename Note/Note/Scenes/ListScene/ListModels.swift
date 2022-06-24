@@ -1,5 +1,3 @@
-import UIKit
-
 enum ListModel {
     enum NotesList {
         struct Request {}
@@ -7,19 +5,7 @@ enum ListModel {
             let notes: [Note]
         }
         struct ViewModel {
-            let notes: [SingleNote.ViewModel]
-        }
-    }
-
-    enum SingleNote {
-        struct Request {}
-        struct Response {
-        }
-        struct ViewModel {
-            let header: String
-            let body: String
-            let date: String
-            let icon: UIImage
+            let notes: [NoteCell.NoteViewModel]
         }
     }
 

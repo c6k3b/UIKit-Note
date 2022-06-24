@@ -45,11 +45,11 @@ class NoteCell: UITableViewCell, ConfigurableCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(header: String?, body: String?, date: String, icon: UIImage?) {
-        headerLabel.text = header
-        bodyLabel.text = body
-        dateLabel.text = date
-        iconView.image = icon
+    func configure(with model: NoteCell.NoteViewModel) {
+        headerLabel.text = model.header
+        bodyLabel.text = model.body
+        dateLabel.text = model.date
+        iconView.image = model.icon
     }
 
     // MARK: - Lifecycle

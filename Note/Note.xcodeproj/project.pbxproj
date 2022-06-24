@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		001CAFAC286590DB003F0DB9 /* CellViewModelExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001CAFAB286590DB003F0DB9 /* CellViewModelExt.swift */; };
 		00262A43284D2D4F00DC3B0B /* AdjKeyboardExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00262A42284D2D4F00DC3B0B /* AdjKeyboardExt.swift */; };
 		002DE1E128210590003F0651 /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002DE1E028210590003F0651 /* Animations.swift */; };
 		0034950F286042D50034714A /* DataSourceExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0034950E286042D50034714A /* DataSourceExt.swift */; };
@@ -44,6 +45,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		001CAFAB286590DB003F0DB9 /* CellViewModelExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellViewModelExt.swift; sourceTree = "<group>"; };
 		00262A42284D2D4F00DC3B0B /* AdjKeyboardExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjKeyboardExt.swift; sourceTree = "<group>"; };
 		002DE1E028210590003F0651 /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
 		0034950E286042D50034714A /* DataSourceExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSourceExt.swift; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 			children = (
 				0034950E286042D50034714A /* DataSourceExt.swift */,
 				003495112860438C0034714A /* DelegateExt.swift */,
+				001CAFAB286590DB003F0DB9 /* CellViewModelExt.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -315,6 +318,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				005E373E2857A72D00222370 /* ListPresenter.swift in Sources */,
+				001CAFAC286590DB003F0DB9 /* CellViewModelExt.swift in Sources */,
 				005E37342857A67C00222370 /* ListProtocols.swift in Sources */,
 				004F90C02857B6500091009A /* NoteRouter.swift in Sources */,
 				005E373A2857A6CC00222370 /* ListRouter.swift in Sources */,

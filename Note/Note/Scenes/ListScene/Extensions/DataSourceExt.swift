@@ -14,12 +14,7 @@ extension ListViewController: UITableViewDataSource {
             return UITableViewCell()
         }
 
-        cell.configure(
-            header: note.header,
-            body: note.body,
-            date: note.date,
-            icon: note.icon
-        )
+        cell.configure(with: note)
         return cell as? UITableViewCell ?? UITableViewCell()
     }
 }
