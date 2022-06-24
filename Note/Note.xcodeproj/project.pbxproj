@@ -104,13 +104,13 @@
 		00262A3F284D2C8100DC3B0B /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				00262A40284D2C8700DC3B0B /* List Scene */,
-				00262A41284D2CA000DC3B0B /* Note Scene */,
+				00262A40284D2C8700DC3B0B /* ListScene */,
+				00262A41284D2CA000DC3B0B /* NoteScene */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
 		};
-		00262A40284D2C8700DC3B0B /* List Scene */ = {
+		00262A40284D2C8700DC3B0B /* ListScene */ = {
 			isa = PBXGroup;
 			children = (
 				005E37272857A59B00222370 /* Views */,
@@ -124,10 +124,10 @@
 				005E37332857A67C00222370 /* ListProtocols.swift */,
 				00C85EF5286338E200A66E7F /* ListAssembly.swift */,
 			);
-			path = "List Scene";
+			path = ListScene;
 			sourceTree = "<group>";
 		};
-		00262A41284D2CA000DC3B0B /* Note Scene */ = {
+		00262A41284D2CA000DC3B0B /* NoteScene */ = {
 			isa = PBXGroup;
 			children = (
 				00A788F72859D25D00CE980A /* Views */,
@@ -140,7 +140,7 @@
 				004F90B92857B5850091009A /* NoteProtocols.swift */,
 				00C85EF82863391600A66E7F /* NoteAssembly.swift */,
 			);
-			path = "Note Scene";
+			path = NoteScene;
 			sourceTree = "<group>";
 		};
 		003495102860436C0034714A /* Extensions */ = {
