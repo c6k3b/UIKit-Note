@@ -8,7 +8,7 @@ enum ListAssembly {
         let router = ListRouter(dataStore: interactor)
         let viewController = ListViewController(interactor: interactor, router: router)
 
-        presenter.view = viewController
+        presenter.viewController = viewController
         router.viewController = viewController
 
         return viewController

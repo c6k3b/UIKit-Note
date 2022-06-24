@@ -1,7 +1,7 @@
 import UIKit
 
 final class ListPresenter: ListPresentationLogic {
-    weak var view: ListDisplayLogic?
+    weak var viewController: ListDisplayLogic?
 
     func presentNotes(_ response: ListModel.NotesList.Response) {
         var presentedNotes: [NoteCell.Model] = []
@@ -20,15 +20,24 @@ final class ListPresenter: ListPresentationLogic {
         let viewModel = ListModel.NotesList.ViewModel(
             notes: presentedNotes
         )
-        view?.displayNotes(viewModel)
+        viewController?.displayNotes(viewModel)
     }
 
-    func presentNoSelectionAlert(_ response: ListModel.Alert.Response) {
-        let viewModel = ListModel.Alert.ViewModel(
-            title: Styles.AlertNoSelection.title,
-            message: Styles.AlertNoSelection.message,
-            actionTitle: Styles.AlertNoSelection.actionTitle
-        )
-        view?.displayNoSelectionAlert(viewModel)
+    func presentNotesRemoving(_ response: ListModel.NotesRemoving.Response) {
+        if !response.indicesToRemove.isEmpty {
+            viewController?.displayNotesRemoving(
+                ListModel.NotesRemoving.ViewModel.success(indicesToRemove: response.indicesToRemove)
+            )
+        } else {
+            viewController?.displayNotesRemoving(
+                ListModel.NotesRemoving.ViewModel.failure(
+                    alert: ListModel.NotesRemoving.ViewModel.Alert(
+                        title: Styles.AlertNoSelection.title,
+                        message: Styles.AlertNoSelection.message,
+                        actionTitle: Styles.AlertNoSelection.actionTitle
+                    )
+                )
+            )
+        }
     }
 }

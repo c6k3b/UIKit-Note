@@ -9,13 +9,24 @@ enum ListModel {
         }
     }
 
-    enum Alert {
-        struct Request {}
-        struct Response {}
-        struct ViewModel {
-            let title: String
-            let message: String
-            let actionTitle: String
+    enum NotesRemoving {
+        struct Request {
+            let indicesToRemove: [Int]
         }
+        struct Response {
+            let indicesToRemove: [Int]
+        }
+        enum ViewModel {
+            case success(indicesToRemove: [Int])
+            case failure(alert: Alert)
+        }
+    }
+}
+
+extension ListModel.NotesRemoving.ViewModel {
+    struct Alert {
+        let title: String
+        let message: String
+        let actionTitle: String
     }
 }

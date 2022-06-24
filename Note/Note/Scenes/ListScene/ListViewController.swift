@@ -38,12 +38,18 @@ final class ListViewController: UIViewController, ListDisplayLogic {
         self.table.reloadData()
     }
 
-    func displayNoSelectionAlert(_ viewModel: ListModel.Alert.ViewModel) {
-        showAlert(
-            title: viewModel.title,
-            message: viewModel.message,
-            actionTitle: viewModel.actionTitle
-        )
+    func displayNotesRemoving(_ viewModel: ListModel.NotesRemoving.ViewModel) {
+        switch viewModel {
+        case .success(indicesToRemove: let indices):
+            indices.forEach { notes.remove(at: $0) }
+            self.table.reloadData()
+        case .failure(alert: let alert):
+            showAlert(
+                title: alert.title,
+                message: alert.message,
+                actionTitle: alert.actionTitle
+            )
+        }
     }
 
     // MARK: - Controller lifecycle
@@ -124,13 +130,18 @@ final class ListViewController: UIViewController, ListDisplayLogic {
     }
 
     func remove(indices: [Int]?, cells: IndexSet?) {
-        if let cells = cells {
+        if let cells = cells,
+        let indices = indices {
             table.beginUpdates()
-            interactor.remove(indices)
+            interactor.performNotesRemoving(
+                ListModel.NotesRemoving.Request(indicesToRemove: indices)
+            )
             table.deleteSections(cells, with: .left)
             table.endUpdates()
         } else {
-            interactor.remove(indices)
+            interactor.performNotesRemoving(
+                ListModel.NotesRemoving.Request(indicesToRemove: [])
+            )
         }
     }
 }
