@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00079B122869E5F400891305 /* NoteViewModelExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00079B112869E5F400891305 /* NoteViewModelExt.swift */; };
 		001CAFAC286590DB003F0DB9 /* CellViewModelExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001CAFAB286590DB003F0DB9 /* CellViewModelExt.swift */; };
 		00262A43284D2D4F00DC3B0B /* AdjKeyboardExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00262A42284D2D4F00DC3B0B /* AdjKeyboardExt.swift */; };
 		002DE1E128210590003F0651 /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002DE1E028210590003F0651 /* Animations.swift */; };
@@ -45,6 +46,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		00079B112869E5F400891305 /* NoteViewModelExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewModelExt.swift; sourceTree = "<group>"; };
 		001CAFAB286590DB003F0DB9 /* CellViewModelExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellViewModelExt.swift; sourceTree = "<group>"; };
 		00262A42284D2D4F00DC3B0B /* AdjKeyboardExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjKeyboardExt.swift; sourceTree = "<group>"; };
 		002DE1E028210590003F0651 /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
@@ -95,6 +97,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		00079B102869E5CA00891305 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				00079B112869E5F400891305 /* NoteViewModelExt.swift */,
+			);
+			name = Extensions;
+			path = Views/Extensions;
+			sourceTree = "<group>";
+		};
 		000920AD28075C88004D1862 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -133,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				00A788F72859D25D00CE980A /* Views */,
+				00079B102869E5CA00891305 /* Extensions */,
 				004F90C32857B67B0091009A /* NotePresenter.swift */,
 				004F90C12857B6670091009A /* NoteWorker.swift */,
 				004F90B52857B54F0091009A /* NoteInteractor.swift */,
@@ -349,6 +361,7 @@
 				00A788F92859D28A00CE980A /* NoteStackView.swift in Sources */,
 				004F90B62857B54F0091009A /* NoteInteractor.swift in Sources */,
 				005E37382857A6B500222370 /* ListModels.swift in Sources */,
+				00079B122869E5F400891305 /* NoteViewModelExt.swift in Sources */,
 				00A788F62859CD3300CE980A /* NotesTableView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

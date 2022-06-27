@@ -2,27 +2,30 @@ import Foundation
 
 final class NotePresenter: NotePresentationLogic {
     // MARK: - Props
-    weak var view: NoteDisplayLogic?
+    weak var viewController: NoteDisplayLogic?
 
     // MARK: - Methods
     func presentNote(_ response: NoteModel.SingleNote.Response) {
-
-        let viewModel = NoteModel.SingleNote.ViewModel(
-            date: (response.note.date ?? Date()).getFormattedDate(
-                format: Styles.DateFormat.inView
-            ),
-            header: response.note.header ?? "",
-            body: response.note.body ?? ""
-        )
-        view?.displayNote(viewModel)
-    }
-
-    func presentEmptyFieldsAlert(_ response: NoteModel.Alert.Response) {
-        let viewModel = NoteModel.Alert.ViewModel(
-            title: Styles.AlertEmpty.title,
-            message: Styles.AlertEmpty.message,
-            actionTitle: Styles.AlertEmpty.actionTitle
-        )
-        view?.displayEmptyFieldsAlert(viewModel)
+        if response.note.header != "" || response.note.body != "" {
+            let viewModel = NoteModel.SingleNote.ViewModel.success(
+                note: NoteView.Model(
+                    header: response.note.header ?? "",
+                    body: response.note.body ?? "",
+                    date: (response.note.date ?? Date()).getFormattedDate(
+                        format: Styles.DateFormat.inView
+                    )
+                )
+            )
+            viewController?.displayNote(viewModel)
+        } else {
+            let viewModel = NoteModel.SingleNote.ViewModel.failure(
+                alert: NoteModel.SingleNote.ViewModel.Alert(
+                    title: Styles.AlertEmpty.title,
+                    message: Styles.AlertEmpty.message,
+                    actionTitle: Styles.AlertEmpty.actionTitle
+                )
+            )
+            viewController?.displayNote(viewModel)
+        }
     }
 }

@@ -15,12 +15,10 @@ protocol NoteWorkerLogic {}
 
 protocol NotePresentationLogic {
     func presentNote(_ response: NoteModel.SingleNote.Response)
-    func presentEmptyFieldsAlert(_ response: NoteModel.Alert.Response)
 }
 
 protocol NoteDisplayLogic: AnyObject {
     func displayNote(_ viewModel: NoteModel.SingleNote.ViewModel)
-    func displayEmptyFieldsAlert(_ viewModel: NoteModel.Alert.ViewModel)
 }
 
 protocol NoteRoutingLogic {

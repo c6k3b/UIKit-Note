@@ -5,9 +5,9 @@ final class NoteViewController: UIViewController, NoteDisplayLogic {
     private let interactor: NoteBusinessLogic
     let router: (NoteRoutingLogic & NoteDataPassing)
 
+    // MARK: - UI Components
     private let noteView = NoteView()
 
-    // MARK: - UI Components
     private lazy var navigationLeftBarButton: UIBarButtonItem = {
         $0.image = Styles.NoteVC.backBtnImg
         $0.target = self
@@ -29,18 +29,19 @@ final class NoteViewController: UIViewController, NoteDisplayLogic {
 
     // MARK: - DisplayLogic
     func displayNote(_ viewModel: NoteModel.SingleNote.ViewModel) {
-        noteView.dateLabel.text = viewModel.date
-        noteView.headerTextField.text = viewModel.header
-        noteView.bodyTextView.text = viewModel.body
-    }
-
-    func displayEmptyFieldsAlert(_ viewModel: NoteModel.Alert.ViewModel) {
-        showAlert(
-            title: viewModel.title,
-            message: viewModel.message,
-            actionTitle: viewModel.actionTitle
-        )
-        isEditing.toggle()
+        switch viewModel {
+        case .success(note: let note):
+            noteView.dateLabel.text = note.date
+            noteView.headerTextField.text = note.header
+            noteView.bodyTextView.text = note.body
+        case .failure(alert: let alert):
+            showAlert(
+                title: alert.title,
+                message: alert.message,
+                actionTitle: alert.actionTitle
+            )
+            isEditing.toggle()
+        }
     }
 
     // MARK: - Controller lifecycle
@@ -83,8 +84,11 @@ final class NoteViewController: UIViewController, NoteDisplayLogic {
 
     private func save() {
         let request = NoteModel.NoteSaving.Request(
-            header: noteView.headerTextField.text,
-            body: noteView.bodyTextView.text
+            note: NoteView.Model(
+                header: noteView.headerTextField.text ?? "",
+                body: noteView.bodyTextView.text,
+                date: ""
+            )
         )
         interactor.saveNote(request)
     }

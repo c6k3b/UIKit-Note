@@ -8,7 +8,7 @@ enum NoteAssembly {
         let router = NoteRouter(dataStore: interactor)
         let viewController = NoteViewController(interactor: interactor, router: router)
 
-        presenter.view = viewController
+        presenter.viewController = viewController
         router.viewController = viewController
 
         return viewController

@@ -4,31 +4,25 @@ enum NoteModel {
         struct Response {
             let note: Note
         }
-        struct ViewModel {
-            let date: String
-            let header: String
-            let body: String
+        enum ViewModel {
+            case success(note: NoteView.Model)
+            case failure(alert: Alert)
         }
     }
 
     enum NoteSaving {
         struct Request {
-            let header: String?
-            let body: String?
+            let note: NoteView.Model
         }
-        struct Response {
-            let note: Note
-        }
-        struct ViewModel {}
-    }
-
-    enum Alert {
-        struct Request {}
         struct Response {}
-        struct ViewModel {
-            let title: String
-            let message: String
-            let actionTitle: String
-        }
+        enum ViewModel {}
+    }
+}
+
+extension NoteModel.SingleNote.ViewModel {
+    struct Alert {
+        let title: String
+        let message: String
+        let actionTitle: String
     }
 }
