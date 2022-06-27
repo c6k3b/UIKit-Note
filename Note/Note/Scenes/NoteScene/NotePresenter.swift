@@ -6,7 +6,7 @@ final class NotePresenter: NotePresentationLogic {
 
     // MARK: - Methods
     func presentNote(_ response: NoteModel.SingleNote.Response) {
-        if response.note.header != "" || response.note.body != "" {
+        if (response.note.header != "") || (response.note.body != "") {
             let viewModel = NoteModel.SingleNote.ViewModel.success(
                 note: NoteView.Model(
                     header: response.note.header ?? "",

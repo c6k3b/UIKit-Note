@@ -22,11 +22,11 @@ final class NoteInteractor: NoteBusinessLogic, NoteDataStore {
     }
 
     func saveNote(_ request: NoteModel.NoteSaving.Request) {
-        if !request.note.header.isEmpty || !request.note.body.isEmpty {
+//        if !request.note.header.isEmpty || !request.note.body.isEmpty {
             note.date = Date()
             note.header = request.note.header
             note.body = request.note.body
-        }
+//        }
         let response = NoteModel.SingleNote.Response(note: note)
         presenter.presentNote(response)
     }
