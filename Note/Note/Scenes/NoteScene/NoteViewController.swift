@@ -5,6 +5,8 @@ final class NoteViewController: UIViewController, NoteDisplayLogic {
     private let interactor: NoteBusinessLogic
     let router: (NoteRoutingLogic & NoteDataPassing)
 
+    var note = NoteView.Model(header: "", body: "", date: "")
+
     // MARK: - UI Components
     private let noteView = NoteView()
 
@@ -31,23 +33,20 @@ final class NoteViewController: UIViewController, NoteDisplayLogic {
     func displayNote(_ viewModel: NoteModel.SingleNote.ViewModel) {
         switch viewModel {
         case .success(note: let note):
-            noteView.dateLabel.text = note.date
-            noteView.headerTextField.text = note.header
-            noteView.bodyTextView.text = note.body
+            self.note = note
+            setupUI()
         case .failure(alert: let alert):
             showAlert(
                 title: alert.title,
                 message: alert.message,
                 actionTitle: alert.actionTitle
             )
-            isEditing.toggle()
         }
     }
 
     // MARK: - Controller lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
         interactor.requestNote(NoteModel.SingleNote.Request())
         setEditing(true, animated: true)
     }
@@ -74,6 +73,7 @@ final class NoteViewController: UIViewController, NoteDisplayLogic {
     // MARK: - Methods
     private func setupUI() {
         view = noteView
+        noteView.configure(with: note)
         navigationItem.leftBarButtonItem = navigationLeftBarButton
         navigationItem.rightBarButtonItem = editButtonItem
     }

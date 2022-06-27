@@ -1,7 +1,7 @@
 import UIKit
 
-class NoteView: UIView {
-    // MARK: - Props
+class NoteView: UIView, ConfigurableView {
+    // MARK: - UI Components
     private lazy var stackView: UIStackView = {
         $0.addArrangedSubview(dateLabel)
         $0.addArrangedSubview(headerTextField)
@@ -37,6 +37,12 @@ class NoteView: UIView {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func configure(with model: NoteView.Model) {
+        dateLabel.text = model.date
+        headerTextField.text = model.header
+        bodyTextView.text = model.body
     }
 
     // MARK: - Methods

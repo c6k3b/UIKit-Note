@@ -24,3 +24,7 @@ protocol NoteDisplayLogic: AnyObject {
 protocol NoteRoutingLogic {
     func route()
 }
+
+protocol ConfigurableView {
+    func configure(with model: NoteView.Model)
+}
