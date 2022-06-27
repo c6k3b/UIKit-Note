@@ -2,17 +2,18 @@ import UIKit
 
 final class NoteViewController: UIViewController, NoteDisplayLogic {
     // MARK: - Props
+    private let interactor: NoteBusinessLogic
+    let router: (NoteRoutingLogic & NoteDataPassing)
+
+    private let noteView = NoteView()
+
+    // MARK: - UI Components
     private lazy var navigationLeftBarButton: UIBarButtonItem = {
         $0.image = Styles.NoteVC.backBtnImg
         $0.target = self
         $0.action = #selector(didNavigationLeftBarButtonTapped)
         return $0
     }(UIBarButtonItem())
-
-    private let noteView = NoteView()
-
-    private let interactor: NoteBusinessLogic
-    let router: (NoteRoutingLogic & NoteDataPassing)
 
     // MARK: - Initializers
     init(interactor: NoteBusinessLogic, router: NoteRoutingLogic & NoteDataPassing) {
@@ -27,7 +28,7 @@ final class NoteViewController: UIViewController, NoteDisplayLogic {
     }
 
     // MARK: - DisplayLogic
-    func displayNote(_ viewModel: NoteModel.PresentNote.ViewModel) {
+    func displayNote(_ viewModel: NoteModel.SingleNote.ViewModel) {
         noteView.dateLabel.text = viewModel.date
         noteView.headerTextField.text = viewModel.header
         noteView.bodyTextView.text = viewModel.body
@@ -46,7 +47,7 @@ final class NoteViewController: UIViewController, NoteDisplayLogic {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        interactor.requestNote(NoteModel.PresentNote.Request())
+        interactor.requestNote(NoteModel.SingleNote.Request())
         setEditing(true, animated: true)
     }
 
@@ -81,7 +82,7 @@ final class NoteViewController: UIViewController, NoteDisplayLogic {
     }
 
     private func save() {
-        let request = NoteModel.SaveNote.Request(
+        let request = NoteModel.NoteSaving.Request(
             header: noteView.headerTextField.text,
             body: noteView.bodyTextView.text
         )

@@ -2,6 +2,12 @@ import UIKit
 
 final class ListViewController: UIViewController, ListDisplayLogic {
     // MARK: - Props
+    private let interactor: ListBusinessLogic
+    let router: (ListRoutingLogic & ListDataPassing)
+
+    var notes: [NoteCell.Model] = []
+
+    // MARK: - UI Components
     private let activityIndicator = ActivityIndicator(frame: .zero)
 
     lazy var table: UITableView = {
@@ -14,10 +20,6 @@ final class ListViewController: UIViewController, ListDisplayLogic {
         $0.addTarget(self, action: #selector(didFloatingButtonTapped), for: .touchUpInside)
         return $0
     }(FloatingButton())
-
-    private let interactor: ListBusinessLogic
-    let router: (ListRoutingLogic & ListDataPassing)
-    var notes: [NoteCell.Model] = []
 
     // MARK: - Initializers
     init(interactor: ListBusinessLogic, router: ListRoutingLogic & ListDataPassing) {

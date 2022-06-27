@@ -7,19 +7,19 @@ protocol NoteDataStore {
 }
 
 protocol NoteBusinessLogic {
-    func requestNote(_ request: NoteModel.PresentNote.Request)
-    func saveNote(_ request: NoteModel.SaveNote.Request)
+    func requestNote(_ request: NoteModel.SingleNote.Request)
+    func saveNote(_ request: NoteModel.NoteSaving.Request)
 }
 
 protocol NoteWorkerLogic {}
 
 protocol NotePresentationLogic {
-    func presentNote(_ response: NoteModel.PresentNote.Response)
+    func presentNote(_ response: NoteModel.SingleNote.Response)
     func presentEmptyFieldsAlert(_ response: NoteModel.Alert.Response)
 }
 
 protocol NoteDisplayLogic: AnyObject {
-    func displayNote(_ viewModel: NoteModel.PresentNote.ViewModel)
+    func displayNote(_ viewModel: NoteModel.SingleNote.ViewModel)
     func displayEmptyFieldsAlert(_ viewModel: NoteModel.Alert.ViewModel)
 }
 

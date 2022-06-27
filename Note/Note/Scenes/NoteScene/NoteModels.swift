@@ -1,5 +1,5 @@
 enum NoteModel {
-    enum PresentNote {
+    enum SingleNote {
         struct Request {}
         struct Response {
             let note: Note
@@ -11,7 +11,7 @@ enum NoteModel {
         }
     }
 
-    enum SaveNote {
+    enum NoteSaving {
         struct Request {
             let header: String?
             let body: String?

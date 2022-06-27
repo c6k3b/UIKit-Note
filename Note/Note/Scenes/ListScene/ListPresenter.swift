@@ -1,8 +1,10 @@
 import UIKit
 
 final class ListPresenter: ListPresentationLogic {
+    // MARK: - Props
     weak var viewController: ListDisplayLogic?
 
+    // MARK: - Methods
     func presentNotes(_ response: ListModel.NotesList.Response) {
         var presentedNotes: [NoteCell.Model] = []
         for note in response.notes {

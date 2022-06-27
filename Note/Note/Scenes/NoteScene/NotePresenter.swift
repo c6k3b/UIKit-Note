@@ -1,10 +1,13 @@
 import Foundation
 
 final class NotePresenter: NotePresentationLogic {
+    // MARK: - Props
     weak var view: NoteDisplayLogic?
 
-    func presentNote(_ response: NoteModel.PresentNote.Response) {
-        let viewModel = NoteModel.PresentNote.ViewModel(
+    // MARK: - Methods
+    func presentNote(_ response: NoteModel.SingleNote.Response) {
+
+        let viewModel = NoteModel.SingleNote.ViewModel(
             date: (response.note.date ?? Date()).getFormattedDate(
                 format: Styles.DateFormat.inView
             ),
