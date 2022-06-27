@@ -3,15 +3,21 @@ import Foundation
 
 final class ListPresenterMock: ListPresentationLogic {
     var presenterWasCalled = false
-    var responseMock: ListModel.PresentList.Response?
-    var fetchResponse: (() -> Void)?
+    var responseMock: ListModel.NotesList.Response?
+    var responseNotesRemovingMock: ListModel.NotesRemoving.Response?
 
-    func presentNotes(_ response: ListModel.PresentList.Response) {
+    var fetchResponse: (() -> Void)?
+    var fetchNotesRemoving: (() -> Void)?
+
+    func presentNotes(_ response: ListModel.NotesList.Response) {
         presenterWasCalled = true
         responseMock = response
         fetchResponse?()
     }
 
-    func presentNoSelectionAlert(_ response: ListModel.Alert.Response) {
+    func presentNotesRemoving(_ response: ListModel.NotesRemoving.Response) {
+        presenterWasCalled = true
+        responseNotesRemovingMock = response
+        fetchNotesRemoving?()
     }
 }

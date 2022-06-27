@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		00079B122869E5F400891305 /* NoteViewModelExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00079B112869E5F400891305 /* NoteViewModelExt.swift */; };
 		00079B32286A088900891305 /* NotePresenterMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00079B23286A088900891305 /* NotePresenterMock.swift */; };
-		00079B33286A088900891305 /* NoteStorageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00079B24286A088900891305 /* NoteStorageMock.swift */; };
 		00079B34286A088900891305 /* NoteViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00079B25286A088900891305 /* NoteViewControllerTests.swift */; };
 		00079B35286A088900891305 /* NotePresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00079B26286A088900891305 /* NotePresenterTests.swift */; };
 		00079B36286A088900891305 /* NoteRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00079B27286A088900891305 /* NoteRouterTests.swift */; };
@@ -72,7 +71,6 @@
 		00079B112869E5F400891305 /* NoteViewModelExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewModelExt.swift; sourceTree = "<group>"; };
 		00079B17286A083D00891305 /* NoteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NoteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00079B23286A088900891305 /* NotePresenterMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotePresenterMock.swift; sourceTree = "<group>"; };
-		00079B24286A088900891305 /* NoteStorageMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteStorageMock.swift; sourceTree = "<group>"; };
 		00079B25286A088900891305 /* NoteViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteViewControllerTests.swift; sourceTree = "<group>"; };
 		00079B26286A088900891305 /* NotePresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotePresenterTests.swift; sourceTree = "<group>"; };
 		00079B27286A088900891305 /* NoteRouterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteRouterTests.swift; sourceTree = "<group>"; };
@@ -171,10 +169,10 @@
 			isa = PBXGroup;
 			children = (
 				00079B22286A088900891305 /* Mocks */,
-				00079B25286A088900891305 /* NoteViewControllerTests.swift */,
 				00079B26286A088900891305 /* NotePresenterTests.swift */,
-				00079B27286A088900891305 /* NoteRouterTests.swift */,
 				00079B28286A088900891305 /* NoteInteractorTests.swift */,
+				00079B27286A088900891305 /* NoteRouterTests.swift */,
+				00079B25286A088900891305 /* NoteViewControllerTests.swift */,
 			);
 			path = NoteScene;
 			sourceTree = "<group>";
@@ -183,7 +181,6 @@
 			isa = PBXGroup;
 			children = (
 				00079B23286A088900891305 /* NotePresenterMock.swift */,
-				00079B24286A088900891305 /* NoteStorageMock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -192,11 +189,11 @@
 			isa = PBXGroup;
 			children = (
 				00079B2A286A088900891305 /* Mocks */,
-				00079B2D286A088900891305 /* ListRouterTests.swift */,
-				00079B2E286A088900891305 /* ListViewControllerTests.swift */,
 				00079B2F286A088900891305 /* ListPresenterTests.swift */,
 				00079B30286A088900891305 /* ListInteractorTests.swift */,
 				00079B31286A088900891305 /* ListWorkerTests.swift */,
+				00079B2D286A088900891305 /* ListRouterTests.swift */,
+				00079B2E286A088900891305 /* ListViewControllerTests.swift */,
 			);
 			path = ListScene;
 			sourceTree = "<group>";
@@ -477,7 +474,6 @@
 				00079B3B286A088900891305 /* ListViewControllerTests.swift in Sources */,
 				00079B3D286A088900891305 /* ListInteractorTests.swift in Sources */,
 				00079B3E286A088900891305 /* ListWorkerTests.swift in Sources */,
-				00079B33286A088900891305 /* NoteStorageMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
