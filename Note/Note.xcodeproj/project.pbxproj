@@ -201,8 +201,8 @@
 		00079B2A286A088900891305 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
-				00079B2B286A088900891305 /* ListWorkerMock.swift */,
 				00079B2C286A088900891305 /* ListPresenterMock.swift */,
+				00079B2B286A088900891305 /* ListWorkerMock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";

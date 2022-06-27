@@ -22,8 +22,13 @@ final class ListInteractorTests: XCTestCase {
     }
 
     func testWorkerWasCalled() {
+        let expectation = expectation(description: "interactor should call the worker method")
+        workerMock.fetchResponse = {
+            XCTAssertTrue(self.workerMock.getNotesWasCalled)
+            expectation.fulfill()
+        }
         sut.fetchNotes(.init())
-        XCTAssertTrue(workerMock.getNotesWasCalled, "interactor should call the worker method")
+        wait(for: [expectation], timeout: 1)
     }
 
     func testPresenterWasCalled() {
@@ -39,8 +44,6 @@ final class ListInteractorTests: XCTestCase {
     func testWorkerResponse() {
         let expectation = expectation(description: "should send response to presenter")
         presenterMock.fetchResponse = {
-            XCTAssertTrue(self.presenterMock.presenterWasCalled)
-            XCTAssertTrue(self.workerMock.getNotesWasCalled)
             XCTAssertTrue(self.presenterMock.responseMock?.notes != nil)
             expectation.fulfill()
         }
