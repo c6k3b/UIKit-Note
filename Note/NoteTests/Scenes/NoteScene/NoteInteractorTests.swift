@@ -7,6 +7,8 @@ final class NoteInteractorTests: XCTestCase {
     var presenterMock: NotePresenterMock!
     var workerMock: NoteWorkerMock!
 
+    var note: NoteView.Model? = NoteView.Model(header: "", body: "", date: "")
+
     // MARK: - Test Lifecycle
     override func setUp() {
         super.setUp()
@@ -23,12 +25,13 @@ final class NoteInteractorTests: XCTestCase {
     }
 
     // MARK: - Test Methods
-    func testPresenterWasCalled() {
+    // Present
+    func testPresenterRequestNoteWasCalled() {
         sut.requestNote(.init())
         XCTAssert(presenterMock.presenterWasCalled, "interactor should call presenter method")
     }
 
-    func testPresenterResponse() {
+    func testPresenterRequestNoteResponse() {
         sut.requestNote(.init())
 
         presenterMock.presentNote(
@@ -39,11 +42,24 @@ final class NoteInteractorTests: XCTestCase {
         XCTAssertTrue(presenterMock.responseMock?.note.header == "test")
     }
 
-    func testPresenterResponseFalse() {
+    func testPresenterRequestNoteResponseFalse() {
         sut.requestNote(.init())
 
         presenterMock.presentNote(.init(note: Note()))
         XCTAssertTrue(presenterMock.presenterWasCalled, "should not send response to presenter")
         XCTAssertTrue(presenterMock.responseMock?.note.header == nil)
+    }
+
+    // Save
+    func testPresenterSaveNoteWasCalled() {
+        sut.saveNote(.init(note: note!))
+        XCTAssert(presenterMock.presenterWasCalled, "interactor should call presenter method")
+    }
+
+    func testPresenterSaveNoteResponse() {
+        sut.saveNote(.init(note: note!))
+
+        XCTAssertTrue(presenterMock.presenterWasCalled, "should send response to presenter")
+        XCTAssertTrue(presenterMock.responseMockSaving == nil)
     }
 }
