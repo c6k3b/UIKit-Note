@@ -2,11 +2,13 @@ import XCTest
 @testable import Note
 
 final class ListInteractorTests: XCTestCase {
+    // MARK: - Props
     var sut: ListBusinessLogic!
 
     var presenterMock: ListPresenterMock!
     var workerMock: ListWorkerMock!
 
+    // MARK: - Test Lifecycle
     override func setUp() {
         super.setUp()
         presenterMock = ListPresenterMock()
@@ -21,6 +23,7 @@ final class ListInteractorTests: XCTestCase {
         super.tearDown()
     }
 
+    // MARK: - Test Methods
     func testWorkerWasCalled() {
         let expectation = expectation(description: "interactor should call the worker method")
         workerMock.fetchResponse = {
@@ -41,10 +44,31 @@ final class ListInteractorTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
-    func testWorkerResponse() {
+    func testPresenterResponse() {
         let expectation = expectation(description: "should send response to presenter")
+        workerMock.result = [
+            Note(header: "test", body: "", date: Date(), icon: Data()),
+            Note()
+        ]
         presenterMock.fetchResponse = {
-            XCTAssertTrue(self.presenterMock.responseMock?.notes != nil)
+            XCTAssertTrue(self.workerMock.getNotesWasCalled)
+            XCTAssertTrue(self.presenterMock.presenterWasCalled)
+            XCTAssertTrue(self.presenterMock.responseMock?.notes.count == 2)
+            XCTAssertTrue(self.presenterMock.responseMock?.notes[0].header == "test")
+            expectation.fulfill()
+        }
+        sut.fetchNotes(.init())
+        wait(for: [expectation], timeout: 1)
+    }
+
+    func testPresenterResponseFalse() {
+        let expectation = expectation(description: "should not send response to presenter")
+
+        presenterMock.fetchResponse = {
+            XCTAssertTrue(self.workerMock.getNotesWasCalled)
+            XCTAssertTrue(self.presenterMock.presenterWasCalled)
+            XCTAssertTrue(self.presenterMock.responseMock?.notes.count == 1)
+            XCTAssertTrue(self.presenterMock.responseMock?.notes[0].header == "WorkerNote")
             expectation.fulfill()
         }
         sut.fetchNotes(.init())

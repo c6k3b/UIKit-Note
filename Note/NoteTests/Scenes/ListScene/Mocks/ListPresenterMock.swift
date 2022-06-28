@@ -7,7 +7,7 @@ final class ListPresenterMock: ListPresentationLogic {
     var responseNotesRemovingMock: ListModel.NotesRemoving.Response?
 
     var fetchResponse: (() -> Void)?
-    var fetchNotesRemoving: (() -> Void)?
+    var fetchResponseNotesRemoving: (() -> Void)?
 
     func presentNotes(_ response: ListModel.NotesList.Response) {
         presenterWasCalled = true
@@ -18,6 +18,6 @@ final class ListPresenterMock: ListPresentationLogic {
     func presentNotesRemoving(_ response: ListModel.NotesRemoving.Response) {
         presenterWasCalled = true
         responseNotesRemovingMock = response
-        fetchNotesRemoving?()
+        fetchResponseNotesRemoving?()
     }
 }

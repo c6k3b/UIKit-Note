@@ -45,6 +45,11 @@
 		005E373A2857A6CC00222370 /* ListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 005E37392857A6CC00222370 /* ListRouter.swift */; };
 		005E373C2857A70D00222370 /* ListWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 005E373B2857A70D00222370 /* ListWorker.swift */; };
 		005E373E2857A72D00222370 /* ListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 005E373D2857A72D00222370 /* ListPresenter.swift */; };
+		0086E550286AA919001715EE /* ListInteractorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0086E54F286AA919001715EE /* ListInteractorMock.swift */; };
+		0086E552286AA985001715EE /* ListDataStoreMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0086E551286AA985001715EE /* ListDataStoreMock.swift */; };
+		0086E554286AA9A0001715EE /* ListRouterMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0086E553286AA9A0001715EE /* ListRouterMock.swift */; };
+		0086E556286AA9C0001715EE /* ListViewControllerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0086E555286AA9C0001715EE /* ListViewControllerMock.swift */; };
+		0086E558286ABF93001715EE /* NoteWorkerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0086E557286ABF93001715EE /* NoteWorkerMock.swift */; };
 		00A788F42859C48300CE980A /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A788F32859C48300CE980A /* ActivityIndicator.swift */; };
 		00A788F62859CD3300CE980A /* NotesTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A788F52859CD3300CE980A /* NotesTableView.swift */; };
 		00A788F92859D28A00CE980A /* NoteStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A788F82859D28A00CE980A /* NoteStackView.swift */; };
@@ -107,6 +112,11 @@
 		005E37392857A6CC00222370 /* ListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRouter.swift; sourceTree = "<group>"; };
 		005E373B2857A70D00222370 /* ListWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListWorker.swift; sourceTree = "<group>"; };
 		005E373D2857A72D00222370 /* ListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListPresenter.swift; sourceTree = "<group>"; };
+		0086E54F286AA919001715EE /* ListInteractorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListInteractorMock.swift; sourceTree = "<group>"; };
+		0086E551286AA985001715EE /* ListDataStoreMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDataStoreMock.swift; sourceTree = "<group>"; };
+		0086E553286AA9A0001715EE /* ListRouterMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListRouterMock.swift; sourceTree = "<group>"; };
+		0086E555286AA9C0001715EE /* ListViewControllerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewControllerMock.swift; sourceTree = "<group>"; };
+		0086E557286ABF93001715EE /* NoteWorkerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteWorkerMock.swift; sourceTree = "<group>"; };
 		00A788F32859C48300CE980A /* ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		00A788F52859CD3300CE980A /* NotesTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesTableView.swift; sourceTree = "<group>"; };
 		00A788F82859D28A00CE980A /* NoteStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteStackView.swift; sourceTree = "<group>"; };
@@ -181,6 +191,7 @@
 			isa = PBXGroup;
 			children = (
 				00079B23286A088900891305 /* NotePresenterMock.swift */,
+				0086E557286ABF93001715EE /* NoteWorkerMock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -203,6 +214,10 @@
 			children = (
 				00079B2C286A088900891305 /* ListPresenterMock.swift */,
 				00079B2B286A088900891305 /* ListWorkerMock.swift */,
+				0086E54F286AA919001715EE /* ListInteractorMock.swift */,
+				0086E553286AA9A0001715EE /* ListRouterMock.swift */,
+				0086E555286AA9C0001715EE /* ListViewControllerMock.swift */,
+				0086E551286AA985001715EE /* ListDataStoreMock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -464,6 +479,7 @@
 			files = (
 				00079B39286A088900891305 /* ListPresenterMock.swift in Sources */,
 				00079B3A286A088900891305 /* ListRouterTests.swift in Sources */,
+				0086E550286AA919001715EE /* ListInteractorMock.swift in Sources */,
 				00079B35286A088900891305 /* NotePresenterTests.swift in Sources */,
 				00079B36286A088900891305 /* NoteRouterTests.swift in Sources */,
 				00079B32286A088900891305 /* NotePresenterMock.swift in Sources */,
@@ -471,9 +487,13 @@
 				00079B34286A088900891305 /* NoteViewControllerTests.swift in Sources */,
 				00079B37286A088900891305 /* NoteInteractorTests.swift in Sources */,
 				00079B38286A088900891305 /* ListWorkerMock.swift in Sources */,
+				0086E554286AA9A0001715EE /* ListRouterMock.swift in Sources */,
 				00079B3B286A088900891305 /* ListViewControllerTests.swift in Sources */,
+				0086E556286AA9C0001715EE /* ListViewControllerMock.swift in Sources */,
 				00079B3D286A088900891305 /* ListInteractorTests.swift in Sources */,
 				00079B3E286A088900891305 /* ListWorkerTests.swift in Sources */,
+				0086E558286ABF93001715EE /* NoteWorkerMock.swift in Sources */,
+				0086E552286AA985001715EE /* ListDataStoreMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

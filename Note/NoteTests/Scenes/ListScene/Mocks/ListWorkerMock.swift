@@ -3,7 +3,7 @@ import Foundation
 
 final class ListWorkerMock: ListWorkerLogic {
     var getNotesWasCalled = false
-    var result: [Note]?
+    var result: [Note]? = [Note(header: "WorkerNote", body: "", date: Date(), icon: Data())]
 
     var fetchResponse: (() -> Void)?
 
