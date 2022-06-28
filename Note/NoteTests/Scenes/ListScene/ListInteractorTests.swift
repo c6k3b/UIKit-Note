@@ -7,7 +7,7 @@ final class ListInteractorTests: XCTestCase {
     var dataStoreMock: ListDataStoreMock!
     var presenterMock: ListPresenterMock!
     var workerMock: ListWorkerMock!
-    var notes: [Note] = [Note(), Note()]
+
     // MARK: - Test Lifecycle
     override func setUp() {
         super.setUp()
