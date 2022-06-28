@@ -25,12 +25,12 @@ final class NoteInteractorTests: XCTestCase {
     }
 
     // MARK: - Test Methods
-    // Present
-    func testPresenterRequestNoteWasCalled() {
+    func testPresenterWasCalled() {
         sut.requestNote(.init())
         XCTAssert(presenterMock.presenterWasCalled, "interactor should call presenter method")
     }
 
+    // Present
     func testPresenterRequestNoteResponse() {
         sut.requestNote(.init())
 
@@ -51,11 +51,6 @@ final class NoteInteractorTests: XCTestCase {
     }
 
     // Save
-    func testPresenterSaveNoteWasCalled() {
-        sut.saveNote(.init(note: note!))
-        XCTAssert(presenterMock.presenterWasCalled, "interactor should call presenter method")
-    }
-
     func testPresenterSaveNoteResponse() {
         sut.saveNote(.init(note: note!))
 

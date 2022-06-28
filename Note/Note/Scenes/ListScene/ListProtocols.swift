@@ -5,7 +5,7 @@ protocol ListDataPassing {
 }
 
 protocol ListDataStore {
-    var notes: [Note] { get }
+    var notes: [Note] { get set }
     var note: Note { get set }
 }
 

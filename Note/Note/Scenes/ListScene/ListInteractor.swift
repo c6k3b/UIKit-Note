@@ -4,8 +4,8 @@ final class ListInteractor: ListBusinessLogic, ListDataStore {
     // MARK: - Props
     private let presenter: ListPresentationLogic
     private let worker: ListWorkerLogic
-    private(set) var notes: [Note] = []
     private(set) var index: Int?
+    var notes: [Note] = []
     var note: Note = Note()
 
     // MARK: - Initializers

@@ -3,14 +3,15 @@ import XCTest
 
 final class ListInteractorTests: XCTestCase {
     // MARK: - Props
-    var sut: ListBusinessLogic!
-
+    var sut: (ListBusinessLogic & ListDataStore)!
+    var dataStoreMock: ListDataStoreMock!
     var presenterMock: ListPresenterMock!
     var workerMock: ListWorkerMock!
-
+    var notes: [Note] = [Note(), Note()]
     // MARK: - Test Lifecycle
     override func setUp() {
         super.setUp()
+        dataStoreMock = ListDataStoreMock()
         presenterMock = ListPresenterMock()
         workerMock = ListWorkerMock()
         sut = ListInteractor(presenter: presenterMock, worker: workerMock)
@@ -18,6 +19,7 @@ final class ListInteractorTests: XCTestCase {
 
     override func tearDown() {
         sut = nil
+        dataStoreMock = nil
         presenterMock = nil
         workerMock = nil
         super.tearDown()
@@ -44,7 +46,8 @@ final class ListInteractorTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
-    func testPresenterResponse() {
+    // Fetch Notes
+    func testPresenterFetchNotesResponse() {
         let expectation = expectation(description: "should send response to presenter")
         workerMock.result = [
             Note(header: "test", body: "", date: Date(), icon: Data()),
@@ -61,7 +64,7 @@ final class ListInteractorTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
-    func testPresenterResponseFalse() {
+    func testPresenterFetchNotesResponseFalse() {
         let expectation = expectation(description: "should not send response to presenter")
 
         presenterMock.fetchResponse = {
@@ -73,5 +76,23 @@ final class ListInteractorTests: XCTestCase {
         }
         sut.fetchNotes(.init())
         wait(for: [expectation], timeout: 1)
+    }
+
+    // Perform Notes Removing
+    func testPresenterPerformNotesRemovingResponse() {
+        sut.notes = dataStoreMock.notes
+        sut.performNotesRemoving(.init(indicesToRemove: [0]))
+
+        XCTAssertTrue(self.dataStoreMock.dataStoreWasCalled)
+        XCTAssertTrue(self.presenterMock.presenterWasCalled)
+        XCTAssertTrue(self.presenterMock.responseNotesRemovingMock?.indicesToRemove == [0])
+    }
+
+    func testPresenterPerformNotesRemovingResponseFalse() {
+        sut.performNotesRemoving(.init(indicesToRemove: []))
+
+        XCTAssertTrue(self.dataStoreMock.dataStoreWasCalled)
+        XCTAssertTrue(self.presenterMock.presenterWasCalled)
+        XCTAssertTrue(self.presenterMock.responseNotesRemovingMock?.indicesToRemove.isEmpty != nil)
     }
 }
