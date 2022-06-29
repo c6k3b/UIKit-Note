@@ -3,6 +3,6 @@ import Foundation
 
 final class ListDataStoreMock: ListDataStore {
     var dataStoreWasCalled = true
-    var notes: [Note] = [Note(), Note()]
-    var note: Note = Note()
+    var notes: [Note] = [Note(header: "tested", body: "", date: Date(), icon: Data()), Note()]
+    var note: Note = Note(header: "selected", body: "", date: Date(), icon: Data())
 }

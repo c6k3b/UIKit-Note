@@ -95,4 +95,24 @@ final class ListInteractorTests: XCTestCase {
         XCTAssertTrue(self.presenterMock.presenterWasCalled)
         XCTAssertTrue(self.presenterMock.responseNotesRemovingMock?.indicesToRemove.isEmpty != nil)
     }
+
+    // Store Selected Note
+    func testStoreSelectedNoteTrue() {
+        let index = 0
+        sut.notes = dataStoreMock.notes
+        sut.note = dataStoreMock.note
+
+        sut.storeSelectedNote(index)
+        XCTAssertTrue(dataStoreMock.dataStoreWasCalled)
+        XCTAssertTrue(sut.note.header == "tested")
+    }
+
+    func testStoreSelectedNoteFalse() {
+        sut.notes = dataStoreMock.notes
+        sut.note = dataStoreMock.note
+
+        sut.storeSelectedNote(nil)
+        XCTAssertTrue(dataStoreMock.dataStoreWasCalled)
+        XCTAssertTrue(sut.note.header == "selected")
+    }
 }
