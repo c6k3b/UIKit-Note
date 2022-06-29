@@ -21,16 +21,6 @@ enum ListModel {
             case failure(alert: Alert)
         }
     }
-
-    enum SelectedNote {
-        struct Request {
-            let noteIndex: Int?
-        }
-        struct Response {
-            let note: Note
-        }
-        struct ViewModel {}
-    }
 }
 
 extension ListModel.NotesRemoving.ViewModel {
