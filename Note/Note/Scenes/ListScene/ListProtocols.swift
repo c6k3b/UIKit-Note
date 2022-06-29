@@ -11,9 +11,8 @@ protocol ListDataStore {
 
 protocol ListBusinessLogic {
     func fetchNotes(_ request: ListModel.NotesList.Request)
-    func update()
-    func getSelectedNoteIndex(_ index: Int?)
     func performNotesRemoving(_ request: ListModel.NotesRemoving.Request)
+    func storeSelectedNote(_ index: Int?)
 }
 
 protocol ListWorkerLogic {
