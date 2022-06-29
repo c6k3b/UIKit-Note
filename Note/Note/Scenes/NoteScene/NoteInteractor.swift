@@ -25,7 +25,7 @@ final class NoteInteractor: NoteBusinessLogic, NoteDataStore {
         note.date = Date()
         note.header = request.note.header
         note.body = request.note.body
-        
+
         let response = NoteModel.SingleNote.Response(note: note)
         presenter.presentNote(response)
     }

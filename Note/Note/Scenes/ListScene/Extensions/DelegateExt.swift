@@ -19,7 +19,8 @@ extension ListViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if !isEditing {
-            navigate(noteIndexToReturn: indexPath.section)
+            interactor.storeSelectedNote(indexPath.section)
+            navigate()
         }
     }
 }

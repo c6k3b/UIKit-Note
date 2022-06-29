@@ -4,8 +4,8 @@ final class ListInteractor: ListBusinessLogic, ListDataStore {
     // MARK: - Props
     private let presenter: ListPresentationLogic
     private let worker: ListWorkerLogic
-    private(set) var notes: [Note] = []
     private(set) var index: Int?
+    var notes: [Note] = []
     var note: Note = Note()
 
     // MARK: - Initializers
@@ -22,6 +22,7 @@ final class ListInteractor: ListBusinessLogic, ListDataStore {
                 if $0 != nil { self.notes = $0! }
             }
             DispatchQueue.main.async {
+                self.notesListUpdate()
                 let response = ListModel.NotesList.Response(notes: self.notes)
                 self.presenter.presentNotes(response)
             }
@@ -35,24 +36,22 @@ final class ListInteractor: ListBusinessLogic, ListDataStore {
         )
     }
 
-    func update() {
+    func storeSelectedNote(_ index: Int?) {
+        if let index = index {
+            self.note = notes[index]
+            self.index = index
+        }
+    }
+}
+
+private extension ListInteractor {
+    private func notesListUpdate() {
         if let index = index {
             notes[index] = note
         } else if index == nil && ((note.header != nil) || (note.body != nil)) {
             notes.append(note)
         }
-
-        let response = ListModel.NotesList.Response(notes: self.notes)
-        presenter.presentNotes(response)
-
         index = nil
         note = Note()
-    }
-
-    func getSelectedNoteIndex(_ index: Int?) {
-        if let index = index {
-            self.note = notes[index]
-            self.index = index
-        }
     }
 }

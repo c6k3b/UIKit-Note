@@ -2,7 +2,7 @@ import UIKit
 
 final class ListViewController: UIViewController, ListDisplayLogic {
     // MARK: - Props
-    private let interactor: ListBusinessLogic
+    let interactor: ListBusinessLogic
     let router: (ListRoutingLogic & ListDataPassing)
 
     var notes: [NoteCell.Model] = []
@@ -58,14 +58,13 @@ final class ListViewController: UIViewController, ListDisplayLogic {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        interactor.fetchNotes(ListModel.NotesList.Request())
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         floatingButton.shakeOnAppear()
         floatingButton.layer.opacity = 1
-        self.interactor.update()
+        self.interactor.fetchNotes(ListModel.NotesList.Request())
     }
 
     override func setEditing(_ editing: Bool, animated: Bool) {
@@ -114,23 +113,6 @@ final class ListViewController: UIViewController, ListDisplayLogic {
         }
     }
 
-    func navigate(noteIndexToReturn: Int? = nil) {
-        table.isUserInteractionEnabled = false
-
-        interactor.getSelectedNoteIndex(noteIndexToReturn)
-
-        CATransaction.begin()
-        CATransaction.setCompletionBlock {
-            self.router.route()
-            self.table.isUserInteractionEnabled = true
-        }
-        floatingButton.shakeOnDisappear()
-        UIView.animate(withDuration: 0.2, delay: 0.6, options: []) {
-            self.floatingButton.layer.opacity = 0
-        }
-        CATransaction.commit()
-    }
-
     func remove(indices: [Int]?, cells: IndexSet?) {
         if let cells = cells,
         let indices = indices {
@@ -145,5 +127,19 @@ final class ListViewController: UIViewController, ListDisplayLogic {
                 ListModel.NotesRemoving.Request(indicesToRemove: [])
             )
         }
+    }
+
+    func navigate() {
+        table.isUserInteractionEnabled = false
+        CATransaction.begin()
+        CATransaction.setCompletionBlock {
+            self.router.route()
+            self.table.isUserInteractionEnabled = true
+        }
+        floatingButton.shakeOnDisappear()
+        UIView.animate(withDuration: 0.2, delay: 0.6, options: []) {
+            self.floatingButton.layer.opacity = 0
+        }
+        CATransaction.commit()
     }
 }
