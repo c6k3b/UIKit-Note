@@ -60,6 +60,7 @@
 		00C85EF6286338E200A66E7F /* ListAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C85EF5286338E200A66E7F /* ListAssembly.swift */; };
 		00C85EF92863391600A66E7F /* NoteAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C85EF82863391600A66E7F /* NoteAssembly.swift */; };
 		00D2AC8E285D8FDF0020E9F3 /* AlertExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D2AC8D285D8FDF0020E9F3 /* AlertExt.swift */; };
+		00FB0B46286CCFE400DB2A84 /* NoteViewControllerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FB0B45286CCFE400DB2A84 /* NoteViewControllerMock.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -129,6 +130,7 @@
 		00C85EF5286338E200A66E7F /* ListAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAssembly.swift; sourceTree = "<group>"; };
 		00C85EF82863391600A66E7F /* NoteAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteAssembly.swift; sourceTree = "<group>"; };
 		00D2AC8D285D8FDF0020E9F3 /* AlertExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertExt.swift; sourceTree = "<group>"; };
+		00FB0B45286CCFE400DB2A84 /* NoteViewControllerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewControllerMock.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +194,7 @@
 			children = (
 				00079B23286A088900891305 /* NotePresenterMock.swift */,
 				0086E557286ABF93001715EE /* NoteWorkerMock.swift */,
+				00FB0B45286CCFE400DB2A84 /* NoteViewControllerMock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -483,6 +486,7 @@
 				00079B35286A088900891305 /* NotePresenterTests.swift in Sources */,
 				00079B36286A088900891305 /* NoteRouterTests.swift in Sources */,
 				00079B32286A088900891305 /* NotePresenterMock.swift in Sources */,
+				00FB0B46286CCFE400DB2A84 /* NoteViewControllerMock.swift in Sources */,
 				00079B3C286A088900891305 /* ListPresenterTests.swift in Sources */,
 				00079B34286A088900891305 /* NoteViewControllerTests.swift in Sources */,
 				00079B37286A088900891305 /* NoteInteractorTests.swift in Sources */,

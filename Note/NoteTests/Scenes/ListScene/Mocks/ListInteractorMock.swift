@@ -7,12 +7,9 @@ final class ListInteractorMock: ListBusinessLogic {
     func fetchNotes(_ request: ListModel.NotesList.Request) {
     }
 
-    func update() {
+    func performNotesRemoving(_ request: ListModel.NotesRemoving.Request) {
     }
 
     func storeSelectedNote(_ index: Int?) {
-    }
-
-    func performNotesRemoving(_ request: ListModel.NotesRemoving.Request) {
     }
 }
