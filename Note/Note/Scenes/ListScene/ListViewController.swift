@@ -64,7 +64,7 @@ final class ListViewController: UIViewController, ListDisplayLogic {
         super.viewWillAppear(animated)
         floatingButton.shakeOnAppear()
         floatingButton.layer.opacity = 1
-        self.interactor.fetchNotes(ListModel.NotesList.Request())
+        showNotesList()
     }
 
     override func setEditing(_ editing: Bool, animated: Bool) {
@@ -98,7 +98,7 @@ final class ListViewController: UIViewController, ListDisplayLogic {
         view.addSubview(activityIndicator)
     }
 
-    @objc private func didFloatingButtonTapped() {
+    @objc func didFloatingButtonTapped() {
         if isEditing {
             guard let indexPath = table.indexPathsForSelectedRows?.sorted(by: >) else {
                 return remove(indices: nil, cells: nil)
@@ -111,6 +111,10 @@ final class ListViewController: UIViewController, ListDisplayLogic {
         } else {
             navigate()
         }
+    }
+
+    func showNotesList() {
+        interactor.fetchNotes(ListModel.NotesList.Request())
     }
 
     func remove(indices: [Int]?, cells: IndexSet?) {
@@ -126,6 +130,12 @@ final class ListViewController: UIViewController, ListDisplayLogic {
             interactor.performNotesRemoving(
                 ListModel.NotesRemoving.Request(indicesToRemove: [])
             )
+        }
+    }
+
+    func storeSelectedNote(_ index: Int?) {
+        if let index = index {
+            interactor.storeSelectedNote(index)
         }
     }
 

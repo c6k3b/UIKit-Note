@@ -20,6 +20,7 @@ protocol ListWorkerLogic {
 }
 
 protocol ListPresentationLogic {
+    var viewController: ListDisplayLogic? { get set }
     func presentNotes(_ response: ListModel.NotesList.Response)
     func presentNotesRemoving(_ response: ListModel.NotesRemoving.Response)
 }
