@@ -4,54 +4,56 @@ import XCTest
 final class ListPresenterTests: XCTestCase {
     // MARK: - Props
     private var sut: ListPresenter!
-    private var viewController: ListViewControllerSpy!
+    private var viewControllerMock: ListViewControllerMock!
 
     // MARK: - Lifecycle
     override func setUp() {
         super.setUp()
-        viewController = ListViewControllerSpy()
+        viewControllerMock = ListViewControllerMock()
         sut = ListPresenter()
-        sut.viewController = viewController
+        sut.viewController = viewControllerMock
     }
 
     override func tearDown() {
         sut = nil
-        viewController = nil
+        viewControllerMock = nil
         super.tearDown()
     }
 
     // MARK: - Test Methods
     func test_givenPresenter_whenPresentNotesCalled_thenVCsProperMethodInvoked() {
         sut.presentNotes(.init(notes: [Note()]))
-        XCTAssertTrue(viewController.displayNotesCalled.0)
+        XCTAssertTrue(viewControllerMock.displayNotesCalled.0)
     }
 
     func test_givenPresenter_whenPresentNotesRemovingCalled_thenVCsProperMethodInvoked() {
         sut.presentNotesRemoving(.init(indicesToRemove: [0]))
-        XCTAssertTrue(viewController.displayNotesRemovingCalled.0)
+        XCTAssertTrue(viewControllerMock.displayNotesRemovingCalled.0)
     }
 
-    func test_givenPresenter_whenPresentNotesCalled_thenVCsArgumentPassed() {
+    func test_givenPresenter_whenPresentNotesCalled_thenVCsProperArgumentPassed() {
         sut.presentNotes(.init(notes: [Note()]))
-        XCTAssertNotNil(viewController.displayNotesCalled.1)
+        XCTAssertNotNil(viewControllerMock.displayNotesCalled.1)
     }
 
-    func test_givenPresenter_whenPresentNotesRemovingCalled_thenVCsArgumentPassed() {
+    func test_givenPresenter_whenPresentNotesRemovingCalledSuccess_thenVCsProperArgumentPassed() {
+        let expectedResult = ListModel.NotesRemoving.ViewModel.success(indicesToRemove: [0])
+
         sut.presentNotesRemoving(.init(indicesToRemove: [0]))
-        XCTAssertNotNil(viewController.displayNotesRemovingCalled.1)
-    }
-}
-
-// MARK: - Mocks
-private final class ListViewControllerSpy: ListDisplayLogic {
-    var displayNotesCalled: (Bool, ListModel.NotesList.ViewModel)!
-    var displayNotesRemovingCalled: (Bool, ListModel.NotesRemoving.ViewModel)!
-
-    func displayNotes(_ viewModel: ListModel.NotesList.ViewModel) {
-        displayNotesCalled = (true, viewModel)
+        XCTAssertNotNil(viewControllerMock.displayNotesRemovingCalled.1)
+        XCTAssertEqual(viewControllerMock.displayNotesRemovingCalled.1, expectedResult)
     }
 
-    func displayNotesRemoving(_ viewModel: ListModel.NotesRemoving.ViewModel) {
-        displayNotesRemovingCalled = (true, viewModel)
+    func test_givenPresenter_whenPresentNotesRemovingCalledFailure_thenVCsProperArgumentPassed() {
+        let expectedResponse = ListModel.NotesRemoving.ViewModel.failure(
+            alert: ListModel.NotesRemoving.ViewModel.Alert(
+                title: Styles.AlertNoSelection.title,
+                message: Styles.AlertNoSelection.message,
+                actionTitle: Styles.AlertNoSelection.actionTitle
+            )
+        )
+
+        sut.presentNotesRemoving(.init(indicesToRemove: []))
+        XCTAssertEqual(viewControllerMock.displayNotesRemovingCalled.1, expectedResponse)
     }
 }
