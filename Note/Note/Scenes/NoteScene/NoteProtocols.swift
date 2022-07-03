@@ -1,8 +1,8 @@
-protocol NoteDataPassing {
+protocol NoteDataPassing: AnyObject {
     var dataStore: NoteDataStore { get }
 }
 
-protocol NoteDataStore {
+protocol NoteDataStore: AnyObject {
     var note: Note { get set }
 }
 
@@ -11,9 +11,9 @@ protocol NoteBusinessLogic {
     func saveNote(_ request: NoteModel.NoteSaving.Request)
 }
 
-protocol NoteWorkerLogic {}
+protocol NoteWorkerLogic: AnyObject {}
 
-protocol NotePresentationLogic {
+protocol NotePresentationLogic: AnyObject {
     func presentNote(_ response: NoteModel.SingleNote.Response)
 }
 
@@ -21,10 +21,10 @@ protocol NoteDisplayLogic: AnyObject {
     func displayNote(_ viewModel: NoteModel.SingleNote.ViewModel)
 }
 
-protocol NoteRoutingLogic {
+protocol NoteRoutingLogic: AnyObject {
     func route()
 }
 
-protocol ConfigurableView {
+protocol ConfigurableView: AnyObject {
     func configure(with model: NoteView.Model)
 }

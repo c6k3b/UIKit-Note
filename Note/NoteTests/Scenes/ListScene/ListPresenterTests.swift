@@ -3,7 +3,7 @@ import XCTest
 
 final class ListPresenterTests: XCTestCase {
     // MARK: - Props
-    private var sut: ListPresentationLogic!
+    private var sut: ListPresenter!
     private var viewController: ListViewControllerSpy!
 
     // MARK: - Lifecycle

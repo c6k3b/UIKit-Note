@@ -3,11 +3,11 @@ import XCTest
 
 final class NoteInteractorTests: XCTestCase {
     // MARK: - Props
-    var sut: NoteBusinessLogic!
-    var presenterMock: NotePresenterMock!
-    var workerMock: NoteWorkerMock!
+    private var sut: NoteBusinessLogic!
+    private var presenterMock: NotePresenterMock!
+    private var workerMock: NoteWorkerMock!
 
-    var note: NoteView.Model? = NoteView.Model(header: "", body: "", date: "")
+    private var note: NoteView.Model? = NoteView.Model(header: "", body: "", date: "")
 
     // MARK: - Test Lifecycle
     override func setUp() {

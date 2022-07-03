@@ -4,15 +4,15 @@ import XCTest
 final class ListViewControllerTests: XCTestCase {
     // MARK: - Props
     private var sut: ListViewController!
-    private var interactor: ListInteractorSpy!
-    private var router: ListRouterSpy!
-    private var dataStore: ListDataStoreSpy!
+    private var interactor: ListInteractorMock!
+    private var router: ListRouterMock!
+    private var dataStore: ListDataStoreMock!
 
     // MARK: - Lifecycle
     override func setUp() {
-        dataStore = ListDataStoreSpy()
-        interactor = ListInteractorSpy()
-        router = ListRouterSpy(dataStore: dataStore)
+        dataStore = ListDataStoreMock()
+        interactor = ListInteractorMock()
+        router = ListRouterMock(dataStore: dataStore)
         sut = ListViewController(interactor: interactor, router: router)
         super.setUp()
     }
@@ -35,7 +35,7 @@ final class ListViewControllerTests: XCTestCase {
         XCTAssertTrue(interactor.tryToPerformNotesRemoving)
     }
 
-    func test_givenScene_whenPresenterCallsStoreSelectedNoteNil_thenInteractorCalled() {
+    func test_givenScene_whenPresenterCallsStoreSelectedNoteNil_thenInteractorCalledFalse() {
         sut.storeSelectedNote(nil)
         XCTAssertFalse(interactor.tryToStoreSelectedNote)
     }
@@ -43,42 +43,5 @@ final class ListViewControllerTests: XCTestCase {
     func test_givenScene_whenPresenterCallsStoreSelectedNote_thenInteractorCalled() {
         sut.storeSelectedNote(0)
         XCTAssertTrue(interactor.tryToStoreSelectedNote)
-    }
-}
-
-// MARK: - Mocks
-private final class ListInteractorSpy: ListBusinessLogic {
-    var tryToFetchNotes = false
-    var tryToPerformNotesRemoving = false
-    var tryToStoreSelectedNote = false
-
-    func fetchNotes(_ request: ListModel.NotesList.Request) {
-        tryToFetchNotes = true
-    }
-
-    func performNotesRemoving(_ request: ListModel.NotesRemoving.Request) {
-        tryToPerformNotesRemoving = true
-    }
-
-    func storeSelectedNote(_ index: Int?) {
-        tryToStoreSelectedNote = true
-    }
-}
-
-private final class ListDataStoreSpy: ListDataStore {
-    var notes: [Note] = []
-    var note: Note = Note()
-}
-
-private final class ListRouterSpy: (ListRoutingLogic & ListDataPassing) {
-    var dataStore: ListDataStore
-
-    init(dataStore: ListDataStoreSpy) {
-        self.dataStore = dataStore
-    }
-
-    var tryToRoute = false
-    func route() {
-        tryToRoute = true
     }
 }

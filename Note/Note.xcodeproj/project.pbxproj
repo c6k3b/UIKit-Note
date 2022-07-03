@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		00079B122869E5F400891305 /* NoteViewModelExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00079B112869E5F400891305 /* NoteViewModelExt.swift */; };
-		00079B32286A088900891305 /* NotePresenterMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00079B23286A088900891305 /* NotePresenterMock.swift */; };
+		00079B32286A088900891305 /* NotePresenterSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00079B23286A088900891305 /* NotePresenterSpy.swift */; };
 		00079B34286A088900891305 /* NoteViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00079B25286A088900891305 /* NoteViewControllerTests.swift */; };
 		00079B35286A088900891305 /* NotePresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00079B26286A088900891305 /* NotePresenterTests.swift */; };
 		00079B36286A088900891305 /* NoteRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00079B27286A088900891305 /* NoteRouterTests.swift */; };
@@ -19,7 +19,6 @@
 		00079B3B286A088900891305 /* ListViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00079B2E286A088900891305 /* ListViewControllerTests.swift */; };
 		00079B3C286A088900891305 /* ListPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00079B2F286A088900891305 /* ListPresenterTests.swift */; };
 		00079B3D286A088900891305 /* ListInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00079B30286A088900891305 /* ListInteractorTests.swift */; };
-		00079B3E286A088900891305 /* ListWorkerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00079B31286A088900891305 /* ListWorkerTests.swift */; };
 		001CAFAC286590DB003F0DB9 /* CellViewModelExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001CAFAB286590DB003F0DB9 /* CellViewModelExt.swift */; };
 		00262A43284D2D4F00DC3B0B /* AdjKeyboardExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00262A42284D2D4F00DC3B0B /* AdjKeyboardExt.swift */; };
 		002DE1E128210590003F0651 /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 002DE1E028210590003F0651 /* Animations.swift */; };
@@ -60,6 +59,8 @@
 		00D2AC8E285D8FDF0020E9F3 /* AlertExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D2AC8D285D8FDF0020E9F3 /* AlertExt.swift */; };
 		00D6BF9A286EB56D007C6ADA /* ListDataPassingMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D6BF99286EB56D007C6ADA /* ListDataPassingMock.swift */; };
 		00FB0B46286CCFE400DB2A84 /* NoteViewControllerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FB0B45286CCFE400DB2A84 /* NoteViewControllerMock.swift */; };
+		00FC88FF2871592E000DB9AE /* ListInteractorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FC88FE2871592E000DB9AE /* ListInteractorMock.swift */; };
+		00FC890128715973000DB9AE /* ListViewControllerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FC890028715973000DB9AE /* ListViewControllerMock.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,7 +76,7 @@
 /* Begin PBXFileReference section */
 		00079B112869E5F400891305 /* NoteViewModelExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewModelExt.swift; sourceTree = "<group>"; };
 		00079B17286A083D00891305 /* NoteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NoteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		00079B23286A088900891305 /* NotePresenterMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotePresenterMock.swift; sourceTree = "<group>"; };
+		00079B23286A088900891305 /* NotePresenterSpy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotePresenterSpy.swift; sourceTree = "<group>"; };
 		00079B25286A088900891305 /* NoteViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteViewControllerTests.swift; sourceTree = "<group>"; };
 		00079B26286A088900891305 /* NotePresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotePresenterTests.swift; sourceTree = "<group>"; };
 		00079B27286A088900891305 /* NoteRouterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteRouterTests.swift; sourceTree = "<group>"; };
@@ -86,7 +87,6 @@
 		00079B2E286A088900891305 /* ListViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewControllerTests.swift; sourceTree = "<group>"; };
 		00079B2F286A088900891305 /* ListPresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListPresenterTests.swift; sourceTree = "<group>"; };
 		00079B30286A088900891305 /* ListInteractorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListInteractorTests.swift; sourceTree = "<group>"; };
-		00079B31286A088900891305 /* ListWorkerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListWorkerTests.swift; sourceTree = "<group>"; };
 		001CAFAB286590DB003F0DB9 /* CellViewModelExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellViewModelExt.swift; sourceTree = "<group>"; };
 		00262A42284D2D4F00DC3B0B /* AdjKeyboardExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjKeyboardExt.swift; sourceTree = "<group>"; };
 		002DE1E028210590003F0651 /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
@@ -129,6 +129,8 @@
 		00D2AC8D285D8FDF0020E9F3 /* AlertExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertExt.swift; sourceTree = "<group>"; };
 		00D6BF99286EB56D007C6ADA /* ListDataPassingMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDataPassingMock.swift; sourceTree = "<group>"; };
 		00FB0B45286CCFE400DB2A84 /* NoteViewControllerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewControllerMock.swift; sourceTree = "<group>"; };
+		00FC88FE2871592E000DB9AE /* ListInteractorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListInteractorMock.swift; sourceTree = "<group>"; };
+		00FC890028715973000DB9AE /* ListViewControllerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewControllerMock.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,7 +192,7 @@
 		00079B22286A088900891305 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
-				00079B23286A088900891305 /* NotePresenterMock.swift */,
+				00079B23286A088900891305 /* NotePresenterSpy.swift */,
 				0086E557286ABF93001715EE /* NoteWorkerMock.swift */,
 				00FB0B45286CCFE400DB2A84 /* NoteViewControllerMock.swift */,
 			);
@@ -203,7 +205,6 @@
 				00079B2A286A088900891305 /* Mocks */,
 				00079B2F286A088900891305 /* ListPresenterTests.swift */,
 				00079B30286A088900891305 /* ListInteractorTests.swift */,
-				00079B31286A088900891305 /* ListWorkerTests.swift */,
 				00079B2D286A088900891305 /* ListRouterTests.swift */,
 				00079B2E286A088900891305 /* ListViewControllerTests.swift */,
 			);
@@ -215,7 +216,9 @@
 			children = (
 				00079B2C286A088900891305 /* ListPresenterMock.swift */,
 				00079B2B286A088900891305 /* ListWorkerMock.swift */,
+				00FC88FE2871592E000DB9AE /* ListInteractorMock.swift */,
 				0086E553286AA9A0001715EE /* ListRouterMock.swift */,
+				00FC890028715973000DB9AE /* ListViewControllerMock.swift */,
 				0086E551286AA985001715EE /* ListDataStoreMock.swift */,
 				00D6BF99286EB56D007C6ADA /* ListDataPassingMock.swift */,
 			);
@@ -481,9 +484,10 @@
 				00079B3A286A088900891305 /* ListRouterTests.swift in Sources */,
 				00079B35286A088900891305 /* NotePresenterTests.swift in Sources */,
 				00079B36286A088900891305 /* NoteRouterTests.swift in Sources */,
-				00079B32286A088900891305 /* NotePresenterMock.swift in Sources */,
+				00079B32286A088900891305 /* NotePresenterSpy.swift in Sources */,
 				00FB0B46286CCFE400DB2A84 /* NoteViewControllerMock.swift in Sources */,
 				00079B3C286A088900891305 /* ListPresenterTests.swift in Sources */,
+				00FC890128715973000DB9AE /* ListViewControllerMock.swift in Sources */,
 				00079B34286A088900891305 /* NoteViewControllerTests.swift in Sources */,
 				00079B37286A088900891305 /* NoteInteractorTests.swift in Sources */,
 				00079B38286A088900891305 /* ListWorkerMock.swift in Sources */,
@@ -491,8 +495,8 @@
 				00079B3B286A088900891305 /* ListViewControllerTests.swift in Sources */,
 				00D6BF9A286EB56D007C6ADA /* ListDataPassingMock.swift in Sources */,
 				00079B3D286A088900891305 /* ListInteractorTests.swift in Sources */,
-				00079B3E286A088900891305 /* ListWorkerTests.swift in Sources */,
 				0086E558286ABF93001715EE /* NoteWorkerMock.swift in Sources */,
+				00FC88FF2871592E000DB9AE /* ListInteractorMock.swift in Sources */,
 				0086E552286AA985001715EE /* ListDataStoreMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

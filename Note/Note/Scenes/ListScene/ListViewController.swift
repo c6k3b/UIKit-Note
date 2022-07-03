@@ -36,15 +36,15 @@ final class ListViewController: UIViewController, ListDisplayLogic {
     // MARK: - DisplayLogic
     func displayNotes(_ viewModel: ListModel.NotesList.ViewModel) {
         notes = viewModel.notes
-        self.activityIndicator.stopAnimating()
-        self.table.reloadData()
+        activityIndicator.stopAnimating()
+        table.reloadData()
     }
 
     func displayNotesRemoving(_ viewModel: ListModel.NotesRemoving.ViewModel) {
         switch viewModel {
         case .success(indicesToRemove: let indices):
             indices.forEach { notes.remove(at: $0) }
-            self.table.reloadData()
+            table.reloadData()
         case .failure(alert: let alert):
             showAlert(
                 title: alert.title,

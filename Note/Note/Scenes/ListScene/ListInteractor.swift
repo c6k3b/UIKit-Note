@@ -17,14 +17,13 @@ final class ListInteractor: ListBusinessLogic, ListDataStore {
     // MARK: - Methods
     func fetchNotes(_ request: ListModel.NotesList.Request) {
         DispatchQueue.global(qos: .background).async { [weak self] in
-            guard let self = self else { return }
-            self.worker.getNotes {
-                if $0 != nil { self.notes = $0! }
+            self?.worker.getNotes {
+                if $0 != nil { self?.notes = $0! }
             }
             DispatchQueue.main.async {
-                self.notesListUpdate()
-                let response = ListModel.NotesList.Response(notes: self.notes)
-                self.presenter.presentNotes(response)
+                self?.notesListUpdate()
+                let response = ListModel.NotesList.Response(notes: self?.notes ?? [])
+                self?.presenter.presentNotes(response)
             }
         }
     }
