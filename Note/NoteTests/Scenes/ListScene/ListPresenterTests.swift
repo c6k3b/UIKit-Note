@@ -31,11 +31,6 @@ final class ListPresenterTests: XCTestCase {
         XCTAssertTrue(viewControllerMock.displayNotesRemovingCalled.0)
     }
 
-    func test_givenPresenter_whenPresentNotesCalled_thenVCsProperArgumentPassed() {
-        sut.presentNotes(.init(notes: [Note()]))
-        XCTAssertNotNil(viewControllerMock.displayNotesCalled.1)
-    }
-
     func test_givenPresenter_whenPresentNotesRemovingCalledSuccess_thenVCsProperArgumentPassed() {
         let expectedResult = ListModel.NotesRemoving.ViewModel.success(indicesToRemove: [0])
 
@@ -54,6 +49,7 @@ final class ListPresenterTests: XCTestCase {
         )
 
         sut.presentNotesRemoving(.init(indicesToRemove: []))
+        XCTAssertNotNil(viewControllerMock.displayNotesRemovingCalled.1)
         XCTAssertEqual(viewControllerMock.displayNotesRemovingCalled.1, expectedResponse)
     }
 }

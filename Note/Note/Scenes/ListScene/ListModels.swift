@@ -33,7 +33,7 @@ extension ListModel.NotesRemoving.ViewModel {
 
 extension ListModel.NotesRemoving.ViewModel {
     static func == (lhs: ListModel.NotesRemoving.ViewModel, rhs: ListModel.NotesRemoving.ViewModel) -> Bool {
-        switch(lhs, rhs) {
+        switch (lhs, rhs) {
         case (let .success(indicesToRemove: lhs), let .success(indicesToRemove: rhs)):
             return lhs == rhs
         case (let .failure(alert: lhs), let .failure(alert: rhs)):

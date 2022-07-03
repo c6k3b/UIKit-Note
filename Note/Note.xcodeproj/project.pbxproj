@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		00079B122869E5F400891305 /* NoteViewModelExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00079B112869E5F400891305 /* NoteViewModelExt.swift */; };
-		00079B32286A088900891305 /* NotePresenterSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00079B23286A088900891305 /* NotePresenterSpy.swift */; };
+		00079B32286A088900891305 /* NotePresenterMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00079B23286A088900891305 /* NotePresenterMock.swift */; };
 		00079B34286A088900891305 /* NoteViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00079B25286A088900891305 /* NoteViewControllerTests.swift */; };
 		00079B35286A088900891305 /* NotePresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00079B26286A088900891305 /* NotePresenterTests.swift */; };
 		00079B36286A088900891305 /* NoteRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00079B27286A088900891305 /* NoteRouterTests.swift */; };
@@ -76,7 +76,7 @@
 /* Begin PBXFileReference section */
 		00079B112869E5F400891305 /* NoteViewModelExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteViewModelExt.swift; sourceTree = "<group>"; };
 		00079B17286A083D00891305 /* NoteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NoteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		00079B23286A088900891305 /* NotePresenterSpy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotePresenterSpy.swift; sourceTree = "<group>"; };
+		00079B23286A088900891305 /* NotePresenterMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotePresenterMock.swift; sourceTree = "<group>"; };
 		00079B25286A088900891305 /* NoteViewControllerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteViewControllerTests.swift; sourceTree = "<group>"; };
 		00079B26286A088900891305 /* NotePresenterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotePresenterTests.swift; sourceTree = "<group>"; };
 		00079B27286A088900891305 /* NoteRouterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteRouterTests.swift; sourceTree = "<group>"; };
@@ -192,7 +192,7 @@
 		00079B22286A088900891305 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
-				00079B23286A088900891305 /* NotePresenterSpy.swift */,
+				00079B23286A088900891305 /* NotePresenterMock.swift */,
 				0086E557286ABF93001715EE /* NoteWorkerMock.swift */,
 				00FB0B45286CCFE400DB2A84 /* NoteViewControllerMock.swift */,
 			);
@@ -484,7 +484,7 @@
 				00079B3A286A088900891305 /* ListRouterTests.swift in Sources */,
 				00079B35286A088900891305 /* NotePresenterTests.swift in Sources */,
 				00079B36286A088900891305 /* NoteRouterTests.swift in Sources */,
-				00079B32286A088900891305 /* NotePresenterSpy.swift in Sources */,
+				00079B32286A088900891305 /* NotePresenterMock.swift in Sources */,
 				00FB0B46286CCFE400DB2A84 /* NoteViewControllerMock.swift in Sources */,
 				00079B3C286A088900891305 /* ListPresenterTests.swift in Sources */,
 				00FC890128715973000DB9AE /* ListViewControllerMock.swift in Sources */,
