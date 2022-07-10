@@ -10,14 +10,15 @@ final class ListViewControllerTests: XCTestCase {
 
     // MARK: - Lifecycle
     override func setUp() {
+        super.setUp()
         dataStore = ListDataStoreMock()
         interactor = ListInteractorMock()
         router = ListRouter(dataStore: dataStore)
         sut = ListViewController(interactor: interactor, router: router)
-        super.setUp()
     }
 
     override func tearDown() {
+        dataStore = nil
         interactor = nil
         router = nil
         sut = nil
@@ -25,24 +26,14 @@ final class ListViewControllerTests: XCTestCase {
     }
 
     // MARK: - Test Methods
-    func test_givenScene_whenPresenterCallsToShowFetchNotes_thenInteractorCalled() {
+    func testShowNotesListShouldAskPresenterToPresentNotes() {
         sut.showNotesList()
         XCTAssertTrue(interactor.tryToFetchNotes)
     }
 
-    func test_givenScene_whenPresenterCallsToPerformNotesRemoving_thenInteractorCalled() {
+    func testRemoveShouldAskPresenterToPresentNotesRemoving() {
         sut.remove(indices: nil, cells: nil)
         XCTAssertTrue(interactor.tryToPerformNotesRemoving)
-    }
-
-    func test_givenScene_whenPresenterCallsStoreSelectedNoteNil_thenInteractorCalledFalse() {
-        sut.storeSelectedNote(nil)
-        XCTAssertFalse(interactor.tryToStoreSelectedNote)
-    }
-
-    func test_givenScene_whenPresenterCallsStoreSelectedNote_thenInteractorCalled() {
-        sut.storeSelectedNote(0)
-        XCTAssertTrue(interactor.tryToStoreSelectedNote)
     }
 }
 
@@ -67,6 +58,6 @@ private final class ListInteractorMock: ListBusinessLogic {
 
 private final class ListDataStoreMock: ListDataStore {
     var dataStoreWasCalled = true
-    var notes: [Note] = [Note(header: "tested", body: nil, date: nil, icon: nil)]
-    var note: Note = Note(header: "selected", body: nil, date: nil, icon: nil)
+    var notes: [Note] = [Note(header: "ListNote", body: nil, date: nil, icon: nil)]
+    var note: Note = Note(header: "Note", body: nil, date: nil, icon: nil)
 }

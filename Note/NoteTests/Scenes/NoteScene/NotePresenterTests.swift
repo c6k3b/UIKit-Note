@@ -33,7 +33,7 @@ final class NotePresenterTests: XCTestCase {
 
     func testPresenterShouldAskViewControlletToDisplayNewNote() {
         let transmittedData = Note(header: "test", body: nil, date: nil, icon: nil)
-        let expectedResult = NoteModel.SingleNote.ViewModel.success(
+        let expectedResponse = NoteModel.SingleNote.ViewModel.success(
             note: NoteView.Model(
                 header: "test",
                 body: "",
@@ -47,7 +47,7 @@ final class NotePresenterTests: XCTestCase {
 
         XCTAssertEqual(
             viewControllerMock.displayNoteCalled.data,
-            expectedResult,
+            expectedResponse,
             "Presenter should send proper data to ViewController to display empty note alert"
         )
     }

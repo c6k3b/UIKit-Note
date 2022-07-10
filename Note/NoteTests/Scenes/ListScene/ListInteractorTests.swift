@@ -26,7 +26,7 @@ final class ListInteractorTests: XCTestCase {
     }
 
     // MARK: - Test Methods
-    func testWorkerWasCalled() {
+    func testFetchResponseShouldCallWorker() {
         let expectation = expectation(description: "Wait for Worker returns notes list")
         workerMock.fetchResponse = {
             XCTAssertTrue(
@@ -39,7 +39,7 @@ final class ListInteractorTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
-    func testPresenterWasCalled() {
+    func testFetchResponseShouldCallPresenter() {
         let expectation = expectation(description: "Wait for presenter present notes list")
 
         presenterMock.fetchResponse = {
@@ -71,7 +71,7 @@ final class ListInteractorTests: XCTestCase {
     }
 
     func testFetchNotesShouldAskPresenterToFormatResult() {
-        let expectedResult = [
+        let expectedResponse = [
             Note(
                 header: "test",
                 body: nil,
@@ -80,14 +80,14 @@ final class ListInteractorTests: XCTestCase {
                 ),
             Note()
         ]
-        workerMock.result = expectedResult
+        workerMock.result = expectedResponse
 
         let expectation = expectation(description: "Wait for send response to presenter")
 
         presenterMock.fetchResponse = {
             XCTAssertEqual(
                 self.presenterMock.responseMock?.notes[0].header,
-                expectedResult[0].header,
+                expectedResponse[0].header,
                 "Should ask Presenter format new header of the first note"
             )
             expectation.fulfill()
@@ -101,7 +101,7 @@ final class ListInteractorTests: XCTestCase {
     func testNotesListUpdateShouldAskPresenterToFormatNewNotesList() {
         sut.notes = dataStoreMock.notes
         sut.note = dataStoreMock.note
-        let expectedResult = sut.notes.count + 1
+        let expectedResponse = sut.notes.count + 1
 
         let expectation = expectation(description: "Wait for send response to Presenter")
 
@@ -110,7 +110,7 @@ final class ListInteractorTests: XCTestCase {
         presenterMock.fetchResponse = {
             XCTAssertEqual(
                 self.sut.notes.count,
-                expectedResult,
+                expectedResponse,
                 "Presenter should format new notes list"
             )
             expectation.fulfill()
@@ -125,7 +125,7 @@ final class ListInteractorTests: XCTestCase {
         sut.note = dataStoreMock.note
 
         let transmittedData = 0
-        let expextedResult = sut.notes[0].header
+        let expextedResponse = sut.notes[0].header
 
         let expectation = expectation(description: "Wait for send response to Presenter")
 
@@ -134,7 +134,7 @@ final class ListInteractorTests: XCTestCase {
         presenterMock.fetchResponse = {
             XCTAssertEqual(
                 self.sut.notes[0].header,
-                expextedResult,
+                expextedResponse,
                 "Presenter should format the new header of the first note"
             )
             expectation.fulfill()
@@ -150,13 +150,13 @@ final class ListInteractorTests: XCTestCase {
         sut.note = dataStoreMock.note
 
         let transmittedData: Int? = nil
-        let expectedResult = dataStoreMock.notes[0].header
+        let expectedResponse = dataStoreMock.notes[0].header
 
         sut.storeSelectedNote(transmittedData)
 
         XCTAssertEqual(
             self.sut.notes[0].header,
-            expectedResult,
+            expectedResponse,
             "Presenter should format result without changes"
         )
     }
@@ -166,13 +166,13 @@ final class ListInteractorTests: XCTestCase {
         sut.note = dataStoreMock.note
 
         let transmittedData = 0
-        let expectedResult = sut.notes[0].header
+        let expectedResponse = sut.notes[0].header
 
         sut.storeSelectedNote(transmittedData)
 
         XCTAssertEqual(
             self.sut.note.header,
-            expectedResult,
+            expectedResponse,
             "Presenter should format the new header of the first note"
         )
     }

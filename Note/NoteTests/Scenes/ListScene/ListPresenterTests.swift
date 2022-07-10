@@ -45,13 +45,13 @@ final class ListPresenterTests: XCTestCase {
 
     func testPresenterShouldAskViewControllerToDisplayNotesRemoving() {
         let transmittedData = [0]
-        let expectedResult = ListModel.NotesRemoving.ViewModel.success(indicesToRemove: transmittedData)
+        let expectedResponse = ListModel.NotesRemoving.ViewModel.success(indicesToRemove: transmittedData)
 
         sut.presentNotesRemoving(.init(indicesToRemove: transmittedData))
 
         XCTAssertEqual(
             viewControllerMock.displayNotesRemovingCalled.data,
-            expectedResult,
+            expectedResponse,
             "Presenter should send proper note index to ViewController to display notes removing"
         )
     }

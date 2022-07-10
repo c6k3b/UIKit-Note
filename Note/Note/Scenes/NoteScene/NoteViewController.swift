@@ -24,10 +24,7 @@ final class NoteViewController: UIViewController, NoteDisplayLogic {
         super.init(nibName: nil, bundle: nil)
     }
 
-    @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder: NSCoder) { nil }
 
     // MARK: - DisplayLogic
     func displayNote(_ viewModel: NoteModel.SingleNote.ViewModel) {
@@ -86,9 +83,9 @@ final class NoteViewController: UIViewController, NoteDisplayLogic {
     private func save() {
         let request = NoteModel.NoteSaving.Request(
             note: NoteView.Model(
-                header: noteView.headerTextField.text ?? "",
-                body: noteView.bodyTextView.text ?? "",
-                date: ""
+                header: noteView.headerTextField.text,
+                body: noteView.bodyTextView.text,
+                date: nil
             )
         )
         interactor.saveNote(request)

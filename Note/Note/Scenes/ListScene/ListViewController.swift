@@ -133,12 +133,6 @@ final class ListViewController: UIViewController, ListDisplayLogic {
         }
     }
 
-    func storeSelectedNote(_ index: Int?) {
-        if let index = index {
-            interactor.storeSelectedNote(index)
-        }
-    }
-
     func navigate() {
         table.isUserInteractionEnabled = false
         CATransaction.begin()
