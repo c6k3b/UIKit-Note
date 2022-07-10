@@ -5,15 +5,13 @@ final class NoteInteractorTests: XCTestCase {
     // MARK: - Props
     private var sut: NoteBusinessLogic!
     private var presenterMock: NotePresenterMock!
-    private var workerMock: NoteWorkerMock!
+    private var workerMock: NoteWorker!
 
-    private var note: NoteView.Model? = NoteView.Model(header: "", body: "", date: "")
-
-    // MARK: - Test Lifecycle
+    // MARK: - Lifecycle
     override func setUp() {
         super.setUp()
         presenterMock = NotePresenterMock()
-        workerMock = NoteWorkerMock()
+        workerMock = NoteWorker()
         sut = NoteInteractor(presenter: presenterMock, worker: workerMock)
     }
 
@@ -27,34 +25,58 @@ final class NoteInteractorTests: XCTestCase {
     // MARK: - Test Methods
     func testPresenterWasCalled() {
         sut.requestNote(.init())
-        XCTAssert(presenterMock.presenterWasCalled, "interactor should call presenter method")
+
+        XCTAssertTrue(
+            presenterMock.presenterWasCalled,
+            "Interactor should invoke Presenter"
+        )
     }
 
-    // Present
-    func testPresenterRequestNoteResponse() {
+    func testRequestNoteShouldAskPresenterToFormatResult() {
+        let transmittedData = Note(
+            header: "test",
+            body: nil,
+            date: nil,
+            icon: nil
+        )
+        let expectedResponse = "test"
+
         sut.requestNote(.init())
 
         presenterMock.presentNote(
-            .init(note: Note(header: "test", body: "", date: Date(), icon: Data()))
+            .init(note: transmittedData)
         )
 
-        XCTAssertTrue(presenterMock.presenterWasCalled, "should send response to presenter")
-        XCTAssertTrue(presenterMock.responseMock?.note.header == "test")
+        XCTAssertEqual(
+            presenterMock.responseMock?.note.header,
+            expectedResponse,
+            "requestNote() should ask presenter to format resuls"
+        )
     }
 
-    func testPresenterRequestNoteResponseFalse() {
-        sut.requestNote(.init())
+    func testSaveNoteShouldAskPresenterToFormatNoteViewModel() {
+        let transmittedData = NoteView.Model(
+            header: "",
+            body: "",
+            date: ""
+        )
 
-        presenterMock.presentNote(.init(note: Note()))
-        XCTAssertTrue(presenterMock.presenterWasCalled, "should not send response to presenter")
-        XCTAssertTrue(presenterMock.responseMock?.note.header == nil)
+        sut.saveNote(.init(note: transmittedData))
+
+        XCTAssertTrue(
+            presenterMock.presenterWasCalled,
+            "saveNote() should ask presenter to format the NoteView Model"
+        )
     }
+}
 
-    // Save
-    func testPresenterSaveNoteResponse() {
-        sut.saveNote(.init(note: note!))
+// MARK: - Mocks
+private final class NotePresenterMock: NotePresentationLogic {
+    var presenterWasCalled = false
+    var responseMock: NoteModel.SingleNote.Response?
 
-        XCTAssertTrue(presenterMock.presenterWasCalled, "should send response to presenter")
-        XCTAssertTrue(presenterMock.responseMockSaving == nil)
+    func presentNote(_ response: NoteModel.SingleNote.Response) {
+        presenterWasCalled = true
+        responseMock = response
     }
 }

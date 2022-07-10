@@ -95,13 +95,13 @@ enum Styles {
         static let bottomConstraint = trailingConstraint
     }
 
-    enum AlertNoSelection {
+    enum AlertNoSelectionForDeleteNotes {
         static let title = "Вы не выбрали ни одной заметки"
         static let message = ""
         static let actionTitle = "Ok"
     }
 
-    enum AlertEmpty {
+    enum AlertEmptyNoteHeaderOrBody {
         static let title = "Поля не заполнены"
         static let message = "Не могу сохранить пустую заметку"
         static let actionTitle = "Редактировать"

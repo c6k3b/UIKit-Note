@@ -20,9 +20,9 @@ final class NotePresenter: NotePresentationLogic {
         } else {
             let viewModel = NoteModel.SingleNote.ViewModel.failure(
                 alert: NoteModel.SingleNote.ViewModel.Alert(
-                    title: Styles.AlertEmpty.title,
-                    message: Styles.AlertEmpty.message,
-                    actionTitle: Styles.AlertEmpty.actionTitle
+                    title: Styles.AlertEmptyNoteHeaderOrBody.title,
+                    message: Styles.AlertEmptyNoteHeaderOrBody.message,
+                    actionTitle: Styles.AlertEmptyNoteHeaderOrBody.actionTitle
                 )
             )
             viewController?.displayNote(viewModel)

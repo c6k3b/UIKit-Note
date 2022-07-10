@@ -5,14 +5,14 @@ final class ListViewControllerTests: XCTestCase {
     // MARK: - Props
     private var sut: ListViewController!
     private var interactor: ListInteractorMock!
-    private var router: ListRouterMock!
+    private var router: ListRouter!
     private var dataStore: ListDataStoreMock!
 
     // MARK: - Lifecycle
     override func setUp() {
         dataStore = ListDataStoreMock()
         interactor = ListInteractorMock()
-        router = ListRouterMock(dataStore: dataStore)
+        router = ListRouter(dataStore: dataStore)
         sut = ListViewController(interactor: interactor, router: router)
         super.setUp()
     }
@@ -44,4 +44,29 @@ final class ListViewControllerTests: XCTestCase {
         sut.storeSelectedNote(0)
         XCTAssertTrue(interactor.tryToStoreSelectedNote)
     }
+}
+
+// MARK: - Mocks
+private final class ListInteractorMock: ListBusinessLogic {
+    var tryToFetchNotes = false
+    var tryToPerformNotesRemoving = false
+    var tryToStoreSelectedNote = false
+
+    func fetchNotes(_ request: ListModel.NotesList.Request) {
+        tryToFetchNotes = true
+    }
+
+    func performNotesRemoving(_ request: ListModel.NotesRemoving.Request) {
+        tryToPerformNotesRemoving = true
+    }
+
+    func storeSelectedNote(_ index: Int?) {
+        tryToStoreSelectedNote = true
+    }
+}
+
+private final class ListDataStoreMock: ListDataStore {
+    var dataStoreWasCalled = true
+    var notes: [Note] = [Note(header: "tested", body: nil, date: nil, icon: nil)]
+    var note: Note = Note(header: "selected", body: nil, date: nil, icon: nil)
 }

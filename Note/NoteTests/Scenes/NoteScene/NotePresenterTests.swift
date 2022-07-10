@@ -3,8 +3,8 @@ import XCTest
 
 final class NotePresenterTests: XCTestCase {
     // MARK: - Props
-    var sut: NotePresenter!
-    var viewControllerMock: NoteViewControllerMock!
+    private var sut: NotePresenter!
+    private var viewControllerMock: NoteViewControllerMock!
 
     // MARK: - Lifecycle
     override func setUp() {
@@ -20,12 +20,19 @@ final class NotePresenterTests: XCTestCase {
         super.tearDown()
     }
     // MARK: - Test Methods
-    func test_givenPresenter_whenPresentNoteCalled_thenVCsProperMethodInvoked() {
-        sut.presentNote(.init(note: Note()))
-        XCTAssertTrue(viewControllerMock.displayNoteCalled.0)
+    func testPresenterShouldCallViewControllerToDisplayNote() {
+        let transmittedData = Note()
+
+        sut.presentNote(.init(note: transmittedData))
+
+        XCTAssertTrue(
+            viewControllerMock.displayNoteCalled.isCalled,
+            "Presenter should invoke ViewController to display note"
+        )
     }
 
-    func test_givenPresenter_whenPresentNoteCalledSuccess_thenVCsProperArgumentPassed() {
+    func testPresenterShouldAskViewControlletToDisplayNewNote() {
+        let transmittedData = Note(header: "test", body: nil, date: nil, icon: nil)
         let expectedResult = NoteModel.SingleNote.ViewModel.success(
             note: NoteView.Model(
                 header: "test",
@@ -36,22 +43,44 @@ final class NotePresenterTests: XCTestCase {
             )
         )
 
-        sut.presentNote(.init(note: Note(header: "test", body: nil, date: nil, icon: nil)))
-        XCTAssertNotNil(viewControllerMock.displayNoteCalled.1)
-        XCTAssertEqual(viewControllerMock.displayNoteCalled.1, expectedResult)
+        sut.presentNote(.init(note: transmittedData))
+
+        XCTAssertEqual(
+            viewControllerMock.displayNoteCalled.data,
+            expectedResult,
+            "Presenter should send proper data to ViewController to display empty note alert"
+        )
     }
 
-    func test_givenPresenter_whenPresentNoteCalledFailure_thenVCsProperArgumentPassed() {
+    func testPresenterShouldAskViewControllerToDisplayEmptyNoteAlert() {
+        let transmittedData = Note(header: "", body: "", date: nil, icon: nil)
         let expectedResponse = NoteModel.SingleNote.ViewModel.failure(
             alert: NoteModel.SingleNote.ViewModel.Alert(
-                title: Styles.AlertEmpty.title,
-                message: Styles.AlertEmpty.message,
-                actionTitle: Styles.AlertEmpty.actionTitle
+                title: Styles.AlertEmptyNoteHeaderOrBody.title,
+                message: Styles.AlertEmptyNoteHeaderOrBody.message,
+                actionTitle: Styles.AlertEmptyNoteHeaderOrBody.actionTitle
             )
         )
 
-        sut.presentNote(.init(note: Note(header: "", body: "", date: nil, icon: nil)))
-        XCTAssertNotNil(viewControllerMock.displayNoteCalled.1)
-        XCTAssertEqual(viewControllerMock.displayNoteCalled.1, expectedResponse)
+        sut.presentNote(.init(note: transmittedData))
+
+        XCTAssertNotNil(
+            viewControllerMock.displayNoteCalled.data,
+            "Presenter should send empty header and body to ViewConroller"
+        )
+        XCTAssertEqual(
+            viewControllerMock.displayNoteCalled.data,
+            expectedResponse,
+            "Presenter should send proper data to ViewController to present empty note alert"
+        )
+    }
+}
+
+// MARK: - Mocks
+private final class NoteViewControllerMock: NoteDisplayLogic {
+    var displayNoteCalled: (isCalled: Bool, data: NoteModel.SingleNote.ViewModel)!
+
+    func displayNote(_ viewModel: NoteModel.SingleNote.ViewModel) {
+        displayNoteCalled = (isCalled: true, data: viewModel)
     }
 }
