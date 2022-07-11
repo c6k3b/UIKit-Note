@@ -61,13 +61,13 @@ final class NoteViewControllerTests: XCTestCase {
             body: "",
             date: ""
         )
-        let expectedResult = transmittedData.header
+        let expectedResponse = transmittedData.header
 
         sut.displayNote(.success(note: transmittedData))
 
         XCTAssertEqual(
             sut.note.header,
-            expectedResult,
+            expectedResponse,
             "displayNote() should present NoteView.Model"
         )
     }
@@ -78,14 +78,18 @@ final class NoteViewControllerTests: XCTestCase {
             message: Styles.AlertEmptyNoteHeaderOrBody.message,
             actionTitle: Styles.AlertEmptyNoteHeaderOrBody.actionTitle
         )
-        let expectedResult = sut.note.header
+        let expectedResponse = UIAlertController(
+            title: Styles.AlertEmptyNoteHeaderOrBody.title,
+            message: "",
+            preferredStyle: .alert
+        )
 
         sut.displayNote(.failure(alert: transmittedData))
 
         XCTAssertEqual(
-            sut.note.header,
-            expectedResult,
-            "displayNote() should present Alert"
+            transmittedData.title,
+            expectedResponse.title,
+            "displayNote() should show an alert"
         )
     }
 }
