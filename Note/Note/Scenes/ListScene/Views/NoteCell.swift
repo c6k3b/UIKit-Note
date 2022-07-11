@@ -41,9 +41,7 @@ class NoteCell: UITableViewCell, ConfigurableCell {
         setupUI()
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder: NSCoder) { nil }
 
     func configure(with model: NoteCell.Model) {
         headerLabel.text = model.header

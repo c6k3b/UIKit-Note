@@ -80,7 +80,7 @@ final class NoteViewControllerTests: XCTestCase {
         )
         let expectedResponse = UIAlertController(
             title: Styles.AlertEmptyNoteHeaderOrBody.title,
-            message: "",
+            message: Styles.AlertEmptyNoteHeaderOrBody.message,
             preferredStyle: .alert
         )
 
@@ -89,6 +89,11 @@ final class NoteViewControllerTests: XCTestCase {
         XCTAssertEqual(
             transmittedData.title,
             expectedResponse.title,
+            "displayNote() should show an alert"
+        )
+        XCTAssertEqual(
+            transmittedData.message,
+            expectedResponse.message,
             "displayNote() should show an alert"
         )
     }

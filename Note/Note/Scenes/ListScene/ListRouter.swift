@@ -13,9 +13,12 @@ final class ListRouter: ListRoutingLogic, ListDataPassing {
     // MARK: - Routing
     func route() {
         let destinationVC = NoteAssembly.build() as? NoteViewController
-        var destinationDS = destinationVC?.router.dataStore
-        passData(source: dataStore, destination: &destinationDS!)
-        navigate(source: viewController!, destination: destinationVC!)
+        if let viewController = viewController,
+           let destinationVC = destinationVC {
+            var destinationDS = destinationVC.router.dataStore
+            passData(source: dataStore, destination: &destinationDS)
+            navigate(source: viewController, destination: destinationVC)
+        }
     }
 
     // MARK: - Navigation
