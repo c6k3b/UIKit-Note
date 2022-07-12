@@ -1,11 +1,24 @@
 import Foundation
 
-struct Worker: WorkerType {
-    // MARK: - Props
-    private let session = URLSession(configuration: .default)
+final class ListWorker: ListWorkerLogic {
+    func getNotes(completion: ([Note]?) -> Void) {
+        var store: [Note]?
+        fetchData { noteData in
+            store = noteData.map {
+                Note(
+                    header: $0.header,
+                    body: $0.text,
+                    date: Date(timeIntervalSince1970: TimeInterval($0.date ?? 0)),
+                    icon: fetchImage(from: $0.userShareIcon ?? "")
+                )
+            }
+        }
+        completion(store)
+    }
+}
 
-    // MARK: - Methods
-    func fetch(completion: ([NoteData]) -> Void) {
+private extension ListWorker {
+    private func fetchData(completion: ([NoteData]) -> Void) {
         guard let url = createURLComponents() else { return }
         var decodedData = [NoteData]()
         do {
@@ -17,7 +30,7 @@ struct Worker: WorkerType {
         completion(decodedData)
     }
 
-    func loadImage(from stringUrl: String) -> Data? {
+    private func fetchImage(from stringUrl: String) -> Data? {
         guard let url = URL(string: stringUrl) else { return nil }
         var imageData = Data()
         do {
