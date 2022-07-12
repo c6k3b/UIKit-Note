@@ -28,23 +28,20 @@ final class ListViewController: UIViewController, ListDisplayLogic {
         super.init(nibName: nil, bundle: nil)
     }
 
-    @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder: NSCoder) { nil }
 
     // MARK: - DisplayLogic
     func displayNotes(_ viewModel: ListModel.NotesList.ViewModel) {
         notes = viewModel.notes
-        self.activityIndicator.stopAnimating()
-        self.table.reloadData()
+        activityIndicator.stopAnimating()
+        table.reloadData()
     }
 
     func displayNotesRemoving(_ viewModel: ListModel.NotesRemoving.ViewModel) {
         switch viewModel {
         case .success(indicesToRemove: let indices):
             indices.forEach { notes.remove(at: $0) }
-            self.table.reloadData()
+            table.reloadData()
         case .failure(alert: let alert):
             showAlert(
                 title: alert.title,
@@ -64,7 +61,7 @@ final class ListViewController: UIViewController, ListDisplayLogic {
         super.viewWillAppear(animated)
         floatingButton.shakeOnAppear()
         floatingButton.layer.opacity = 1
-        self.interactor.fetchNotes(ListModel.NotesList.Request())
+        showNotesList()
     }
 
     override func setEditing(_ editing: Bool, animated: Bool) {
@@ -98,7 +95,7 @@ final class ListViewController: UIViewController, ListDisplayLogic {
         view.addSubview(activityIndicator)
     }
 
-    @objc private func didFloatingButtonTapped() {
+    @objc func didFloatingButtonTapped() {
         if isEditing {
             guard let indexPath = table.indexPathsForSelectedRows?.sorted(by: >) else {
                 return remove(indices: nil, cells: nil)
@@ -111,6 +108,10 @@ final class ListViewController: UIViewController, ListDisplayLogic {
         } else {
             navigate()
         }
+    }
+
+    func showNotesList() {
+        interactor.fetchNotes(ListModel.NotesList.Request())
     }
 
     func remove(indices: [Int]?, cells: IndexSet?) {

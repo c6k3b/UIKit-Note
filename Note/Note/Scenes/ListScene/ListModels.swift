@@ -16,7 +16,7 @@ enum ListModel {
         struct Response {
             let indicesToRemove: [Int]
         }
-        enum ViewModel {
+        enum ViewModel: Equatable {
             case success(indicesToRemove: [Int])
             case failure(alert: Alert)
         }
@@ -24,9 +24,21 @@ enum ListModel {
 }
 
 extension ListModel.NotesRemoving.ViewModel {
-    struct Alert {
+    struct Alert: Equatable {
         let title: String
         let message: String
         let actionTitle: String
+    }
+}
+
+extension ListModel.NotesRemoving.ViewModel {
+    static func == (lhs: ListModel.NotesRemoving.ViewModel, rhs: ListModel.NotesRemoving.ViewModel) -> Bool {
+        switch (lhs, rhs) {
+        case (let .success(indicesToRemove: lhs), let .success(indicesToRemove: rhs)):
+            return lhs == rhs
+        case (let .failure(alert: lhs), let .failure(alert: rhs)):
+            return lhs == rhs
+        default: return false
+        }
     }
 }

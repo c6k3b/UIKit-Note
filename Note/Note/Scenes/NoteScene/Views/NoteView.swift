@@ -35,9 +35,7 @@ class NoteView: UIView, ConfigurableView {
         setupUI()
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder: NSCoder) { nil }
 
     func configure(with model: NoteView.Model) {
         dateLabel.text = model.date

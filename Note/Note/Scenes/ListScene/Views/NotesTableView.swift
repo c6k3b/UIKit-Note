@@ -7,9 +7,7 @@ class NotesTableView: UITableView {
         setupUI()
     }
 
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    required init?(coder: NSCoder) { nil }
 
     override func didMoveToSuperview() {
         activateTableViewConstraints()

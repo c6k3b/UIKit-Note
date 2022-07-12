@@ -34,9 +34,9 @@ final class ListPresenter: ListPresentationLogic {
             viewController?.displayNotesRemoving(
                 ListModel.NotesRemoving.ViewModel.failure(
                     alert: ListModel.NotesRemoving.ViewModel.Alert(
-                        title: Styles.AlertNoSelection.title,
-                        message: Styles.AlertNoSelection.message,
-                        actionTitle: Styles.AlertNoSelection.actionTitle
+                        title: Styles.AlertNoSelectionForDeleteNotes.title,
+                        message: Styles.AlertNoSelectionForDeleteNotes.message,
+                        actionTitle: Styles.AlertNoSelectionForDeleteNotes.actionTitle
                     )
                 )
             )
